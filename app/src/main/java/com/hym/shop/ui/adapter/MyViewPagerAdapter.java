@@ -15,41 +15,26 @@ import java.util.List;
 
 public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    private List<FragmentInfo> fragmentInfos = new ArrayList<>();
+    private List<Fragment> fragments;
 
-    public MyViewPagerAdapter(@NonNull FragmentManager fm,List<FragmentInfo> fragmentInfo) {
+    public MyViewPagerAdapter(@NonNull FragmentManager fm,List<Fragment> fragmentInfo) {
         super(fm, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        this.fragmentInfos = fragmentInfo;
+        this.fragments = fragmentInfo;
     }
 
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        try {
-            return (Fragment)fragmentInfos.get(position).getFragment().newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
 
-        return null;
+        return fragments.get(position);
+
     }
 
     @Override
     public int getCount() {
-        return fragmentInfos.size();
+        return fragments.size();
     }
 
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return fragmentInfos.get(position).getTitle();
-    }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        //super.destroyItem(container, position, object);
-    }
 }

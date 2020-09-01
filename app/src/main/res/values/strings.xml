@@ -141,5 +141,11 @@
     <string name="action_settings">Settings</string>
 
     <string name="search_hint">搜索</string>
+    <string name="home">首頁</string>
+    <string name="search">搜索</string>
+    <string name="sort">分类</string>
+    <string name="shopping_cart">购物车</string>
+    <string name="mine">我的</string>
+    <string name="selling">热卖</string>
 
 </resources>

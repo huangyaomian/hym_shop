@@ -104,8 +104,4 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
     }
 
 
-
-
-
-
 }

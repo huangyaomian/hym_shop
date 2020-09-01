@@ -120,6 +120,8 @@ public class AppDetailsActivity3 extends ProgressActivity<AppDetailPresenter> im
                 .build().injectActivity(this);
     }
 
+
+
     @Override
     public void init() {
 
@@ -140,20 +142,7 @@ public class AppDetailsActivity3 extends ProgressActivity<AppDetailPresenter> im
 
     }
 
-    private void initToolbar(){
-        setSupportActionBar(mToolbar);
 
-        mToolbar.setNavigationIcon(
-                new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_ios_arrow_back)
-                        .sizeDp(16)
-                        .color(getResources().getColor(R.color.theme_black)
-                        )
-        );
-
-        mToolbar.setOverflowIcon(new IconicsDrawable(this, Ionicons.Icon.ion_android_more_vertical).color(getResources().getColor(R.color.TextColor)).actionBar());
-
-    }
 
 
     @Override

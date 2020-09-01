@@ -26,8 +26,6 @@ import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 public class HomeAppActivity extends ProgressActivity<HomeAppPresenter> implements HomeAppContract.HomeAppView {
 
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
@@ -48,17 +46,11 @@ public class HomeAppActivity extends ProgressActivity<HomeAppPresenter> implemen
 
     }
 
+
     @Override
     public void init() {
-        mPresenter.requestHomeApps(true);
 
-        toolbar.setNavigationIcon(
-                new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_ios_arrow_back)
-                        .sizeDp(16)
-                        .color(getResources().getColor(R.color.theme_black)
-                        )
-        );
+        mPresenter.requestHomeApps(true);
 
     }
 
@@ -72,12 +64,7 @@ public class HomeAppActivity extends ProgressActivity<HomeAppPresenter> implemen
 
     @Override
     public void initEvent() {
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+
     }
 
 
@@ -90,14 +77,13 @@ public class HomeAppActivity extends ProgressActivity<HomeAppPresenter> implemen
         int intExtra = getIntent().getIntExtra(Constant.HOME_LIST, 1);
         if (intExtra == Constant.APP_HOME_LIST) {
             mAdapter.addData(datas.getHomeApps());
-            toolbar.setTitle("热门应用");
+            setToolBarTitle("热门應用");
         }else {
             mAdapter.addData(datas.getHomeGames());
-            toolbar.setTitle("热门游戏");
+            setToolBarTitle("热门游戏");
         }
         SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mAdapter);
         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
-//        mRecyclerView.setAdapter(mAdapter);
 
     }
 }

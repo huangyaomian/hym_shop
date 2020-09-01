@@ -1,34 +1,25 @@
 package com.hym.shop.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.MenuItemCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hym.shop.R;
 import com.hym.shop.bean.FragmentInfo;
 import com.hym.shop.bean.User;
 import com.hym.shop.common.Constant;
-import com.hym.shop.common.font.Cniao5Font;
-import com.hym.shop.common.imageloader.GlideCircleTransform;
 import com.hym.shop.common.rx.RxBus;
 import com.hym.shop.common.utils.ACache;
 import com.hym.shop.dagger2.component.AppComponent;
@@ -49,38 +40,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 
-public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.MainView {
+public class MainActivity extends ProgressActivity<MainPresenter> implements MainContract.MainView {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    /* @BindView(R.id.appBarLayout)
-     AppBarLayout appBarLayout;*/
-    @BindView(R.id.main_tab_layout)
-    TabLayout mainTabLayout;
+
     @BindView(R.id.main_viewpager)
     ViewPager mainViewpager;
     @BindView(R.id.nav_view)
-    NavigationView navigationView;
+    BottomNavigationView mNavView;
     @BindView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
+    LinearLayout mDrawerLayout;
 
-    private View headerView;
-    private ImageView mUserHeadView;
-    private TextView mTextUserName;
-    private TextView mTextUserPhone;
 
     private long lastClickTime = 0;
 
     private BadgeActionProvider badgeActionProvider;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setSupportActionBar(toolbar);
-    }
 
     @Override
     protected int setLayoutResourceID() {
@@ -95,16 +72,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 .inject(this);
     }
 
+
     @Override
     public void init() {
-
-//        RxBus.get().register(this);
 
         RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
             @Override
             public void accept(User user) {
-                navigationView.getMenu().setGroupVisible(R.id.group2,true);
-                initUserHeadView(user);
+
             }
         });
 
@@ -114,106 +89,97 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     }
 
-    private List<FragmentInfo> initFragments(){
-        List<FragmentInfo>  mFragments=new ArrayList<>(4);
-        mFragments.add(new FragmentInfo(getString(R.string.home_tab_recommend), HomeFragment.class));
-        mFragments.add(new FragmentInfo(getString(R.string.home_tab_ranking), RankingFragment.class));
-        mFragments.add(new FragmentInfo(getString(R.string.home_tab_game), GameFragment.class));
-        mFragments.add(new FragmentInfo(getString(R.string.home_tab_sort), SortFragment.class));
+    @Override
+    public void initToolbar() {
+        super.initToolbar();
+        setShowToolBarBack(false);
+        setToolBarTitle("首頁");
+    }
+
+    private List<Fragment> initFragments() {
+        List<Fragment> mFragments = new ArrayList<>(5);
+        mFragments.add(new HomeFragment());
+        mFragments.add(new RankingFragment());
+        mFragments.add(new GameFragment());
+        mFragments.add(new SortFragment());
+        mFragments.add(new SortFragment());
         return mFragments;
     }
 
-    private void initDrawerLayout() {
-        headerView = navigationView.getHeaderView(0);
-        mUserHeadView = (ImageView) headerView.findViewById(R.id.icon_image);
-//        mUserHeadView.setImageDrawable(new IconicsDrawable(this, Cniao5Font.Icon.cniao_head).colorRes(R.color.theme_while));
-        mUserHeadView.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_no_log));
-        mTextUserName = (TextView) headerView.findViewById(R.id.username);
-        mTextUserPhone = (TextView) headerView.findViewById(R.id.mail);
-        navigationView.getMenu().findItem(R.id.menu_app_update).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_loop));
-//        navigationView.getMenu().findItem(R.id.menu_download_manager).setIcon(new IconicsDrawable(this, Cniao5Font.Icon.cniao_download));
-        navigationView.getMenu().findItem(R.id.menu_download_manager).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_cloud_download_outline));
-        navigationView.getMenu().findItem(R.id.menu_app_uninstall).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline));
-        navigationView.getMenu().findItem(R.id.menu_setting).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_gear_outline));
-        navigationView.getMenu().findItem(R.id.menu_logout).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_log_out));
-//        navigationView.getMenu().findItem(R.id.menu_logout).setIcon(new IconicsDrawable(this, Cniao5Font.Icon.cniao_shutdown));
-
-
-//        navigationView.setCheckedItem(R.id.nav_call);//设置默认选择
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                CharSequence title = item.getTitle();
-                Toast.makeText(MainActivity.this, title, Toast.LENGTH_SHORT).show();
-                switch (item.getItemId()) {
-                    case R.id.menu_logout:
-                        logout();
-                        break;
-                    case R.id.menu_download_manager:
-//                        startActivity(AppManagerActivity.class);
-                        break;
-
-                }
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });
-        headerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(LoginActivity.class);
-            }
-        });
-
-    }
 
     @Override
     public void initView() {
 
+        initViewpager();
     }
 
-    private void initTabLayout() {
-        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),initFragments());
+    private void initViewpager() {
+        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(), initFragments());
         mainViewpager.setAdapter(myViewPagerAdapter);
-        mainTabLayout.setupWithViewPager(mainViewpager);
-    }
-
-    private void initToolbar(){
-        // NavigationView 可以将滑动菜单页面的实现变得非常简单
-        ActionBar supportActionBar = getSupportActionBar();
-        //Toolbar 的最左边加入一个导航按钮；引得用户滑动
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-            supportActionBar.setHomeAsUpIndicator(new IconicsDrawable(this, Ionicons.Icon.ion_android_menu).color(getResources().getColor(R.color.TextColor)).actionBar());
-        }
-        toolbar.setOverflowIcon(new IconicsDrawable(this, Ionicons.Icon.ion_android_more_vertical).color(getResources().getColor(R.color.TextColor)).actionBar());
+        mainViewpager.setOffscreenPageLimit(5);
     }
 
 
     @Override
     public void initEvent() {
+        //BottomNavigationView 点击事件监听
+        mNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int menuId = menuItem.getItemId();
+                // 跳转指定页面：Fragment
+                switch (menuId) {
+                    case R.id.navigation_home:
+                        mainViewpager.setCurrentItem(0);
+                        break;
+                    case R.id.navigation_selling:
+                        mainViewpager.setCurrentItem(1);
+                        break;
+                    case R.id.navigation_sort:
+                        mainViewpager.setCurrentItem(2);
+                        break;
+                    case R.id.navigation_shopping_cart:
+                        mainViewpager.setCurrentItem(3);
+                        break;
+                    case R.id.navigation_mine:
+                        mainViewpager.setCurrentItem(4);
+                        break;
+                }
+                return false;
+            }
+        });
+
+
+        // ViewPager 滑动事件监听
+        mainViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                //将滑动到的页面对应的 menu 设置为选中状态
+                mNavView.getMenu().getItem(i).setChecked(true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
 
     }
-
-/*    @Subscribe
-    public void getUser(User user){
-        navigationView.getMenu().setGroupVisible(R.id.group2,true);
-        initUserHeadView(user);
-    }*/
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.toolbar, menu);//加载toolbar.xml 菜单文件
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar, menu);
-        menu.getItem(2).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
-//        menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
-//        MenuItem menuItem = menu.findItem(R.id.delete).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_cloud_download_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
-        MenuItem downloadMenuItem = toolbar.getMenu().findItem(R.id.delete);
-        badgeActionProvider = (BadgeActionProvider) MenuItemCompat.getActionProvider(downloadMenuItem);
-
-        menu.findItem(R.id.search).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_search).color(getResources().getColor(R.color.TextColor)).actionBar());
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.toolbar, menu);
+//        menu.getItem(2).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+//        MenuItem downloadMenuItem = toolbar.getMenu().findItem(R.id.delete);
+//        badgeActionProvider = (BadgeActionProvider) MenuItemCompat.getActionProvider(downloadMenuItem);
+//        menu.findItem(R.id.search).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_search).color(getResources().getColor(R.color.TextColor)).actionBar());
 
         return true;
     }
@@ -222,85 +188,69 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        badgeActionProvider.setIcon(DrawableCompat.wrap(new IconicsDrawable(this, Ionicons.Icon.ion_ios_cloud_download_outline).color(ContextCompat.getColor(this,R.color.TextColor))));
-        badgeActionProvider.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, AppManagerActivity.class);
-//                if (badgeActionProvider.getBadgeNum() > 0) {
-//                    intent.putExtra(Constant.POSITION,2);
-//                }
-//                startActivity(intent);
-            }
-        });
+//        badgeActionProvider.setIcon(DrawableCompat.wrap(new IconicsDrawable(this, Ionicons.Icon.ion_ios_cloud_download_outline).color(ContextCompat.getColor(this, R.color.TextColor))));
+//        badgeActionProvider.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Intent intent = new Intent(MainActivity.this, AppManagerActivity.class);
+////                if (badgeActionProvider.getBadgeNum() > 0) {
+////                    intent.putExtra(Constant.POSITION,2);
+////                }
+////                startActivity(intent);
+//            }
+//        });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home://Toolbar 的最左边加入一个导航按钮；引得用户滑动
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                break;
-            case R.id.search:
-                startActivity(SearchActivity.class);
-                break;
-/*            case R.id.setting:
-                Toast.makeText(this, "you clicked 11", Toast.LENGTH_SHORT).show();
-                break;*/
-            case R.id.setting2:
-                Toast.makeText(this, "you clicked 22", Toast.LENGTH_SHORT).show();
-                break;
-        }
+//        switch (item.getItemId()) {
+//            case android.R.id.home://Toolbar 的最左边加入一个导航按钮；引得用户滑动
+//
+//                break;
+//            case R.id.search:
+//                startActivity(SearchActivity.class);
+//                break;
+///*            case R.id.setting:
+//                Toast.makeText(this, "you clicked 11", Toast.LENGTH_SHORT).show();
+//                break;*/
+//            case R.id.setting2:
+//                Toast.makeText(this, "you clicked 22", Toast.LENGTH_SHORT).show();
+//                break;
+//        }
         return true;
     }
 
-    private void logout() {
-        headerView.setEnabled(true);
-        ACache aCache = ACache.get(this);
-        aCache.put(Constant.TOKEN, "");
-        aCache.put(Constant.USER, "");
-        mUserHeadView.setImageDrawable(new IconicsDrawable(this, Cniao5Font.Icon.cniao_head).colorRes(R.color.theme_while));
-        mTextUserName.setText(R.string.no_login);
-        mTextUserPhone.setText(R.string.phone_num);
-        headerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
-        });
-        Toast.makeText(MainActivity.this, "退出登錄", Toast.LENGTH_LONG).show();
-        navigationView.getMenu().setGroupVisible(R.id.group2,false);
-        mUserHeadView.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_no_log));
-    }
+//    private void logout() {
+//        headerView.setEnabled(true);
+//        ACache aCache = ACache.get(this);
+//        aCache.put(Constant.TOKEN, "");
+//        aCache.put(Constant.USER, "");
+//        mUserHeadView.setImageDrawable(new IconicsDrawable(this, Cniao5Font.Icon.cniao_head).colorRes(R.color.theme_while));
+//        mTextUserName.setText(R.string.no_login);
+//        mTextUserPhone.setText(R.string.phone_num);
+//        headerView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//            }
+//        });
+//        Toast.makeText(MainActivity.this, "退出登錄", Toast.LENGTH_LONG).show();
+//        navigationView.getMenu().setGroupVisible(R.id.group2,false);
+//        mUserHeadView.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_no_log));
+//    }
 
     private void initUser() {
         Object objUser = ACache.get(this).getAsObject(Constant.USER);
         if (objUser == null) {
-            headerView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                }
-            });
-            navigationView.getMenu().setGroupVisible(R.id.group2,false);
+
         } else {
-            navigationView.getMenu().setGroupVisible(R.id.group2,true);
             User user = (User) objUser;
-            initUserHeadView(user);
         }
     }
 
-    private void initUserHeadView(User user) {
-        headerView.setEnabled(false);
-        Glide.with(this).load("http:" + user.getLogo_url()).transform(new GlideCircleTransform())
-                .into(mUserHeadView);
-        mTextUserName.setText(user.getUsername());
-        mTextUserPhone.setText(String.valueOf(user.getId()));
-    }
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();//一定要将改行删掉
         if (lastClickTime <= 0) {
             Toast.makeText(this, "再点击一下，退出应用", Toast.LENGTH_SHORT).show();
             lastClickTime = System.currentTimeMillis();
@@ -319,24 +269,20 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void requestPermissionSuccess() {
-        initToolbar();
-        initDrawerLayout();
-        initTabLayout();
         initUser();
     }
 
     @Override
     public void requestPermissionFail() {
-        Toast.makeText(MainActivity.this,"授权失败....",Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "授权失败....", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void changeAppNeedUpdateCount(int count) {
-        if(count>0){
-            badgeActionProvider.setText(count+"");
-        }
-        else{
-            badgeActionProvider.hideBadge();
+        if (count > 0) {
+//            badgeActionProvider.setText(count + "");
+        } else {
+//            badgeActionProvider.hideBadge();
         }
     }
 

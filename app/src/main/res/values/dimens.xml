@@ -6,4 +6,11 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+
+
+    <dimen name="design_bottom_navigation_active_text_size">10sp</dimen>
+    <dimen name="design_bottom_navigation_text_size">10sp</dimen>
+    <dimen name="design_bottom_navigation_margin">6dp</dimen>
+    <dimen name="design_bottom_navigation_height">48dp</dimen>//高度
 </resources>
