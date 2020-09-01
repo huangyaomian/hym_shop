@@ -1,0 +1,32 @@
+package com.hym.shop.presenter;
+
+import android.app.Activity;
+import android.content.Context;
+
+import androidx.fragment.app.Fragment;
+
+import com.hym.shop.ui.BaseView;
+
+public class BasePresenter<M,V extends BaseView>  {
+
+    protected M mModel;
+    protected V mView;
+
+    protected Context mContext;
+
+    public BasePresenter(M mModel, V mView) {
+        this.mModel = mModel;
+        this.mView = mView;
+
+        initContext();
+    }
+
+    private void initContext(){
+        if (mView instanceof Fragment) {
+            mContext = ((Fragment) mView).getActivity();
+        }else {
+            mContext = (Activity) mView;
+        }
+    }
+
+}
