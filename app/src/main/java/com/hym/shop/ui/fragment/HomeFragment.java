@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.hym.shop.R;
 import com.hym.shop.bean.HomeBean;
@@ -26,6 +27,8 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
     @BindView(R.id.home_rv)
     RecyclerView mRecyclerView;
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout mySwipeRefreshLayout;
     private HomeAdapter mAdapter;
 
 
@@ -42,6 +45,21 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
     @Override
     protected void initView() {
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        //设置下拉出现小圆圈是否是缩放出现，出现的位置，最大的下拉位置
+        mySwipeRefreshLayout.setProgressViewOffset(true, 50, 200);
+
+//设置下拉圆圈的大小，两个值 LARGE， DEFAULT
+        mySwipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
+
+// 设置下拉圆圈上的颜色，蓝色、绿色、橙色、红色
+        mySwipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        // 设定下拉圆圈的背景
+//        mySwipeRefreshLayout.setBackground(getResources().getColor(R.color.theme_blue));
     }
 
 
@@ -68,15 +86,20 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
     @Override
     protected void initEvent() {
-
+        mySwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.requestHomeData(false);
+            }
+        });
     }
-
-
-
 
 
     @Override
     public void showResult(HomeBean homeBean) {
+        if (mySwipeRefreshLayout.isRefreshing()) {
+            mySwipeRefreshLayout.setRefreshing(false);
+        }
 
         mAdapter = new HomeAdapter(getActivity(), homeBean);
 
@@ -85,7 +108,6 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
         Log.d("showResult", String.valueOf(mRecyclerView.getChildCount()));
 
     }
-
 
 
     @Override
@@ -100,7 +122,7 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
 
     @Override
     public void onRequestPermissionError() {
-        Toast.makeText(getActivity(),"您已拒絕授權!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "您已拒絕授權!", Toast.LENGTH_SHORT).show();
     }
 
 
