@@ -1,6 +1,7 @@
 package com.hym.shop.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -22,6 +24,7 @@ import com.hym.shop.common.exception.BaseException;
 import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.presenter.BasePresenter;
 import com.hym.shop.ui.BaseView;
+import com.hym.shop.ui.widget.CNToolbar;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
@@ -209,6 +212,10 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
                 mRootView.getChildAt(i).setVisibility(View.GONE);
             }
         }
+    }
+
+    public void hideToolbar(){
+        mToolBar.setVisibility(View.GONE);
     }
 
     @Override

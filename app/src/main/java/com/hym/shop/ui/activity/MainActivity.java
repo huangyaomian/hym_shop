@@ -131,6 +131,7 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
                 switch (menuId) {
                     case R.id.navigation_home:
                         mainViewpager.setCurrentItem(0);
+                        hideToolbar();
                         break;
                     case R.id.navigation_selling:
                         mainViewpager.setCurrentItem(1);
@@ -161,6 +162,9 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
             public void onPageSelected(int i) {
                 //将滑动到的页面对应的 menu 设置为选中状态
                 mNavView.getMenu().getItem(i).setChecked(true);
+                if (mNavView.getMenu().getItem(i).getItemId() ==R.id.navigation_home) {
+                    hideToolbar();
+                }
             }
 
             @Override

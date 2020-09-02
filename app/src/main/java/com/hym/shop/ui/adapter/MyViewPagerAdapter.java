@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.hym.shop.bean.FragmentInfo;
+import com.hym.shop.ui.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,9 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-
+        if (position == 0) {
+            ((MainActivity)fragments.get(position).getContext()).hideToolbar();
+        }
         return fragments.get(position);
 
     }
