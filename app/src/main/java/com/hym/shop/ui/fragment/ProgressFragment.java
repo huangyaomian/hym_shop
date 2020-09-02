@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.hym.shop.R;
@@ -21,6 +22,8 @@ import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.presenter.BasePresenter;
 import com.hym.shop.ui.BaseView;
 import com.hym.shop.ui.activity.LoginActivity;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import javax.inject.Inject;
 
@@ -33,7 +36,7 @@ import butterknife.Unbinder;
  */
 public abstract class ProgressFragment<T extends BasePresenter> extends Fragment implements BaseView {
 
-    private FrameLayout mRootView;
+    private LinearLayout mRootView;
     private View mViewProgress;
     private View mViewEmpty;
     private FrameLayout mViewContent;
@@ -41,6 +44,7 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     private Button mLoginButton;
     private Button mRetryButton;
     private boolean isShowContent = true;
+    private Toolbar mToolBar;
 
     protected MyApplication mMyApplication;
 
@@ -53,13 +57,14 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRootView = (FrameLayout) inflater.inflate(R.layout.fragment_progress, container, false);
+        mRootView = (LinearLayout) inflater.inflate(R.layout.fragment_progress, container, false);
         mViewProgress = mRootView.findViewById(R.id.view_progress);
         mViewEmpty = mRootView.findViewById(R.id.view_empty);
         mViewContent = mRootView.findViewById(R.id.view_content);
         mTextError = mRootView.findViewById(R.id.text_tip);
         mLoginButton = mRootView.findViewById(R.id.login_btn);
         mRetryButton = mRootView.findViewById(R.id.retry);
+        mToolBar = mRootView.findViewById(R.id.tool_bar);
         mTextError.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +85,33 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
         init();
         initView();
         initEvent();
+    }
+
+    public void setToolBarTitle(String toolBarTitle) {
+        mToolBar.setTitle(toolBarTitle);
+    }
+
+    public void initToolbar(){
+
+//        getActivity().setSupportActionBar(mToolBar);
+//
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        mToolBar.setNavigationIcon(
+                new IconicsDrawable(getContext())
+                        .icon(Ionicons.Icon.ion_ios_arrow_back)
+                        .sizeDp(16)
+                        .color(getResources().getColor(R.color.theme_black)
+                        )
+        );
+
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                getContext().onBackPressed();
+            }
+        });
+
     }
 
     //子类实现此方法使其点击重新刷新页面
@@ -141,7 +173,7 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
 
     public void showView(int viewId) {
         for (int i = 0; i < mRootView.getChildCount(); i++) {
-            if (mRootView.getChildAt(i).getId() == viewId) {
+            if (mRootView.getChildAt(i).getId() == viewId || mRootView.getChildAt(i).getId() == R.id.appBarLayout) {
                 mRootView.getChildAt(i).setVisibility(View.VISIBLE);
             } else {
                 mRootView.getChildAt(i).setVisibility(View.GONE);

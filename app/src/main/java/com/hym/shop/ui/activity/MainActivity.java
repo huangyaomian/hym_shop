@@ -107,7 +107,6 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
 
     @Override
     public void initView() {
-
         initViewpager();
     }
 
