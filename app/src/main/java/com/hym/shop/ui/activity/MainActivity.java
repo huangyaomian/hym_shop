@@ -91,9 +91,7 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
 
     @Override
     public void initToolbar() {
-        super.initToolbar();
-        setShowToolBarBack(false);
-        setToolBarTitle("首頁");
+        hideToolbar();
     }
 
     private List<Fragment> initFragments() {
@@ -131,7 +129,6 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
                 switch (menuId) {
                     case R.id.navigation_home:
                         mainViewpager.setCurrentItem(0);
-                        hideToolbar();
                         break;
                     case R.id.navigation_selling:
                         mainViewpager.setCurrentItem(1);

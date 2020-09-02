@@ -27,9 +27,6 @@ public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
-            ((MainActivity)fragments.get(position).getContext()).hideToolbar();
-        }
         return fragments.get(position);
 
     }
