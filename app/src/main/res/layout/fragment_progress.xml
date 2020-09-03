@@ -19,16 +19,19 @@
         app:elevation="0dp"
         android:fitsSystemWindows="true"
         app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         >
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tool_bar"
+            android:id="@+id/fragment_tool_bar"
             android:layout_width="match_parent"
             app:contentInsetStartWithNavigation="0dp"
             android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
             android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow"
+            android:visibility="gone"
             />
 
         <View
@@ -36,7 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/line"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"/>
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            android:visibility="gone"/>
 
 
     </com.google.android.material.appbar.AppBarLayout>

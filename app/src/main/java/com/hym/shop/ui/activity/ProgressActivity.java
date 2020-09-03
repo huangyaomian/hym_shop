@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.LayoutInflaterCompat;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.hym.shop.R;
 import com.hym.shop.app.MyApplication;
 import com.hym.shop.common.exception.BaseException;
@@ -48,6 +49,8 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
     private TextView mTextError;
     private Button mLoginButton;
     private Toolbar mToolBar;
+    private AppBarLayout mAppBarLayout;
+    private View line;
 
     private boolean isShowToolBarBack = true;
 
@@ -74,6 +77,8 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
         mTextError = findViewById(R.id.text_tip);
         mLoginButton = findViewById(R.id.login_btn);
         mToolBar = findViewById(R.id.tool_bar);
+        mAppBarLayout = findViewById(R.id.appBarLayout);
+        line = findViewById(R.id.line);
 
         setRealContentView();
         mTextError.setOnClickListener(new View.OnClickListener() {
@@ -215,7 +220,9 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
     }
 
     public void hideToolbar(){
+        mAppBarLayout.setVisibility(View.GONE);
         mToolBar.setVisibility(View.GONE);
+        line.setVisibility(View.GONE);
     }
 
     @Override

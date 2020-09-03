@@ -1,6 +1,7 @@
 package com.hym.shop.ui.fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,10 +12,15 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.hym.shop.R;
 import com.hym.shop.app.MyApplication;
 import com.hym.shop.common.exception.BaseException;
@@ -45,6 +51,10 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     private Button mRetryButton;
     private boolean isShowContent = true;
     private Toolbar mToolBar;
+    private AppBarLayout mAppBarLayout;
+    private View line;
+
+    private boolean showBackBtn = false;
 
     protected MyApplication mMyApplication;
 
@@ -64,7 +74,9 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
         mTextError = mRootView.findViewById(R.id.text_tip);
         mLoginButton = mRootView.findViewById(R.id.login_btn);
         mRetryButton = mRootView.findViewById(R.id.retry);
-        mToolBar = mRootView.findViewById(R.id.tool_bar);
+        mToolBar = mRootView.findViewById(R.id.fragment_tool_bar);
+        mAppBarLayout = mRootView.findViewById(R.id.appBarLayout);
+        line = mRootView.findViewById(R.id.line);
         mTextError.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +87,13 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
         return mRootView;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.requestApplyInsets();
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -83,36 +102,59 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
         setupActivityComponent(mMyApplication.getAppComponent());
         setRealContentView();
         init();
+        initToolbar();
         initView();
         initEvent();
+    }
+
+
+
+    public void initToolbar(){
+
+        if (showBackBtn){
+            ((AppCompatActivity)this.getActivity()).setSupportActionBar(mToolBar);
+
+            ((AppCompatActivity)this.getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+            mToolBar.setNavigationIcon(
+                    new IconicsDrawable(getContext())
+                            .icon(Ionicons.Icon.ion_ios_arrow_back)
+                            .sizeDp(16)
+                            .color(getResources().getColor(R.color.theme_black)
+                            )
+            );
+
+            mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                getContext().onBackPressed();
+                }
+            });
+        }
+
     }
 
     public void setToolBarTitle(String toolBarTitle) {
         mToolBar.setTitle(toolBarTitle);
     }
 
-    public void initToolbar(){
-
-//        getActivity().setSupportActionBar(mToolBar);
-//
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        mToolBar.setNavigationIcon(
-                new IconicsDrawable(getContext())
-                        .icon(Ionicons.Icon.ion_ios_arrow_back)
-                        .sizeDp(16)
-                        .color(getResources().getColor(R.color.theme_black)
-                        )
-        );
-
-        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                getContext().onBackPressed();
-            }
-        });
-
+    public void showToolBar() {
+        mToolBar.setVisibility(View.VISIBLE);
+        mAppBarLayout.setVisibility(View.VISIBLE);
+        line.setVisibility(View.VISIBLE);
     }
+
+    public void hideToolBar() {
+        mToolBar.setVisibility(View.GONE);
+        mAppBarLayout.setVisibility(View.GONE);
+        line.setVisibility(View.GONE);
+    }
+
+    public void setShowBackBtn(boolean isShowBackBtn) {
+       this.showBackBtn = isShowBackBtn;
+    }
+
+
 
     //子类实现此方法使其点击重新刷新页面
     public void onEmptyViewClick() {

@@ -66,6 +66,8 @@ public class HomeFragment extends ProgressFragment<HomePresenter> implements App
     @Override
     protected void init() {
 
+        showToolBar();
+
         //这里为了解决recycleview不能撑满全屏的问题，这里layoutManager不管你布局里是否设置，都不准确，所以需要在代码里
         //重新设置MATCH_PARENT
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext()) {
