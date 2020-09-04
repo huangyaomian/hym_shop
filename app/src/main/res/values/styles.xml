@@ -126,4 +126,23 @@
         <item name="android:layout_height">@dimen/def_height</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
+
+
+
+
+    <style name="line">
+        <item name="android:background">@color/line</item>
+    </style>
+
+    <style name="line_vertical" parent="line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+
+    <style name="line_horizontal" parent="line">
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
 </resources>

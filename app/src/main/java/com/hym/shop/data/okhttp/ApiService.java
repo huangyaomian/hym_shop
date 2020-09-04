@@ -3,6 +3,7 @@ package com.hym.shop.data.okhttp;
 import com.hym.shop.bean.AppInfoBean;
 import com.hym.shop.bean.BaseBean;
 import com.hym.shop.bean.HomeBean;
+import com.hym.shop.bean.HomeCampaign;
 import com.hym.shop.bean.LoginBean;
 import com.hym.shop.bean.PageBean;
 import com.hym.shop.bean.SearchResult;
@@ -72,5 +73,12 @@ public interface ApiService {
 
     @GET("search")
     Observable<BaseBean<SearchResult>> search(@Query("keyword") String keyword);
+
+    //下面是菜鸟商城的
+    String BASE_URL_SHOP = "http:112.124.22.238:8081/course_api/campaign/";
+
+    @GET("recommend")
+    Observable<BaseBean<List<HomeCampaign>>> getHomeCampaign();
+
 
 }

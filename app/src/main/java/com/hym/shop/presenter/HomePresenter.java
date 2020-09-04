@@ -23,7 +23,6 @@ public class HomePresenter extends BasePresenter<AppInfoModel, AppInfoContract.V
 
 
 
-
     public void requestHomeData(boolean isShowProgress) {
         mModel.getHomeRequest()
                 .compose(RxHttpResponseCompat.handle_result())
@@ -40,54 +39,9 @@ public class HomePresenter extends BasePresenter<AppInfoModel, AppInfoContract.V
                     }
                 });
 
-      /*  mModel.getHomeRequest()
-               .subscribeOn(Schedulers.io())//把請求放到子綫程中去做(被观察者设置为子线程(发消息))
-               .observeOn(AndroidSchedulers.mainThread())//观观察者设置为主线程(接收消息）
-                .subscribeWith(new ProgressDisposableObserver<BaseBean<HomeBean>>(mContext, mView) {
-                    @Override
-                    public void onNext(@NonNull BaseBean baseBean) {
-//                        Log.d("requestHomeData", String.valueOf(appInfoBeans);
-                        mView.showResult((HomeBean) baseBean.getData());
-                    }
 
-                    @Override
-                    protected boolean isShowProgress() {
-                        return isShowProgress;
-                    }
-                });*/
 
 
     }
 }
 
-
-    /*RxPermissions rxPermissions = new RxPermissions((Fragment) mView);
-        rxPermissions.requestSimple(Manifest.permission.READ_PHONE_STATE).flatMap(new Function<Boolean[], ObservableSource<HomeBean>>() {
-            @Override
-            public ObservableSource<HomeBean> apply(Boolean[] booleans) throws Throwable {
-                for (int i = 0; i < booleans.length; i++) {
-                    if (booleans[i] && i == booleans.length - 1) {
-                        return mModel.getHomeRequest().compose(RxHttpResponseCompat.<HomeBean>compatResult());
-                    } else {
-                        return Observable.empty();
-                    }
-                }
-                return Observable.empty();
-            }
-        }).subscribe(new ProgressDisposableObserver<HomeBean>(mContext, mView) {
-            @Override
-            public void onNext(@NonNull HomeBean homeBean) {
-                Log.d("requestRecommendData", "onNext");
-                if (homeBean != null) {
-                    mView.showResult(homeBean);
-                } else {
-                    mView.showNoData();
-                }
-            }
-
-            @Override
-            protected boolean isShowProgress() {
-                return isShowProgress;
-            }
-        });
-    }*/
