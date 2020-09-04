@@ -13,7 +13,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class HomeCampaignPresenter extends BasePresenter<HomeCampaignContract.IHomeCampaignModel, HomeCampaignContract.HomeCampaignView> {
@@ -29,19 +32,26 @@ public class HomeCampaignPresenter extends BasePresenter<HomeCampaignContract.IH
     public void getHomeRecommend(boolean isShowProgress){
 
         mModel.getHomeRecommend()
-                .compose(RxHttpResponseCompat.handle_result())
-                .subscribe(new ProgressDisposableObserver<Optional<List<HomeCampaign>>>(mContext,mView) {
-                    @Override
-                    public void onNext(@NonNull Optional<List<HomeCampaign>> searchResultOptional) {
-                        mView.showHomeRecommend(searchResultOptional.getIncludeNull());
-
-                    }
-
-                    @Override
-                    protected boolean isShowProgress() {
-                        return isShowProgress;
-                    }
-                });
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                .subscribe(new ProgressDisposableObserver<List<HomeCampaign>>(mContext,mView) {
+            @Override
+            public void onNext(List<HomeCampaign> homeCampaigns) {
+                mView.showHomeRecommend(homeCampaigns);
+            }
+        });
+////                .compose(RxHttpResponseCompat.handle_result())
+//                .subscribe(new ProgressDisposableObserver<Optional<List<HomeCampaign>>>(mContext,mView) {
+//                    @Override
+//                    public void onNext(@NonNull Optional<List<HomeCampaign>> searchResultOptional) {
+//                        mView.showHomeRecommend(searchResultOptional.getIncludeNull());
+//
+//                    }
+//
+//                    @Override
+//                    protected boolean isShowProgress() {
+//                        return isShowProgress;
+//                    }
+//                });
 
     }
 

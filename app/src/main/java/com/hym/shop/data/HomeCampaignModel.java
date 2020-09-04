@@ -25,7 +25,7 @@ public class HomeCampaignModel implements HomeCampaignContract.IHomeCampaignMode
 
 
     @Override
-    public Observable<BaseBean<List<HomeCampaign>>> getHomeRecommend() {
+    public Observable<List<HomeCampaign>> getHomeRecommend() {
         return  mApiService.getHomeCampaign();
     }
 }

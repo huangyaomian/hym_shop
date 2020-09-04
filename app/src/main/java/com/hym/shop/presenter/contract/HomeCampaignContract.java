@@ -20,7 +20,7 @@ public interface HomeCampaignContract {
 
     interface IHomeCampaignModel{
 
-        Observable<BaseBean<List<HomeCampaign>>> getHomeRecommend();
+        Observable<List<HomeCampaign>> getHomeRecommend();
 
     }
 

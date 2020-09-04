@@ -12,14 +12,22 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.hym.shop.R;
 import com.hym.shop.bean.HomeBean;
 import com.hym.shop.bean.HomeCampaign;
+import com.hym.shop.common.utils.UIUtils;
 import com.hym.shop.dagger2.component.AppComponent;
+import com.hym.shop.dagger2.component.DaggerHomeCampaignComponent;
 import com.hym.shop.dagger2.component.DaggerHomeComponent;
+import com.hym.shop.dagger2.component.DaggerSearchComponent;
+import com.hym.shop.dagger2.module.HomeCampaignModule;
 import com.hym.shop.dagger2.module.HomeModule;
+import com.hym.shop.dagger2.module.SearchModule;
 import com.hym.shop.presenter.HomeCampaignPresenter;
 import com.hym.shop.presenter.HomePresenter;
 import com.hym.shop.presenter.contract.AppInfoContract;
 import com.hym.shop.presenter.contract.HomeCampaignContract;
 import com.hym.shop.ui.adapter.HomeAdapter;
+import com.hym.shop.ui.adapter.HomeCampaignAdapter;
+import com.hym.shop.ui.widget.SpaceItemDecoration3;
+import com.hym.shop.ui.widget.SpaceItemDecoration4;
 
 import java.util.List;
 
@@ -34,12 +42,14 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mySwipeRefreshLayout;
-    private HomeAdapter mAdapter;
+    private HomeCampaignAdapter mAdapter;
 
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-//        DaggerHomeComponent.builder().appComponent(appComponent).homeModule(new HomeModule(this)).build().inject(this);
+
+        DaggerHomeCampaignComponent.builder().appComponent(appComponent).homeCampaignModule(new HomeCampaignModule(this)).build().inject(this);
+
     }
 
     @Override
@@ -83,6 +93,8 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
             }
         };
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        SpaceItemDecoration4 dividerDecoration = new SpaceItemDecoration4(UIUtils.dp2px(16));
+        mRecyclerView.addItemDecoration(dividerDecoration);
         mRecyclerView.setLayoutManager(layoutManager);
 
 
@@ -118,14 +130,15 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
 
     @Override
     public void showHomeRecommend(List<HomeCampaign> list) {
+
         if (mySwipeRefreshLayout.isRefreshing()) {
             mySwipeRefreshLayout.setRefreshing(false);
         }
 
-        mAdapter = new HomeAdapter(getActivity(), homeBean);
+        mAdapter = new HomeCampaignAdapter();
+        mAdapter.addData(list);
 
         SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mAdapter);
         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
-        Log.d("showResult", String.valueOf(mRecyclerView.getChildCount()));
     }
 }

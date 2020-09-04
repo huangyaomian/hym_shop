@@ -23,62 +23,62 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 //    http://112.124.22.238:8081/course_api/cniaoplay/featured?p={%22page%22:0}
-    String BASE_URL = "http:112.124.22.238:8081/course_api/cniaoplay/";
+    String BASE_URL = "http:112.124.22.238:8081/course_api/";
 
     /*@GET("featured")
     public Call<RecommendBean2> getApps(@Query("p") String jsonParam);*/
 
-    @GET("featured")
+    @GET("cniaoplay/featured")
     public Observable<BaseBean<List<AppInfoBean>>> getApps(@Query("p") String jsonParam);
 
     //http://112.124.22.238:8081/course_api/cniaoplay/index?p={"publicParams":{"model":"12","imei":"12","la":"12","os":"12","resolution":"12","sdk":"12","densityScaleFactor":"12"}}
-    @GET("index")
+    @GET("cniaoplay/index")
     public Observable<BaseBean<HomeBean>> getHome();
 
-    @GET("toplist")
+    @GET("cniaoplay/toplist")
     public Observable<BaseBean<PageBean<AppInfoBean>>> getTopList(@Query("page") int page);
 
-    @GET("game")
+    @GET("cniaoplay/game")
     public Observable<BaseBean<PageBean<AppInfoBean>>> getGames(@Query("page") int page);
 
-    @POST("login")
+    @POST("cniaoplay/login")
     public Observable<BaseBean<LoginBean>> login(@Body LoginRequestBean bean);
 
-    @GET("category")
+    @GET("cniaoplay/category")
     Observable<BaseBean<List<SortBean>>> getCategories();
 
-    @GET("category/featured/{categoryid}")
+    @GET("cniaoplay/category/featured/{categoryid}")
     Observable<BaseBean<PageBean<AppInfoBean>>> getFeaturedAppsBySort(@Path("categoryid") int categoryid, @Query("page") int page);
 
-    @GET("category/toplist/{categoryid}")
+    @GET("cniaoplay/category/toplist/{categoryid}")
     Observable<BaseBean<PageBean<AppInfoBean>>> getTopListAppsBySort(@Path("categoryid") int categoryid,@Query("page") int page);
 
-    @GET("category/newlist/{categoryid}")
+    @GET("cniaoplay/category/newlist/{categoryid}")
     Observable<BaseBean<PageBean<AppInfoBean>>> getNewListAppsBySort(@Path("categoryid") int categoryid,@Query("page") int page);
 
-    @GET("app/{id}")
+    @GET("cniaoplay/app/{id}")
     Observable<BaseBean<AppInfoBean>> getAppDetail(@Path("id")int id);
 
-    @GET("apps/updateinfo")
+    @GET("cniaoplay/apps/updateinfo")
     Observable<BaseBean<List<AppInfoBean>>> getAppsUpdateinfo(@Query("packageName") String packageName,@Query("versionCode") String versionCode);
 
-    @GET("subject/hot")
+    @GET("cniaoplay/subject/hot")
     Observable<BaseBean<PageBean<Subject>>> subjects(@Query("page") int page);
 
-    @GET("subject/{id}")
+    @GET("cniaoplay/subject/{id}")
     Observable<BaseBean<SubjectDetail>> subjectDetail(@Path("id") int id);
 
-    @GET("search/suggest")
+    @GET("cniaoplay/search/suggest")
     Observable<BaseBean<List<String>>> searchSuggest(@Query("keyword") String keyword);
 
-    @GET("search")
+    @GET("cniaoplay/search")
     Observable<BaseBean<SearchResult>> search(@Query("keyword") String keyword);
 
     //下面是菜鸟商城的
-    String BASE_URL_SHOP = "http:112.124.22.238:8081/course_api/campaign/";
+//    String BASE_URL_SHOP = "http:112.124.22.238:8081/course_api/";
 
-    @GET("recommend")
-    Observable<BaseBean<List<HomeCampaign>>> getHomeCampaign();
+    @GET("campaign/recommend")
+    Observable<List<HomeCampaign>> getHomeCampaign();
 
 
 }
