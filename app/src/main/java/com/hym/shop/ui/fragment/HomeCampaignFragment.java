@@ -93,7 +93,7 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
             }
         };
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        SpaceItemDecoration4 dividerDecoration = new SpaceItemDecoration4(UIUtils.dp2px(16));
+        SpaceItemDecoration4 dividerDecoration = new SpaceItemDecoration4(UIUtils.dp2px(8));
         mRecyclerView.addItemDecoration(dividerDecoration);
         mRecyclerView.setLayoutManager(layoutManager);
 
