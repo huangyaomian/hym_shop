@@ -4,7 +4,8 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 import com.hym.shop.BuildConfig;
-import com.hym.shop.common.CommonParamsInterceptor;
+import com.hym.shop.common.Interceptor.CommonParamsInterceptor;
+import com.hym.shop.common.Interceptor.LoggingInterceptor;
 import com.hym.shop.common.rx.RxErrorHandler;
 import com.hym.shop.data.okhttp.ApiService;
 
@@ -42,7 +43,8 @@ public class HttpModule {
 
         return builder
                 //headinterceptor实现了interceptor，用来往request header 添加一些业务相关的数据，如app版本等，token信息
-                .addInterceptor(new CommonParamsInterceptor(application,gson))
+//                .addInterceptor(new CommonParamsInterceptor(application,gson))
+//                .addInterceptor(new LoggingInterceptor())
                 .connectTimeout(10, TimeUnit.SECONDS)//连接超时时间
                 .readTimeout(10,TimeUnit.SECONDS)//读取超时时间
                 .build();

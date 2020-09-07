@@ -2,6 +2,7 @@
 <com.hym.shop.ui.widget.BannerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/banner"
+    android:background="@color/theme_blue"
     android:layout_width="match_parent"
     android:layout_height="180dp"
     app:autoPlayDuration="5000"

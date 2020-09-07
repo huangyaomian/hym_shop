@@ -31,6 +31,7 @@ import com.hym.shop.ui.adapter.MyViewPagerAdapter;
 import com.hym.shop.ui.fragment.GameFragment;
 import com.hym.shop.ui.fragment.HomeCampaignFragment;
 import com.hym.shop.ui.fragment.HomeFragment;
+import com.hym.shop.ui.fragment.HotWaresFragment;
 import com.hym.shop.ui.fragment.RankingFragment;
 import com.hym.shop.ui.fragment.SortFragment;
 import com.hym.shop.ui.widget.BadgeActionProvider;
@@ -77,16 +78,16 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
     @Override
     public void init() {
 
-        RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
+       /* RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
             @Override
             public void accept(User user) {
 
             }
-        });
+        });*/
 
         mPresenter.requestPermission();
 
-        mPresenter.getAppUpdateInfo();
+//        mPresenter.getAppUpdateInfo();
 
     }
 
@@ -98,10 +99,10 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
     private List<Fragment> initFragments() {
         List<Fragment> mFragments = new ArrayList<>(5);
         mFragments.add(new HomeCampaignFragment());
-        mFragments.add(new RankingFragment());
-        mFragments.add(new GameFragment());
-        mFragments.add(new SortFragment());
-        mFragments.add(new SortFragment());
+        mFragments.add(new HotWaresFragment());
+        mFragments.add(new HomeCampaignFragment());
+        mFragments.add(new HomeCampaignFragment());
+        mFragments.add(new HomeCampaignFragment());
         return mFragments;
     }
 
@@ -240,14 +241,14 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
 //        mUserHeadView.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_no_log));
 //    }
 
-    private void initUser() {
+   /* private void initUser() {
         Object objUser = ACache.get(this).getAsObject(Constant.USER);
         if (objUser == null) {
 
         } else {
             User user = (User) objUser;
         }
-    }
+    }*/
 
 
     @Override
@@ -270,7 +271,7 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
 
     @Override
     public void requestPermissionSuccess() {
-        initUser();
+//        initUser();
     }
 
     @Override

@@ -7,20 +7,35 @@
     android:focusableInTouchMode="true"
     android:background="#60ffffff">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/home_rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/theme_while">
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme_while">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="--已經到底部了--"
+                android:textSize="16sp"
+                android:textColor="@color/line"/>
+        </com.scwang.smart.refresh.footer.ClassicsFooter>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 
 </FrameLayout>

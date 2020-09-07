@@ -19,15 +19,15 @@
            android:layout_height="wrap_content"
            android:id="@+id/text_title"
            android:text="热门活动"
-           android:textSize="20sp"
+           android:textSize="16sp"
            android:textColor="@color/TextColor"
-           android:paddingTop="10dp"/>
+           />
 
 
         <View
             style="@style/line_vertical"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"></View>
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"></View>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,13 +47,13 @@
                     android:id="@+id/img_view_small_top"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
-                    android:maxHeight="160dp"
+                    android:maxHeight="100dp"
                     android:layout_gravity="center"/>
 
                 <View
                     android:id="@+id/line2"
                     style="@style/line_vertical"
-
+                    android:layout_marginEnd="6dp"
                     ></View>
 
                 <ImageView
@@ -61,7 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
-                    android:maxHeight="160dp"
+                    android:maxHeight="100dp"
                     android:adjustViewBounds="true"
                     android:layout_gravity="center"
                     />
@@ -77,6 +77,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/img_view_big"
+                android:adjustViewBounds="true"
+                android:maxWidth="140dp"
                 android:layout_gravity="center"/>
 
 

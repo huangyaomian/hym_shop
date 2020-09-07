@@ -1,10 +1,12 @@
-package com.hym.shop.common;
+package com.hym.shop.common.Interceptor;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.hym.shop.common.Constant;
 import com.hym.shop.common.utils.ACache;
 import com.hym.shop.common.utils.DensityUtil;
 import com.hym.shop.common.utils.DeviceUtils;
@@ -47,7 +49,6 @@ public class CommonParamsInterceptor implements Interceptor {
         try {
             HashMap<String,Object> commonParamsMap = new HashMap<>();
             commonParamsMap.put(Constant.IMEI, DeviceUtils.getIMEI(mContext));
-//            commonParamsMap.put(Constant.IMEI, "1111111111");
             commonParamsMap.put(Constant.MODEL, DeviceUtils.getModel());
             commonParamsMap.put(Constant.LANGUAGE, DeviceUtils.getLanguage());
             commonParamsMap.put(Constant.OS, DeviceUtils.getOSVersion());
@@ -60,7 +61,9 @@ public class CommonParamsInterceptor implements Interceptor {
             commonParamsMap.put(Constant.TOKEN, token == null ? "" : token);
 
             if (method.equals("GET")) {
-                HttpUrl httpUrl = request.url();
+
+               HttpUrl httpUrl = request.url();
+                Log.d("hymmmm", "intercept: " + request.url().toString());
                 HashMap<String,Object> rootMap = new HashMap<>();
                 Set<String> paramNames = httpUrl.queryParameterNames();
                 for (String key : paramNames){

@@ -16,9 +16,11 @@ import com.hym.shop.dagger2.module.RecommendModule;
 import com.hym.shop.presenter.RecommendPresenter;
 import com.hym.shop.presenter.contract.RecommendContract;
 import com.hym.shop.ui.adapter.RecommendRVAdapter;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public class RecommendFragment extends ProgressFragment<RecommendPresenter> impl
     @BindView(R.id.recommend_rv)
     RecyclerView mRecommendRv;
     @BindView(R.id.recommend_refreshLayout)
-    RefreshLayout recommendRefreshLayout;
+    SmartRefreshLayout recommendRefreshLayout;
 
     /**
      * 自定义的容器

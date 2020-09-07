@@ -12,4 +12,31 @@
     <color name="skip_btn">#80000000</color>
 
     <color name="transparent">#D9ffffff</color>
+
+
+
+    <item type="color" name="green_btn_color_normal">@color/xui_btn_green_normal_color</item>
+
+    <item type="color" name="green_btn_color_disable">@color/xui_btn_green_select_color</item>
+
+    <color name="green_btn_color_pressed">#ff298409</color>
+    <color name="red_btn_color_normal">#ffff5454</color>
+    <color name="red_btn_color_pressed">#ffd24242</color>
+    <color name="red_btn_color_disable">#7fff5454</color>
+    <color name="grey_btn_color_normal">#fff1f1f1</color>
+    <color name="grey_btn_color_pressed">#ffd8d8d8</color>
+    <color name="grey_btn_color_disable">#7fd8d8d8</color>
+    <color name="grey_btn_stroke_color_normal">#ffbebebe</color>
+    <color name="grey_btn_stroke_color_pressed">#ff9e9e9e</color>
+    <color name="grey_btn_stroke_color_disable">#7f9e9e9e</color>
+    <color name="black_btn_color_normal">#00000000</color>
+    <color name="black_btn_color_pressed">#00000000</color>
+    <color name="black_btn_color_disable">#00000000</color>
+    <color name="black_btn_stroke_color_normal">#ffcfcfcf</color>
+    <color name="black_btn_stroke_color_pressed">#ff353535</color>
+    <color name="black_btn_stroke_color_disable">#7fcfcfcf</color>
+    <color name="normal_text_color">#ff353535</color>
+    <color name="normal_text_color_disable">#7f353535</color>
+    <color name="white_color_disable">#7fffffff</color>
+
 </resources>

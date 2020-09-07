@@ -34,11 +34,15 @@ public class HomeCampaignPresenter extends BasePresenter<HomeCampaignContract.IH
         mModel.getHomeRecommend()
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
                 .subscribe(new ProgressDisposableObserver<List<HomeCampaign>>(mContext,mView) {
-            @Override
-            public void onNext(List<HomeCampaign> homeCampaigns) {
-                mView.showHomeRecommend(homeCampaigns);
-            }
-        });
+                    @Override
+                    public void onNext(List<HomeCampaign> homeCampaigns) {
+                        mView.showHomeRecommend(homeCampaigns);
+                    }
+                    @Override
+                    protected boolean isShowProgress() {
+                        return isShowProgress;
+                    }
+                });
 ////                .compose(RxHttpResponseCompat.handle_result())
 //                .subscribe(new ProgressDisposableObserver<Optional<List<HomeCampaign>>>(mContext,mView) {
 //                    @Override

@@ -4,6 +4,7 @@ import com.hym.shop.bean.AppInfoBean;
 import com.hym.shop.bean.BaseBean;
 import com.hym.shop.bean.HomeBean;
 import com.hym.shop.bean.HomeCampaign;
+import com.hym.shop.bean.HotWares;
 import com.hym.shop.bean.LoginBean;
 import com.hym.shop.bean.PageBean;
 import com.hym.shop.bean.SearchResult;
@@ -81,7 +82,7 @@ public interface ApiService {
     Observable<List<HomeCampaign>> getHomeCampaign();
 
     @GET("wares/hot")
-    Observable<List<HomeCampaign>> getHots(@Query("curPage") int curPage,@Query("pageSize") int pageSize);
+    Observable<HotWares> getHotWares(@Query("curPage") int curPage, @Query("pageSize") int pageSize);
 
 
 }

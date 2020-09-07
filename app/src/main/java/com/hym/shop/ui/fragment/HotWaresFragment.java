@@ -1,71 +1,62 @@
 package com.hym.shop.ui.fragment;
 
 
-import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.icu.text.DecimalFormat;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.hym.shop.R;
-import com.hym.shop.bean.HomeBean;
 import com.hym.shop.bean.HomeCampaign;
-import com.hym.shop.common.imageloader.ImageLoadConfig;
-import com.hym.shop.common.imageloader.ImageLoader;
+import com.hym.shop.bean.HotWares;
 import com.hym.shop.common.utils.UIUtils;
 import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.dagger2.component.DaggerHomeCampaignComponent;
-import com.hym.shop.dagger2.component.DaggerHomeComponent;
-import com.hym.shop.dagger2.component.DaggerSearchComponent;
+import com.hym.shop.dagger2.component.DaggerHotWaresComponent;
 import com.hym.shop.dagger2.module.HomeCampaignModule;
-import com.hym.shop.dagger2.module.HomeModule;
-import com.hym.shop.dagger2.module.SearchModule;
+import com.hym.shop.dagger2.module.HotWaresModule;
 import com.hym.shop.presenter.HomeCampaignPresenter;
-import com.hym.shop.presenter.HomePresenter;
-import com.hym.shop.presenter.contract.AppInfoContract;
+import com.hym.shop.presenter.HotWaresPresenter;
 import com.hym.shop.presenter.contract.HomeCampaignContract;
-import com.hym.shop.ui.adapter.HomeAdapter;
+import com.hym.shop.presenter.contract.HotWaresContract;
 import com.hym.shop.ui.adapter.HomeCampaignAdapter;
-import com.hym.shop.ui.widget.BannerLayout;
-import com.hym.shop.ui.widget.SpaceItemDecoration3;
+import com.hym.shop.ui.adapter.HotWaresAdapter;
 import com.hym.shop.ui.widget.SpaceItemDecoration4;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
-import java.util.ArrayList;
+import java.math.RoundingMode;
 import java.util.List;
 
 import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
-public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter> implements HomeCampaignContract.HomeCampaignView {
+public class HotWaresFragment extends ProgressFragment<HotWaresPresenter> implements HotWaresContract.HotWaresView {
 
+    private final int STATUS_NORMAL = 1;
+    private final int STATUS_MORE = 2;
 
     @BindView(R.id.home_rv)
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh)
     SmartRefreshLayout mSmartRefreshLayout;
-    private HomeCampaignAdapter mAdapter;
+    private HotWaresAdapter mAdapter;
 
-    private LayoutInflater mLayoutInflater;
-    private BannerLayout mBannerLayout;
+    private int mCurPage = 1;
+    private int mPageSize = 10;
+
+    private int mStatus = STATUS_NORMAL;
 
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-
-        DaggerHomeCampaignComponent.builder().appComponent(appComponent).homeCampaignModule(new HomeCampaignModule(this)).build().inject(this);
-
+        DaggerHotWaresComponent.builder().appComponent(appComponent).hotWaresModule(new HotWaresModule(this)).build().inject(this);
     }
 
     @Override
@@ -75,37 +66,6 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
 
     @Override
     protected void initView() {
-        mAdapter = new HomeCampaignAdapter();
-        mLayoutInflater= this.getLayoutInflater();
-
-        mBannerLayout = (BannerLayout)mLayoutInflater.inflate(R.layout.home_banner, null, false);
-
-        mBannerLayout.setImageLoader(new BannerLayout.ImageLoader() {
-            @Override
-            public void displayImage(Context context, String path, ImageView imageView) {
-                ImageLoadConfig defConfig = new ImageLoadConfig.Builder()
-                        .setCropType(ImageLoadConfig.CENTER_CROP)
-                        .setAsBitmap(true)
-                        .setPlaceHolderResId(R.drawable.vector_drawable_init_pic)
-                        .setDiskCacheStrategy(ImageLoadConfig.DiskCache.ALL)
-                        .setPrioriy(ImageLoadConfig.LoadPriority.HIGH)
-                        .setCrossFade(true)
-                        .build();
-                ImageLoader.load(path, imageView,defConfig);
-            }
-        });
-
-        List<String> urls = new ArrayList<>(3);
-
-        urls.add("https://img.cniao5.com/5608f3b5Nc8d90151.jpg");
-        urls.add("https://img.cniao5.com/5608eb8cN9b9a0a39.jpg");
-        urls.add("https://img.cniao5.com/5608cae6Nbb1a39f9.jpg");
-
-        mBannerLayout.setViewUrls(urls);
-
-        mAdapter.addHeaderView(mBannerLayout);
-
-
         initRefresh();
     }
 
@@ -130,7 +90,7 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
         mRecyclerView.setLayoutManager(layoutManager);
 
 
-        mPresenter.getHomeRecommend(true);
+        mPresenter.getHotWares(true,mCurPage,mPageSize);
     }
 
     @Override
@@ -140,11 +100,23 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
 
     private void  initRefresh() {
         mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
-        mSmartRefreshLayout.setEnableLoadMore(false);
+        mSmartRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                mPresenter.getHomeRecommend(false);
+                mStatus = STATUS_NORMAL;
+                mCurPage = 1;
+                mSmartRefreshLayout.setEnableLoadMore(true);
+                mPresenter.getHotWares(false,mCurPage,mPageSize);
+            }
+        });
+
+        mSmartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                mStatus = STATUS_MORE;
+                mCurPage++;
+                mPresenter.getHotWares(false,mCurPage,mPageSize);
             }
         });
     }
@@ -153,23 +125,37 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
 
 
     @Override
-    public void showHomeRecommend(List<HomeCampaign> list) {
+    public void showHotWares(HotWares hotWares) {
 
         if (mSmartRefreshLayout.isRefreshing()) {
             mSmartRefreshLayout.finishRefresh();
         }
 
+        if (mSmartRefreshLayout.isLoading()) {
+            mSmartRefreshLayout.finishLoadMore();
+        }
 
 
 
+        switch (mStatus){
+            case STATUS_NORMAL:
+                mAdapter = new HotWaresAdapter();
+                mAdapter.addData(hotWares.getList());
+                SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mAdapter);
+                mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
+                break;
+            case STATUS_MORE:
+                mAdapter.getData().addAll(hotWares.getList());
+                mAdapter.notifyItemRangeInserted(mAdapter.getData().size(),hotWares.getList().size());
+                break;
+        }
 
 
 
-
-
-        mAdapter.addData(list);
-
-        SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mAdapter);
-        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
+        if (mCurPage * mPageSize < hotWares.getTotalCount()) {
+            mSmartRefreshLayout.setEnableLoadMore(true);
+        }else {
+            mSmartRefreshLayout.setEnableLoadMore(false);
+        }
     }
 }
