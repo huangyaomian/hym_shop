@@ -80,5 +80,8 @@ public interface ApiService {
     @GET("campaign/recommend")
     Observable<List<HomeCampaign>> getHomeCampaign();
 
+    @GET("wares/hot")
+    Observable<List<HomeCampaign>> getHots(@Query("curPage") int curPage,@Query("pageSize") int pageSize);
+
 
 }
