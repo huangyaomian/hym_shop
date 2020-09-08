@@ -44,6 +44,10 @@ import com.youth.banner.Banner;
 import com.youth.banner.adapter.BannerImageAdapter;
 import com.youth.banner.holder.BannerImageHolder;
 import com.youth.banner.indicator.CircleIndicator;
+import com.youth.banner.transformer.AlphaPageTransformer;
+import com.youth.banner.transformer.DepthPageTransformer;
+import com.youth.banner.transformer.ScaleInTransformer;
+import com.youth.banner.transformer.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,6 +68,7 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
 
     private LayoutInflater mLayoutInflater;
     private Banner mBanner;
+    private View mView;
 
 
     @Override
@@ -89,32 +94,17 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
 
         mLayoutInflater= this.getLayoutInflater();
 
-        View view = mLayoutInflater.inflate(R.layout.template_banner, null, false);
-        mBanner = view.findViewById(R.id.template_banner);
+        mView = mLayoutInflater.inflate(R.layout.template_banner, null, false);
+        mBanner = mView.findViewById(R.id.template_banner);
+
+//        List<String> urls = new ArrayList<>(3);
+//
+//        urls.add("https://img.cniao5.com/5608f3b5Nc8d90151.jpg");
+//        urls.add("https://img.cniao5.com/5608eb8cN9b9a0a39.jpg");
+//        urls.add("https://img.cniao5.com/5608cae6Nbb1a39f9.jpg");
 
 
 
-
-        List<String> urls = new ArrayList<>(5);
-
-        urls.add("https://img.cniao5.com/5608f3b5Nc8d90151.jpg");
-        urls.add("https://img.cniao5.com/5608eb8cN9b9a0a39.jpg");
-        urls.add("https://img.cniao5.com/5608cae6Nbb1a39f9.jpg");
-
-
-
-        //—————————————————————————如果你想偷懒，而又只是图片轮播————————————————————————
-        mBanner.setAdapter(new BannerImageAdapter<List<String>>(Collections.singletonList(urls)) {
-            @Override
-            public void onBindView(BannerImageHolder holder, List<String> urls, int position, int size) {
-                ImageLoader.load(urls.get(position), holder.imageView);
-            }
-        })
-                .addBannerLifecycleObserver(this)//添加生命周期观察者
-                .setIndicator(new CircleIndicator(getContext()));
-        //更多使用方法仔细阅读文档，或者查看demo
-
-        mAdapter.addHeaderView(view);
     }
 
 
@@ -138,7 +128,7 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
         mRecyclerView.setLayoutManager(layoutManager);
 
 
-        mPresenter.getHomeRecommend(true);
+        mPresenter.getHomeRecommendAndBanner(true);
     }
 
     @Override
@@ -152,7 +142,9 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                mPresenter.getHomeRecommend(false);
+                mAdapter.removeHeaderView(mView);
+
+                mPresenter.getHomeRecommendAndBanner(false);
             }
         });
     }
@@ -167,17 +159,52 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
             mSmartRefreshLayout.finishRefresh();
         }
 
+        //—————————————————————————如果你想偷懒，而又只是图片轮播————————————————————————
+        mBanner.setAdapter(new BannerImageAdapter<com.hym.shop.bean.Banner>(list.get(0).getBanners()) {
+            @Override
+            public void onBindView(BannerImageHolder holder, com.hym.shop.bean.Banner data, int position, int size) {
+                ImageLoader.load(data.getImgUrl(), holder.imageView);
+            }
 
 
+        })
+                .addBannerLifecycleObserver(this)//添加生命周期观察者
+                .addPageTransformer(new ScaleInTransformer())
+                .setIndicator(new CircleIndicator(getContext()));
 
 
-
-
-
-
+        mAdapter.addHeaderView(mView);
+        if (mAdapter.getData() != null && mAdapter.getData().size()>0){
+            mAdapter.getData().clear();
+        }
         mAdapter.addData(list);
-
         SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mAdapter);
         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
+
+
+    }
+
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //开始轮播
+        mBanner.start();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //停止轮播
+        mBanner.stop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //销毁
+        mBanner.destroy();
     }
 }

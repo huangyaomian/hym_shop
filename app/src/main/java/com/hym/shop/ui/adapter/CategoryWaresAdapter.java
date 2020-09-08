@@ -3,20 +3,18 @@ package com.hym.shop.ui.adapter;
 
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.hym.shop.R;
 import com.hym.shop.bean.HotWares;
-import com.hym.shop.bean.SortBean;
 import com.hym.shop.common.imageloader.ImageLoader;
 
 import org.jetbrains.annotations.NotNull;
 
-public class HotWaresAdapter extends BaseQuickAdapter<HotWares.WaresBean, BaseViewHolder>{
+public class CategoryWaresAdapter extends BaseQuickAdapter<HotWares.WaresBean, BaseViewHolder>{
 
 
-    public HotWaresAdapter() {
-        super(R.layout.template_hot_wares);
+    public CategoryWaresAdapter() {
+        super(R.layout.template_category_wares);
     }
 
 

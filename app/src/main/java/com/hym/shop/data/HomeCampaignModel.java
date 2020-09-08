@@ -1,5 +1,6 @@
 package com.hym.shop.data;
 
+import com.hym.shop.bean.Banner;
 import com.hym.shop.bean.BaseBean;
 import com.hym.shop.bean.HomeCampaign;
 import com.hym.shop.bean.SearchResult;
@@ -27,5 +28,11 @@ public class HomeCampaignModel implements HomeCampaignContract.IHomeCampaignMode
     @Override
     public Observable<List<HomeCampaign>> getHomeRecommend() {
         return  mApiService.getHomeCampaign();
+    }
+
+
+    @Override
+    public Observable<List<Banner>> getBanner(int type) {
+        return  mApiService.getBanner(type);
     }
 }

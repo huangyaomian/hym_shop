@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.GameFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/line_60"
+        />
+
+    <LinearLayout
+        android:id="@+id/view_progress"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <com.xuexiang.xui.widget.progress.materialprogressbar.MaterialProgressBar
+            android:id="@+id/progress"
+            android:outlineAmbientShadowColor="@color/theme_blue"
+            android:layout_width="wrap_content"
+            android:indeterminateTint="@color/theme_blue"
+            android:indeterminateTintMode="src_atop"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/TextColor"
+            android:text="@string/xui_tip_loading_message"/>
+
+    </LinearLayout>
+
+
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="0dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:visibility="gone">
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/category_wares"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="--已經到底部了--"
+                android:textSize="16sp"
+                android:textColor="@color/line"/>
+        </com.scwang.smart.refresh.footer.ClassicsFooter>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+
+</LinearLayout>

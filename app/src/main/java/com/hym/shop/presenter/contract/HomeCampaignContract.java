@@ -1,5 +1,6 @@
 package com.hym.shop.presenter.contract;
 
+import com.hym.shop.bean.Banner;
 import com.hym.shop.bean.BaseBean;
 import com.hym.shop.bean.Campaign;
 import com.hym.shop.bean.HomeCampaign;
@@ -21,6 +22,8 @@ public interface HomeCampaignContract {
     interface IHomeCampaignModel{
 
         Observable<List<HomeCampaign>> getHomeRecommend();
+
+        Observable<List<Banner>> getBanner(int type);
 
     }
 

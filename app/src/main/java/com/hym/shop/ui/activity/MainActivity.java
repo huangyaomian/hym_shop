@@ -28,6 +28,7 @@ import com.hym.shop.dagger2.module.MainModule;
 import com.hym.shop.presenter.MainPresenter;
 import com.hym.shop.presenter.contract.MainContract;
 import com.hym.shop.ui.adapter.MyViewPagerAdapter;
+import com.hym.shop.ui.fragment.CategoryFragment;
 import com.hym.shop.ui.fragment.GameFragment;
 import com.hym.shop.ui.fragment.HomeCampaignFragment;
 import com.hym.shop.ui.fragment.HomeFragment;
@@ -100,7 +101,7 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
         List<Fragment> mFragments = new ArrayList<>(5);
         mFragments.add(new HomeCampaignFragment());
         mFragments.add(new HotWaresFragment());
-        mFragments.add(new HomeCampaignFragment());
+        mFragments.add(new CategoryFragment());
         mFragments.add(new HomeCampaignFragment());
         mFragments.add(new HomeCampaignFragment());
         return mFragments;

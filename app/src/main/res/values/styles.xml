@@ -150,6 +150,7 @@
         <item name="android:textColor">@color/theme_grey</item>
         <item name="android:textSize">14sp</item>
         <item name="android:maxLines">3</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="ware_price">

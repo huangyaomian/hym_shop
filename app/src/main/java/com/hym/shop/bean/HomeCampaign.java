@@ -1,6 +1,7 @@
 package com.hym.shop.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class HomeCampaign implements Serializable {
 
@@ -23,6 +24,16 @@ public class HomeCampaign implements Serializable {
     private int campaignOne;
     private int campaignTwo;
     private int campaignThree;
+
+    private List<Banner> banners;
+
+    public List<Banner> getBanners() {
+        return banners;
+    }
+
+    public void setBanners(List<Banner> banners) {
+        this.banners = banners;
+    }
 
     public Campaign getCpOne() {
         return cpOne;

@@ -1,7 +1,9 @@
 package com.hym.shop.data.okhttp;
 
 import com.hym.shop.bean.AppInfoBean;
+import com.hym.shop.bean.Banner;
 import com.hym.shop.bean.BaseBean;
+import com.hym.shop.bean.Category;
 import com.hym.shop.bean.HomeBean;
 import com.hym.shop.bean.HomeCampaign;
 import com.hym.shop.bean.HotWares;
@@ -80,7 +82,7 @@ public interface ApiService {
 
 
     @GET("banner/query")
-    Observable<List<HomeCampaign>> getbanner(@Query("type") int type);
+    Observable<List<Banner>> getBanner(@Query("type") int type);
 
     @GET("campaign/recommend")
     Observable<List<HomeCampaign>> getHomeCampaign();
@@ -89,10 +91,10 @@ public interface ApiService {
     Observable<HotWares> getHotWares(@Query("curPage") int curPage, @Query("pageSize") int pageSize);
 
     @GET("category/list")
-    Observable<HotWares> getCategoryList();
+    Observable<List<Category>> getCategoryList();
 
     @GET("wares/list")
-    Observable<HotWares> getWaresList(@Query("curPage") int curPage, @Query("pageSize") int pageSize,@Query("categoryid") int categoryId);
+    Observable<HotWares> getWaresList(@Query("curPage") int curPage, @Query("pageSize") int pageSize,@Query("categoryId") int categoryId);
 
 
 }
