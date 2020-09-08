@@ -78,11 +78,21 @@ public interface ApiService {
     //下面是菜鸟商城的
 //    String BASE_URL_SHOP = "http:112.124.22.238:8081/course_api/";
 
+
+    @GET("banner/query")
+    Observable<List<HomeCampaign>> getbanner(@Query("type") int type);
+
     @GET("campaign/recommend")
     Observable<List<HomeCampaign>> getHomeCampaign();
 
     @GET("wares/hot")
     Observable<HotWares> getHotWares(@Query("curPage") int curPage, @Query("pageSize") int pageSize);
+
+    @GET("category/list")
+    Observable<HotWares> getCategoryList();
+
+    @GET("wares/list")
+    Observable<HotWares> getWaresList(@Query("curPage") int curPage, @Query("pageSize") int pageSize,@Query("categoryid") int categoryId);
 
 
 }

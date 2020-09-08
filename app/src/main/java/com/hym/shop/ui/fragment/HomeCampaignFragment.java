@@ -40,8 +40,13 @@ import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.youth.banner.Banner;
+import com.youth.banner.adapter.BannerImageAdapter;
+import com.youth.banner.holder.BannerImageHolder;
+import com.youth.banner.indicator.CircleIndicator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -58,7 +63,7 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
     private HomeCampaignAdapter mAdapter;
 
     private LayoutInflater mLayoutInflater;
-    private BannerLayout mBannerLayout;
+    private Banner mBanner;
 
 
     @Override
@@ -76,37 +81,40 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
     @Override
     protected void initView() {
         mAdapter = new HomeCampaignAdapter();
+        initBanner();
+        initRefresh();
+    }
+
+    private void initBanner(){
+
         mLayoutInflater= this.getLayoutInflater();
 
-        mBannerLayout = (BannerLayout)mLayoutInflater.inflate(R.layout.home_banner, null, false);
+        View view = mLayoutInflater.inflate(R.layout.template_banner, null, false);
+        mBanner = view.findViewById(R.id.template_banner);
 
-        mBannerLayout.setImageLoader(new BannerLayout.ImageLoader() {
-            @Override
-            public void displayImage(Context context, String path, ImageView imageView) {
-                ImageLoadConfig defConfig = new ImageLoadConfig.Builder()
-                        .setCropType(ImageLoadConfig.CENTER_CROP)
-                        .setAsBitmap(true)
-                        .setPlaceHolderResId(R.drawable.vector_drawable_init_pic)
-                        .setDiskCacheStrategy(ImageLoadConfig.DiskCache.ALL)
-                        .setPrioriy(ImageLoadConfig.LoadPriority.HIGH)
-                        .setCrossFade(true)
-                        .build();
-                ImageLoader.load(path, imageView,defConfig);
-            }
-        });
 
-        List<String> urls = new ArrayList<>(3);
+
+
+        List<String> urls = new ArrayList<>(5);
 
         urls.add("https://img.cniao5.com/5608f3b5Nc8d90151.jpg");
         urls.add("https://img.cniao5.com/5608eb8cN9b9a0a39.jpg");
         urls.add("https://img.cniao5.com/5608cae6Nbb1a39f9.jpg");
 
-        mBannerLayout.setViewUrls(urls);
-
-        mAdapter.addHeaderView(mBannerLayout);
 
 
-        initRefresh();
+        //—————————————————————————如果你想偷懒，而又只是图片轮播————————————————————————
+        mBanner.setAdapter(new BannerImageAdapter<List<String>>(Collections.singletonList(urls)) {
+            @Override
+            public void onBindView(BannerImageHolder holder, List<String> urls, int position, int size) {
+                ImageLoader.load(urls.get(position), holder.imageView);
+            }
+        })
+                .addBannerLifecycleObserver(this)//添加生命周期观察者
+                .setIndicator(new CircleIndicator(getContext()));
+        //更多使用方法仔细阅读文档，或者查看demo
+
+        mAdapter.addHeaderView(view);
     }
 
 
