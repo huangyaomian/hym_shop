@@ -16,11 +16,11 @@
 
 
 
-    <item type="color" name="green_btn_color_normal">@color/xui_btn_green_normal_color</item>
+    <item type="color" name="blue_btn_color_normal">@color/theme_blue</item>
 
-    <item type="color" name="green_btn_color_disable">@color/xui_btn_green_select_color</item>
+    <item type="color" name="blue_btn_color_disable">#6000c6e6</item>
 
-    <color name="green_btn_color_pressed">#ff298409</color>
+    <color name="blue_btn_color_pressed">#6000c6e6</color>
     <color name="red_btn_color_normal">#ffff5454</color>
     <color name="red_btn_color_pressed">#ffd24242</color>
     <color name="red_btn_color_disable">#7fff5454</color>

@@ -25,13 +25,11 @@ public class SearchPresenter extends BasePresenter<SearchContract.ISearchModel, 
 
 
     public void getSuggestions(String keyword){
-
         mModel.getSuggestion(keyword)
                 .compose(RxHttpResponseCompat.<List<String>>compatResult())
                 .subscribe(new ProgressDisposableObserver<List<String>>(mContext,mView) {
                     @Override
                     public void onNext(List<String> suggestions) {
-
                         mView.showSuggestions(suggestions);
                     }
                 });
@@ -73,7 +71,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.ISearchModel, 
 
     private void saveSearchHistory(String keyword) {
 
-        DBManager.insertSearchHistory(keyword);
+//        DBManager.insertSearchHistory(keyword);
     }
 
 
@@ -96,10 +94,10 @@ public class SearchPresenter extends BasePresenter<SearchContract.ISearchModel, 
         list.add("直播");
         list.add("妹子");
         list.add("美女");*/
-        List<String> allSearchHistoryList = DBManager.getAllSearchHistoryList();
-        if (allSearchHistoryList.size()> 0) {
-            mView.showSearchHistory(allSearchHistoryList);
-        }
+//        List<String> allSearchHistoryList = DBManager.getAllSearchHistoryList();
+//        if (allSearchHistoryList.size()> 0) {
+//            mView.showSearchHistory(allSearchHistoryList);
+//        }
 
     }
 

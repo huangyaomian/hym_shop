@@ -1,6 +1,7 @@
 package com.hym.shop.ui.fragment;
 
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hym.shop.R;
 import com.hym.shop.bean.Category;
 import com.hym.shop.bean.HotWares;
+import com.hym.shop.common.imageloader.ImageLoader;
 import com.hym.shop.common.utils.UIUtils;
 import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.dagger2.component.DaggerCategoryComponent;
@@ -23,6 +25,7 @@ import com.hym.shop.presenter.CategoryPresenter;
 import com.hym.shop.presenter.contract.CategoryContract;
 import com.hym.shop.ui.adapter.CategoryAdapter;
 import com.hym.shop.ui.adapter.CategoryWaresAdapter;
+import com.hym.shop.ui.adapter.HotWaresAdapter;
 import com.hym.shop.ui.widget.SpaceItemDecoration2;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
@@ -31,6 +34,11 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.xuexiang.xui.widget.progress.materialprogressbar.MaterialProgressBar;
+import com.youth.banner.Banner;
+import com.youth.banner.adapter.BannerImageAdapter;
+import com.youth.banner.holder.BannerImageHolder;
+import com.youth.banner.indicator.CircleIndicator;
+import com.youth.banner.transformer.ScaleInTransformer;
 
 import java.util.List;
 
@@ -65,6 +73,10 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
     private int mCategoryFlag = 0;
     private int mCategoryId = 0;
 
+    private LayoutInflater mLayoutInflater;
+    private Banner mBanner;
+    private View mView;
+
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -78,6 +90,7 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
 
     @Override
     protected void initView() {
+        initBanner();
         initRefresh();
     }
 
@@ -90,7 +103,7 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
         mCategoryAdapter = new CategoryAdapter();
         mCategoryWaresAdapter = new CategoryWaresAdapter();
 
-        SpaceItemDecoration2 dividerDecoration = new SpaceItemDecoration2(UIUtils.dp2px(8));
+        SpaceItemDecoration2 dividerDecoration = new SpaceItemDecoration2(UIUtils.dp2px(4));
         mCategoryWaresRV.addItemDecoration(dividerDecoration);
         mCategoryWaresRV.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
@@ -107,7 +120,8 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
 
                 if (!(mCategoryAdapter.getData().get(position).isSelect())) {
-                    mCurPage=1;
+                    mStatus = STATUS_NORMAL;
+                    mCurPage = 1;
                     mCategoryId = mCategoryAdapter.getData().get(position).getId();
                     requestCategoryWares(mCategoryId);
                     mCategoryAdapter.getData().get(mCategoryFlag).setSelect(false);
@@ -116,6 +130,7 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
                     mCategoryAdapter.notifyItemChanged(position);
                     mCategoryFlag = position;
                 }
+                mCategoryWaresRV.scrollToPosition(0);
             }
         });
     }
@@ -138,9 +153,16 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
             public void onLoadMore(RefreshLayout refreshlayout) {
                 mStatus = STATUS_MORE;
                 mCurPage++;
-                requestCategoryWares(mCategoryId);
+                mPresenter.getCategoryWares(mCurPage, mPageSize, mCategoryId, false);
             }
         });
+    }
+
+    private void initBanner(){
+        mLayoutInflater= this.getLayoutInflater();
+        mView = mLayoutInflater.inflate(R.layout.template_banner, null, false);
+        mBanner = mView.findViewById(R.id.template_banner);
+
     }
 
 
@@ -152,7 +174,7 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
         SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mCategoryAdapter);
         mCategoryRV.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
         mCategoryId = categoryList.get(0).getId();
-        requestCategoryWares(mCategoryId);
+        requestCategoryWaresAndBanner(mCategoryId);
 
 
     }
@@ -162,6 +184,7 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
         if (hotWares.getList() == null || hotWares.getList().size() == 0) {
             showEmpty();
         } else {
+            showContent();
             if (mSmartRefreshLayout.isRefreshing()) {
                 mSmartRefreshLayout.finishRefresh();
             }
@@ -170,42 +193,53 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
                 mSmartRefreshLayout.finishLoadMore();
             }
 
+            switch (mStatus){
+                case STATUS_NORMAL:
+                    if (hotWares.getBanners() != null && hotWares.getBanners().size()>0) {
+                        mBanner.setAdapter(new BannerImageAdapter<com.hym.shop.bean.Banner>(hotWares.getBanners()) {
+                            @Override
+                            public void onBindView(BannerImageHolder holder, com.hym.shop.bean.Banner data, int position, int size) {
+                                ImageLoader.load(data.getImgUrl(), holder.imageView);
+                            }
 
-            showContent();
+
+                        })
+                                .addBannerLifecycleObserver(this)//添加生命周期观察者
+                                .addPageTransformer(new ScaleInTransformer())
+                                .setIndicator(new CircleIndicator(getContext()));
+
+                        mCategoryWaresAdapter.addHeaderView(mView);
+                    }
 
 
-            if (mCategoryWaresAdapter.getData() != null && mCategoryWaresAdapter.getData().size() > 0) {
-                mCategoryWaresAdapter.getData().clear();
+                    if (mCategoryWaresAdapter.getData() != null && mCategoryWaresAdapter.getData().size() > 0) {
+                        mCategoryWaresAdapter.getData().clear();
+                    }
+
+                    mCategoryWaresAdapter.addData(hotWares.getList());
+                    SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mCategoryWaresAdapter);
+                    mCategoryWaresRV.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
+                    break;
+                case STATUS_MORE:
+                    mCategoryWaresAdapter.getData().addAll(hotWares.getList());
+                    mCategoryWaresAdapter.notifyItemRangeInserted(mCategoryWaresAdapter.getData().size(),hotWares.getList().size());
+                    break;
             }
-            mCategoryWaresAdapter.addData(hotWares.getList());
-            SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mCategoryWaresAdapter);
-            mCategoryWaresRV.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
+
         }
 
-        //        switch (mStatus){
-//            case STATUS_NORMAL:
-//                mAdapter = new HotWaresAdapter();
-//                mAdapter.addData(hotWares.getList());
-//                SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mAdapter);
-//                mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
-//                break;
-//            case STATUS_MORE:
-//                mAdapter.getData().addAll(hotWares.getList());
-//                mAdapter.notifyItemRangeInserted(mAdapter.getData().size(),hotWares.getList().size());
-//                break;
-//        }
-//
-//
-//
-//        if (mCurPage * mPageSize < hotWares.getTotalCount()) {
-//            mSmartRefreshLayout.setEnableLoadMore(true);
-//        }else {
-//            mSmartRefreshLayout.setEnableLoadMore(false);
-//        }
+
+        if (mCurPage * mPageSize < hotWares.getTotalCount()) {
+            mSmartRefreshLayout.setEnableLoadMore(true);
+        }else {
+            mSmartRefreshLayout.setEnableLoadMore(false);
+        }
 
     }
 
     private void showDialog() {
+        mProgress.setVisibility(View.VISIBLE);
+        mLoading.setText(R.string.xui_tip_loading_message);
         mProgressView.setVisibility(View.VISIBLE);
         mSmartRefreshLayout.setVisibility(View.GONE);
     }
@@ -218,6 +252,11 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
     private void requestCategoryWares(int categoryId) {
         showDialog();
         mPresenter.getCategoryWares(mCurPage, mPageSize, categoryId, false);
+    }
+
+    private void requestCategoryWaresAndBanner(int categoryId) {
+        showDialog();
+        mPresenter.getCategoryWaresAndBanner(mCurPage, mPageSize, categoryId, false);
     }
 
     private void showEmpty(){

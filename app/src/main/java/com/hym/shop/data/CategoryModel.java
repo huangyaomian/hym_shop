@@ -1,5 +1,6 @@
 package com.hym.shop.data;
 
+import com.hym.shop.bean.Banner;
 import com.hym.shop.bean.Category;
 import com.hym.shop.bean.HotWares;
 import com.hym.shop.data.okhttp.ApiService;
@@ -32,5 +33,10 @@ public class CategoryModel implements CategoryContract.ICategoryModel {
     @Override
     public Observable<HotWares> getCategoryWares(int curPage, int pageSize, int categoryId) {
         return mApiService.getWaresList(curPage,pageSize,categoryId);
+    }
+
+    @Override
+    public Observable<List<Banner>> getBanner(int type) {
+        return mApiService.getBanner(type);
     }
 }

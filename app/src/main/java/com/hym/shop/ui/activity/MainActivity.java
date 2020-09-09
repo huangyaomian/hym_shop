@@ -34,6 +34,7 @@ import com.hym.shop.ui.fragment.HomeCampaignFragment;
 import com.hym.shop.ui.fragment.HomeFragment;
 import com.hym.shop.ui.fragment.HotWaresFragment;
 import com.hym.shop.ui.fragment.RankingFragment;
+import com.hym.shop.ui.fragment.ShoppingCarFragment;
 import com.hym.shop.ui.fragment.SortFragment;
 import com.hym.shop.ui.widget.BadgeActionProvider;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -102,7 +103,7 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
         mFragments.add(new HomeCampaignFragment());
         mFragments.add(new HotWaresFragment());
         mFragments.add(new CategoryFragment());
-        mFragments.add(new HomeCampaignFragment());
+        mFragments.add(new ShoppingCarFragment());
         mFragments.add(new HomeCampaignFragment());
         return mFragments;
     }

@@ -33,7 +33,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        DBManager.initDB(this);
+        DBManager.initDB(this);
         mAppComponent = (DaggerAppComponent) DaggerAppComponent.builder().appModule(new AppModule(this)).build();
 
         XUI.init(this); //初始化UI框架

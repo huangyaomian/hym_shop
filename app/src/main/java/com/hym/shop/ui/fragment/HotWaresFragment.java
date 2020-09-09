@@ -2,14 +2,20 @@ package com.hym.shop.ui.fragment;
 
 
 import android.icu.text.DecimalFormat;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.hym.shop.R;
 import com.hym.shop.bean.HomeCampaign;
 import com.hym.shop.bean.HotWares;
+import com.hym.shop.common.db.DBManager;
 import com.hym.shop.common.utils.UIUtils;
 import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.dagger2.component.DaggerHomeCampaignComponent;
@@ -66,6 +72,7 @@ public class HotWaresFragment extends ProgressFragment<HotWaresPresenter> implem
 
     @Override
     protected void initView() {
+        mAdapter = new HotWaresAdapter();
         initRefresh();
     }
 
@@ -74,6 +81,7 @@ public class HotWaresFragment extends ProgressFragment<HotWaresPresenter> implem
     protected void init() {
 
         showToolBar();
+
 
         //这里为了解决recycleview不能撑满全屏的问题，这里layoutManager不管你布局里是否设置，都不准确，所以需要在代码里
         //重新设置MATCH_PARENT
@@ -95,7 +103,16 @@ public class HotWaresFragment extends ProgressFragment<HotWaresPresenter> implem
 
     @Override
     protected void initEvent() {
-
+//        mAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+//            @Override
+//            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+//                switch (view.getId()){
+//                    case R.id.btn_add:
+//
+//                        break;
+//                }
+//            }
+//        });
     }
 
     private void  initRefresh() {
@@ -139,7 +156,7 @@ public class HotWaresFragment extends ProgressFragment<HotWaresPresenter> implem
 
         switch (mStatus){
             case STATUS_NORMAL:
-                mAdapter = new HotWaresAdapter();
+
                 mAdapter.addData(hotWares.getList());
                 SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mAdapter);
                 mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));

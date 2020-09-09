@@ -157,7 +157,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
             @Override
             public void accept(@NonNull Object o) throws Exception {
                 //这里需要移除view，并且将历史记录清除
-                DBManager.DeleteAllSearchHistory();
+//                DBManager.DeleteAllSearchHistory();
                 setLayoutHistoryGone();
             }
         });
@@ -255,9 +255,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
                 mSearchTextView.setText("");
                 mPresenter.showHistory();
-//                mLayoutHistory.setVisibility(View.VISIBLE);
-//                mRecyclerViewSuggestion.setVisibility(View.GONE);
-//                mRecyclerViewResult.setVisibility(View.GONE);
+
             }
         });
 

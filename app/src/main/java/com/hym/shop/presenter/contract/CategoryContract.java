@@ -1,5 +1,6 @@
 package com.hym.shop.presenter.contract;
 
+import com.hym.shop.bean.Banner;
 import com.hym.shop.bean.Category;
 import com.hym.shop.bean.HotWares;
 import com.hym.shop.ui.BaseView;
@@ -23,6 +24,8 @@ public interface CategoryContract {
         Observable<List<Category>> getCategory();
 
         Observable<HotWares> getCategoryWares(int curPage, int pageSize, int categoryId);
+
+        Observable<List<Banner>> getBanner(int type);
 
     }
 

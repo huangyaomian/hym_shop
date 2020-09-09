@@ -91,19 +91,9 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
     }
 
     private void initBanner(){
-
         mLayoutInflater= this.getLayoutInflater();
-
         mView = mLayoutInflater.inflate(R.layout.template_banner, null, false);
         mBanner = mView.findViewById(R.id.template_banner);
-
-//        List<String> urls = new ArrayList<>(3);
-//
-//        urls.add("https://img.cniao5.com/5608f3b5Nc8d90151.jpg");
-//        urls.add("https://img.cniao5.com/5608eb8cN9b9a0a39.jpg");
-//        urls.add("https://img.cniao5.com/5608cae6Nbb1a39f9.jpg");
-
-
 
     }
 

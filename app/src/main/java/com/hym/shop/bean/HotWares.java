@@ -21,6 +21,15 @@ public class HotWares {
     private int totalPage;
     private int pageSize;
     private List<WaresBean> list;
+    private List<Banner> banners;
+
+    public List<Banner> getBanners() {
+        return banners;
+    }
+
+    public void setBanners(List<Banner> banners) {
+        this.banners = banners;
+    }
 
     public String getCopyright() {
         return copyright;
@@ -88,6 +97,24 @@ public class HotWares {
         private String imgUrl;
         private double price;
         private int sale;
+        private int count = 1;
+        private boolean isCheck = true;
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+
+        public boolean isCheck() {
+            return isCheck;
+        }
+
+        public void setCheck(boolean check) {
+            isCheck = check;
+        }
 
         public int getId() {
             return id;

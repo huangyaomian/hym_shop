@@ -6,13 +6,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBOpenHelper extends SQLiteOpenHelper {
 
+    //新建數據庫
     public DBOpenHelper(Context context) {
-        super(context, "search.db", null, 1);
+        super(context, "shoppingCar.db", null, 1);
     }
 
+    //新建表
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sql = "create table searchHistory(id integer primary key,keyword text unique not null )";
+        String sql = "create table wares(id integer primary key,waresId integer UNIQUE ,title text not null,price REAL,img varchar(20),count intger,isCheck intger)";
         sqLiteDatabase.execSQL(sql);
 
     }

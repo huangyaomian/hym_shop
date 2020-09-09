@@ -153,6 +153,13 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="ware_title_2">
+    <item name="android:textColor">@color/theme_grey</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:ellipsize">end</item>
+</style>
+
     <style name="ware_price">
         <item name="android:textColor">@color/xui_config_color_red</item>
         <item name="android:textSize">16sp</item>
@@ -211,6 +218,11 @@
     <style name="bigGreyButton" parent="@style/bigButton">
         <item name="android:textColor">@color/grey_btn_text_color</item>
         <item name="android:background">@drawable/bg_btn_style_grey</item>
+    </style>
+
+
+    <style name="customCheckbox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/selector_checkbox</item>
     </style>
 
 
