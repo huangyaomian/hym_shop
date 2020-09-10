@@ -20,10 +20,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class ShoppingCarAdapter extends BaseQuickAdapter<HotWares.WaresBean, BaseViewHolder>{
 
-
-
-
-
     private StatusChangeListener mStatusChangeListener;
 
     public interface StatusChangeListener{
@@ -39,6 +35,10 @@ public class ShoppingCarAdapter extends BaseQuickAdapter<HotWares.WaresBean, Bas
     }
 
 
+    private final int  PAGE_STATUS_NORMAL = 1;
+    private final int  PAGE_STATUS_EDIT = 2;
+
+    public int pageStatus = PAGE_STATUS_NORMAL;
 
 
     @Override
@@ -61,9 +61,12 @@ public class ShoppingCarAdapter extends BaseQuickAdapter<HotWares.WaresBean, Bas
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                DBManager.updateWaresIsCheck(waresBean.getId(),b?1:0);
+                if (!(pageStatus == PAGE_STATUS_EDIT)){
+                    DBManager.updateWaresIsCheck(waresBean.getId(),b?1:0);
+                }
                 waresBean.setCheck(b);
                 mStatusChangeListener.statusChange(b);
+
             }
         });
     }
@@ -74,6 +77,9 @@ public class ShoppingCarAdapter extends BaseQuickAdapter<HotWares.WaresBean, Bas
     }
 
 
+    public void setPageStatus(int pageStatus){
+       this.pageStatus = pageStatus;
+    }
 
 
 

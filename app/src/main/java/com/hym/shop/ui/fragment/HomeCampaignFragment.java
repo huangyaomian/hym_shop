@@ -2,6 +2,7 @@ package com.hym.shop.ui.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hym.shop.R;
+import com.hym.shop.bean.AppInfoBean;
 import com.hym.shop.bean.HomeBean;
 import com.hym.shop.bean.HomeCampaign;
 import com.hym.shop.common.imageloader.ImageLoadConfig;
@@ -30,6 +35,8 @@ import com.hym.shop.presenter.HomeCampaignPresenter;
 import com.hym.shop.presenter.HomePresenter;
 import com.hym.shop.presenter.contract.AppInfoContract;
 import com.hym.shop.presenter.contract.HomeCampaignContract;
+import com.hym.shop.ui.activity.CampaignWaresActivity;
+import com.hym.shop.ui.activity.MainActivity;
 import com.hym.shop.ui.adapter.HomeAdapter;
 import com.hym.shop.ui.adapter.HomeCampaignAdapter;
 import com.hym.shop.ui.widget.BannerLayout;
@@ -101,6 +108,8 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
     @Override
     protected void init() {
 
+
+
         showToolBar();
 
         //这里为了解决recycleview不能撑满全屏的问题，这里layoutManager不管你布局里是否设置，都不准确，所以需要在代码里
@@ -123,7 +132,15 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
 
     @Override
     protected void initEvent() {
-
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), CampaignWaresActivity.class);
+                intent.putExtra("campaignId",mAdapter.getData().get(position).getId());
+                getContext().startActivity(intent);
+            }
+        });
     }
 
     private void  initRefresh() {

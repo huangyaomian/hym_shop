@@ -85,6 +85,11 @@ public class DBManager {
         database.execSQL("delete from " + "wares");
     }
 
+    //删除数据库中一条记录
+    public static void DeleteWares(HotWares.WaresBean waresBean){
+        database.delete("wares","waresId=?",new String[]{String.valueOf(waresBean.getId())});
+    }
+
     //獲取數據庫中的一條數據
     public static boolean getWares(int waresId){
         Cursor cursor = database.query("wares", null, "waresId="+waresId, null, null, null, null);

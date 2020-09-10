@@ -150,6 +150,10 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
         line.setVisibility(View.GONE);
     }
 
+    public Toolbar getToolBar() {
+        return mToolBar;
+    }
+
     public void setShowBackBtn(boolean isShowBackBtn) {
        this.showBackBtn = isShowBackBtn;
     }

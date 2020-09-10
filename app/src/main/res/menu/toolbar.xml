@@ -4,26 +4,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <item
-        android:id="@+id/search"
-        android:title="search"
+        android:id="@+id/upper_right_corner"
+        android:title="编辑"
         app:showAsAction="ifRoom" /><!--always 表示永远显示在toolbar中 如果屏幕空间不够则不显示 -->
-    <item
-        android:id="@+id/delete"
-        android:title="delete"
-        app:showAsAction="always"
-        app:actionProviderClass="com.hym.shop.ui.widget.BadgeActionProvider"
-        /><!--ifRoom 表示屏幕空间足够的情况下；显示在Toolbar中；不够的话；就显示在菜单中 -->
+<!--    <item-->
+<!--        android:id="@+id/delete"-->
+<!--        android:title="delete"-->
+<!--        app:showAsAction="always"-->
+<!--        app:actionProviderClass="com.hym.shop.ui.widget.BadgeActionProvider"-->
+<!--        />&lt;!&ndash;ifRoom 表示屏幕空间足够的情况下；显示在Toolbar中；不够的话；就显示在菜单中 &ndash;&gt;-->
 
-<!--    android:icon="@drawable/ic_launcher_background"-->
-    <item
-        android:icon="@drawable/ic_launcher_background"
-        android:title="11"
-        app:showAsAction="never"/>
-    <!--never 表示永远显示在菜单中 -->
-    <item
-        android:id="@+id/setting2"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="22"
-        app:showAsAction="never"/><!--never 表示永远显示在菜单中 -->
+<!--&lt;!&ndash;    android:icon="@drawable/ic_launcher_background"&ndash;&gt;-->
+<!--    <item-->
+<!--        android:icon="@drawable/ic_launcher_background"-->
+<!--        android:title="11"-->
+<!--        app:showAsAction="never"/>-->
+<!--    &lt;!&ndash;never 表示永远显示在菜单中 &ndash;&gt;-->
+<!--    <item-->
+<!--        android:id="@+id/setting2"-->
+<!--        android:icon="@drawable/ic_launcher_background"-->
+<!--        android:title="22"-->
+<!--        app:showAsAction="never"/>&lt;!&ndash;never 表示永远显示在菜单中 &ndash;&gt;-->
 
 </menu>
