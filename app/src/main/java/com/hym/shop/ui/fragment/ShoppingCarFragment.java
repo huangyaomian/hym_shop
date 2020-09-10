@@ -1,15 +1,20 @@
 package com.hym.shop.ui.fragment;
 
 
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.diff.BrvahAsyncDiffer;
 import com.hym.shop.R;
 import com.hym.shop.bean.HotWares;
 import com.hym.shop.dagger2.component.AppComponent;
@@ -49,8 +54,6 @@ public class ShoppingCarFragment extends ProgressFragment<ShoppingCarPresenter> 
 
 
 
-
-
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
         DaggerShoppingCarComponent.builder().appComponent(appComponent).shoppingCarModule(new ShoppingCarModule(this)).build().inject(this);
@@ -86,11 +89,18 @@ public class ShoppingCarFragment extends ProgressFragment<ShoppingCarPresenter> 
 
     @Override
     protected void initEvent() {
-        mCheckboxAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        mCheckboxAll.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                for (int i = 0; i < mShoppingCarAdapter.getData().size(); i++) {
-                    mShoppingCarAdapter.getData().get(i).setCheck(b);
+            public void onClick(View v) {
+                if (mCheckboxAll.isChecked()) {
+                    for (int i = 0; i < mShoppingCarAdapter.getData().size(); i++) {
+                        mShoppingCarAdapter.getData().get(i).setCheck(true);
+                    }
+                }else {
+                    for (int i = 0; i < mShoppingCarAdapter.getData().size(); i++) {
+                        mShoppingCarAdapter.getData().get(i).setCheck(false);
+                    }
                 }
                 mShoppingCarAdapter.notifyDataSetChanged();
             }
@@ -145,8 +155,20 @@ public class ShoppingCarFragment extends ProgressFragment<ShoppingCarPresenter> 
 
 
     @Override
-    public void statusChange() {
+    public void statusChange(boolean isCheck) {
         List<HotWares.WaresBean> data = mShoppingCarAdapter.getData();
         setAllCheckAndTotalPrice(data);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("hymmmm", "onStart: ");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("hymmmm", "onStart: ");
     }
 }

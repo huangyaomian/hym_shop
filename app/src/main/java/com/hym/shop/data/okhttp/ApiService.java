@@ -96,5 +96,8 @@ public interface ApiService {
     @GET("wares/list")
     Observable<HotWares> getWaresList(@Query("curPage") int curPage, @Query("pageSize") int pageSize,@Query("categoryId") int categoryId);
 
+    @GET("wares/campaign/list")
+    Observable<HotWares> getCampaignWaresList(@Query("curPage") int curPage, @Query("pageSize") int pageSize,@Query("campaignId") int campaignId, @Query("orderBy") int orderBy );
+
 
 }

@@ -27,7 +27,7 @@ public class ShoppingCarAdapter extends BaseQuickAdapter<HotWares.WaresBean, Bas
     private StatusChangeListener mStatusChangeListener;
 
     public interface StatusChangeListener{
-        void statusChange();
+        void statusChange(boolean isCheck);
     }
 
     public void setStatusChangeListener(StatusChangeListener listener){
@@ -55,7 +55,7 @@ public class ShoppingCarAdapter extends BaseQuickAdapter<HotWares.WaresBean, Bas
             public void onValueChange(int value) {
                 DBManager.updateWaresCount(waresBean.getId(),value);
                 waresBean.setCount(value);
-                mStatusChangeListener.statusChange();
+                mStatusChangeListener.statusChange(false);
             }
         });
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -63,7 +63,7 @@ public class ShoppingCarAdapter extends BaseQuickAdapter<HotWares.WaresBean, Bas
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 DBManager.updateWaresIsCheck(waresBean.getId(),b?1:0);
                 waresBean.setCheck(b);
-                mStatusChangeListener.statusChange();
+                mStatusChangeListener.statusChange(b);
             }
         });
     }
