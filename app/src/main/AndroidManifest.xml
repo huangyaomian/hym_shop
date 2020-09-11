@@ -17,6 +17,7 @@
         tools:targetApi="n">
         <activity android:name="com.hym.shop.ui.activity.SearchActivity" />
         <activity android:name="com.hym.shop.ui.activity.SubjectActivity" />
+        <activity android:name="com.hym.shop.ui.activity.CampaignWaresActivity" />
         <activity
             android:name="com.hym.shop.ui.activity.AppDetailsActivity3" />
         <activity android:name="com.hym.shop.ui.activity.SortAppActivity" />

@@ -1,11 +1,13 @@
 package com.hym.shop.bean;
 
+import androidx.fragment.app.Fragment;
+
 public class FragmentInfo {
 
     private String title;
-    private Class fragment;
+    private Fragment fragment;
 
-    public FragmentInfo(String title, Class fragment) {
+    public FragmentInfo(String title, Fragment fragment) {
         this.title = title;
         this.fragment = fragment;
     }
@@ -18,11 +20,11 @@ public class FragmentInfo {
         this.title = title;
     }
 
-    public Class getFragment() {
+    public Fragment getFragment() {
         return fragment;
     }
 
-    public void setFragment(Class fragment) {
+    public void setFragment(Fragment fragment) {
         this.fragment = fragment;
     }
 

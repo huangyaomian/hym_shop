@@ -14,6 +14,7 @@ import com.hym.shop.common.Constant;
 import com.hym.shop.common.imageloader.ImageLoader;
 import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.ui.adapter.MyViewPagerAdapter2;
+import com.hym.shop.ui.fragment.DefaultSortWaresFragment;
 import com.hym.shop.ui.fragment.GameFragment;
 import com.hym.shop.ui.fragment.HomeFragment;
 import com.hym.shop.ui.fragment.RankingFragment;
@@ -33,7 +34,7 @@ public class CampaignWaresActivity extends ProgressActivity {
     @BindView(R.id.main_tab_layout)
     TabLayout mMainTabLayout;
 
-    private int campaignId = 0;
+    private int campaignId;
 
 
     @Override
@@ -49,18 +50,20 @@ public class CampaignWaresActivity extends ProgressActivity {
 
     @Override
     public void init() {
+        setShowToolBarBack(true);
         campaignId = (int) getIntent().getSerializableExtra("campaignId");
     }
 
     @Override
     public void initToolbar() {
+        setToolBarTitle("商品列表");
     }
 
     private List<FragmentInfo> initFragments() {
         List<FragmentInfo> mFragments = new ArrayList<>(3);
-        mFragments.add(new FragmentInfo(getString(R.string.home_tab_recommend), HomeFragment.class));
-        mFragments.add(new FragmentInfo(getString(R.string.home_tab_ranking), RankingFragment.class));
-        mFragments.add(new FragmentInfo(getString(R.string.home_tab_game), GameFragment.class));
+        mFragments.add(new FragmentInfo("默认", new DefaultSortWaresFragment(campaignId,DefaultSortWaresFragment.DEFAULT_SORT)));
+        mFragments.add(new FragmentInfo("价格", new DefaultSortWaresFragment(campaignId,DefaultSortWaresFragment.PRICE_SORT)));
+        mFragments.add(new FragmentInfo("销量", new DefaultSortWaresFragment(campaignId,DefaultSortWaresFragment.SALES_SORT)));
         return mFragments;
     }
 

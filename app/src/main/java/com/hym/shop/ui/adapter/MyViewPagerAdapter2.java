@@ -26,15 +26,7 @@ public class MyViewPagerAdapter2 extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        try {
-            return (Fragment)fragmentInfos.get(position).getFragment().newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return fragmentInfos.get(position).getFragment();
     }
 
     @Override

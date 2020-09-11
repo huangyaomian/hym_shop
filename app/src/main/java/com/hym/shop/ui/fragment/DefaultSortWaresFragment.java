@@ -3,35 +3,20 @@ package com.hym.shop.ui.fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hym.shop.R;
-import com.hym.shop.bean.Category;
 import com.hym.shop.bean.HotWares;
-import com.hym.shop.common.imageloader.ImageLoader;
 import com.hym.shop.common.utils.UIUtils;
 import com.hym.shop.dagger2.component.AppComponent;
-import com.hym.shop.dagger2.component.DaggerCategoryComponent;
-import com.hym.shop.dagger2.component.DaggerHotWaresComponent;
-import com.hym.shop.dagger2.module.CategoryModule;
-import com.hym.shop.dagger2.module.HotWaresModule;
-import com.hym.shop.presenter.CategoryPresenter;
+import com.hym.shop.dagger2.component.DaggerSortWaresComponent;
+import com.hym.shop.dagger2.module.SortWaresModule;
 import com.hym.shop.presenter.SortWaresPresenter;
-import com.hym.shop.presenter.contract.CategoryContract;
 import com.hym.shop.presenter.contract.SortWaresContract;
-import com.hym.shop.ui.adapter.CategoryAdapter;
-import com.hym.shop.ui.adapter.CategoryWaresAdapter;
 import com.hym.shop.ui.adapter.HotWaresAdapter;
-import com.hym.shop.ui.widget.SpaceItemDecoration2;
 import com.hym.shop.ui.widget.SpaceItemDecoration4;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
@@ -39,14 +24,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
-import com.xuexiang.xui.widget.progress.materialprogressbar.MaterialProgressBar;
 import com.youth.banner.Banner;
-import com.youth.banner.adapter.BannerImageAdapter;
-import com.youth.banner.holder.BannerImageHolder;
-import com.youth.banner.indicator.CircleIndicator;
-import com.youth.banner.transformer.ScaleInTransformer;
-
-import java.util.List;
 
 import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
@@ -56,6 +34,12 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
 
     private final int STATUS_NORMAL = 1;
     private final int STATUS_MORE = 2;
+
+
+    public static final int DEFAULT_SORT = 0;
+    public static final int PRICE_SORT = 1;
+    public static final int SALES_SORT = 2;
+
 
     @BindView(R.id.home_rv)
     RecyclerView mRecyclerView;
@@ -68,10 +52,22 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
 
     private int mStatus = STATUS_NORMAL;
 
+    private int mCampaignId;
+    private int mOrder;
+
+    private LayoutInflater mLayoutInflater;
+    private TextView totalWares;
+    private View mView;
+
+    public DefaultSortWaresFragment(int campaignId, int mOrder) {
+        this.mCampaignId = campaignId;
+        this.mOrder = mOrder;
+    }
+
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-//        DaggerHotWaresComponent.builder().appComponent(appComponent).hotWaresModule(new HotWaresModule(this)).build().inject(this);
+        DaggerSortWaresComponent.builder().appComponent(appComponent).sortWaresModule(new SortWaresModule(this)).build().inject(this);
     }
 
     @Override
@@ -83,22 +79,21 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
     protected void initView() {
         mAdapter = new HotWaresAdapter();
         initRefresh();
+        initHead();
     }
 
 
     @Override
     protected void init() {
-        showToolBar();
+        hideToolBar();
+
+
+
+
 
         //这里为了解决recycleview不能撑满全屏的问题，这里layoutManager不管你布局里是否设置，都不准确，所以需要在代码里
         //重新设置MATCH_PARENT
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext()) {
-            @Override
-            public RecyclerView.LayoutParams generateDefaultLayoutParams() {
-                return new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-            }
-        };
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         SpaceItemDecoration4 dividerDecoration = new SpaceItemDecoration4(UIUtils.dp2px(8));
@@ -106,7 +101,7 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
         mRecyclerView.setLayoutManager(layoutManager);
 
 
-//        mPresenter.getSortWares(true,mCurPage,mPageSize);
+        mPresenter.getSortWares(true,mCurPage,mPageSize,mCampaignId,mOrder);
     }
 
     @Override
@@ -123,7 +118,7 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
                 mStatus = STATUS_NORMAL;
                 mCurPage = 1;
                 mSmartRefreshLayout.setEnableLoadMore(true);
-//                mPresenter.getHotWares(false,mCurPage,mPageSize);
+                mPresenter.getSortWares(false,mCurPage,mPageSize,mCampaignId,mOrder);
             }
         });
 
@@ -132,9 +127,17 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
             public void onLoadMore(RefreshLayout refreshlayout) {
                 mStatus = STATUS_MORE;
                 mCurPage++;
-//                mPresenter.getHotWares(false,mCurPage,mPageSize);
+                mPresenter.getSortWares(false,mCurPage,mPageSize,mCampaignId,mOrder);
             }
         });
+    }
+
+
+    private void initHead(){
+        mLayoutInflater= this.getLayoutInflater();
+        mView = mLayoutInflater.inflate(R.layout.sort_wares_head, null, false);
+        totalWares = mView.findViewById(R.id.total_wares);
+
     }
 
 
@@ -151,10 +154,12 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
             mSmartRefreshLayout.finishLoadMore();
         }
 
-
-
         switch (mStatus){
             case STATUS_NORMAL:
+                totalWares.setText("总共有" + hotWares.getTotalCount() +"件商品");
+                if (!(mAdapter.getHeaderLayoutCount() > 0)) {
+                    mAdapter.addHeaderView(mView);
+                }
 
                 mAdapter.addData(hotWares.getList());
                 SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mAdapter);
@@ -165,8 +170,6 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
                 mAdapter.notifyItemRangeInserted(mAdapter.getData().size(),hotWares.getList().size());
                 break;
         }
-
-
 
         if (mCurPage * mPageSize < hotWares.getTotalCount()) {
             mSmartRefreshLayout.setEnableLoadMore(true);
