@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +17,9 @@ import com.hym.shop.dagger2.component.DaggerSortWaresComponent;
 import com.hym.shop.dagger2.module.SortWaresModule;
 import com.hym.shop.presenter.SortWaresPresenter;
 import com.hym.shop.presenter.contract.SortWaresContract;
+import com.hym.shop.ui.activity.CampaignWaresActivity;
 import com.hym.shop.ui.adapter.HotWaresAdapter;
+import com.hym.shop.ui.widget.SpaceItemDecoration2;
 import com.hym.shop.ui.widget.SpaceItemDecoration4;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
@@ -30,7 +33,7 @@ import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
-public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresenter> implements SortWaresContract.SortWaresView {
+public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> implements SortWaresContract.SortWaresView, CampaignWaresActivity.PageStatusChangeListener {
 
     private final int STATUS_NORMAL = 1;
     private final int STATUS_MORE = 2;
@@ -59,7 +62,7 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
     private TextView totalWares;
     private View mView;
 
-    public DefaultSortWaresFragment(int campaignId, int mOrder) {
+    public SortWaresFragment(int campaignId, int mOrder) {
         this.mCampaignId = campaignId;
         this.mOrder = mOrder;
     }
@@ -77,7 +80,8 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
 
     @Override
     protected void initView() {
-        mAdapter = new HotWaresAdapter();
+        mAdapter =  new HotWaresAdapter(R.layout.template_category_wares);
+//        mAdapter = new HotWaresAdapter();
         initRefresh();
         initHead();
     }
@@ -87,12 +91,8 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
     protected void init() {
         hideToolBar();
 
+        ((CampaignWaresActivity)getContext()).setPageStatusChangeListener(this);
 
-
-
-
-        //这里为了解决recycleview不能撑满全屏的问题，这里layoutManager不管你布局里是否设置，都不准确，所以需要在代码里
-        //重新设置MATCH_PARENT
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -130,6 +130,7 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
                 mPresenter.getSortWares(false,mCurPage,mPageSize,mCampaignId,mOrder);
             }
         });
+
     }
 
 
@@ -176,5 +177,29 @@ public class DefaultSortWaresFragment extends ProgressFragment<SortWaresPresente
         }else {
             mSmartRefreshLayout.setEnableLoadMore(false);
         }
+
+
+    }
+
+    @Override
+    public void pageStatusChange(int pageStatus) {
+
+        if (pageStatus == CampaignWaresActivity.PAGE_LIST){
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            SpaceItemDecoration4 dividerDecoration = new SpaceItemDecoration4(UIUtils.dp2px(8));
+            mRecyclerView.addItemDecoration(dividerDecoration);
+            mRecyclerView.setLayoutManager(layoutManager);
+            mAdapter = new HotWaresAdapter();
+
+        }else {
+            SpaceItemDecoration2 dividerDecoration = new SpaceItemDecoration2(UIUtils.dp2px(4));
+            mRecyclerView.addItemDecoration(dividerDecoration);
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            mAdapter = new HotWaresAdapter(R.layout.template_category_wares);
+        }
+
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyItemRangeChanged(0,mAdapter.getData().size());
     }
 }

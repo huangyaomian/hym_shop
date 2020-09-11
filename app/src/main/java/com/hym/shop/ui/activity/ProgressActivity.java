@@ -104,6 +104,10 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
         mToolBar.setTitle(toolBarTitle);
     }
 
+    public Toolbar getToolBar() {
+        return mToolBar;
+    }
+
     public void initToolbar(){
 
         setSupportActionBar(mToolBar);

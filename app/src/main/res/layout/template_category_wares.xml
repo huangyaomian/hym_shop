@@ -16,8 +16,8 @@
         >
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/ware_grid_img_width"
+            android:layout_height="@dimen/ware_grid_img_height"
             android:background="@null"
             android:id="@+id/image_view"
             android:layout_gravity="center"
@@ -36,7 +36,6 @@
             style="@style/line_vertical"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"/>
-
 
 
         <TextView

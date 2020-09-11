@@ -3,6 +3,7 @@ package com.hym.shop.ui.adapter;
 
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -19,6 +20,10 @@ import org.jetbrains.annotations.NotNull;
 public class HotWaresAdapter extends BaseQuickAdapter<HotWares.WaresBean, BaseViewHolder>{
 
 
+    public HotWaresAdapter(int layoutId) {
+        super(layoutId);
+    }
+
     public HotWaresAdapter() {
         super(R.layout.template_hot_wares);
     }
@@ -29,14 +34,23 @@ public class HotWaresAdapter extends BaseQuickAdapter<HotWares.WaresBean, BaseVi
         ImageLoader.load(waresBean.getImgUrl(),baseViewHolder.getView(R.id.image_view));
         baseViewHolder.setText(R.id.text_title,waresBean.getName());
         baseViewHolder.setText(R.id.text_price,"￥"+waresBean.getPrice());
-        baseViewHolder.getView(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DBManager.insertWares(waresBean);
-                Toast.makeText(getContext(),"添加成功",Toast.LENGTH_SHORT).show();
-            }
-        });
+
+        try {
+            Button button = baseViewHolder.getView(R.id.btn_add);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DBManager.insertWares(waresBean);
+                    Toast.makeText(getContext(),"添加成功",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+        }
+
+
     }
+
 
 
 

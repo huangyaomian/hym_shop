@@ -1,33 +1,44 @@
 package com.hym.shop.ui.activity;
 
-import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.hym.shop.R;
 import com.hym.shop.bean.FragmentInfo;
-import com.hym.shop.common.Constant;
-import com.hym.shop.common.imageloader.ImageLoader;
 import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.ui.adapter.MyViewPagerAdapter2;
-import com.hym.shop.ui.fragment.DefaultSortWaresFragment;
-import com.hym.shop.ui.fragment.GameFragment;
-import com.hym.shop.ui.fragment.HomeFragment;
-import com.hym.shop.ui.fragment.RankingFragment;
-import com.hym.shop.ui.fragment.SortFragment;
+import com.hym.shop.ui.adapter.ShoppingCarAdapter;
+import com.hym.shop.ui.fragment.SortWaresFragment;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class CampaignWaresActivity extends ProgressActivity {
 
+
+    private PageStatusChangeListener mPageStatusChangeListener;
+
+    public interface PageStatusChangeListener{
+        void pageStatusChange(int pageStatus);
+    }
+
+    public void setPageStatusChangeListener(PageStatusChangeListener listener){
+        this.mPageStatusChangeListener =listener;
+    }
 
     @BindView(R.id.main_viewpager)
     ViewPager mainViewpager;
@@ -35,6 +46,11 @@ public class CampaignWaresActivity extends ProgressActivity {
     TabLayout mMainTabLayout;
 
     private int campaignId;
+
+    public static final int PAGE_LIST = 1;
+    public static final int PAGE_GIRD = 2;
+
+    private int mPageStatus = PAGE_LIST;
 
 
     @Override
@@ -56,14 +72,16 @@ public class CampaignWaresActivity extends ProgressActivity {
 
     @Override
     public void initToolbar() {
+        super.initToolbar();
         setToolBarTitle("商品列表");
+
     }
 
     private List<FragmentInfo> initFragments() {
         List<FragmentInfo> mFragments = new ArrayList<>(3);
-        mFragments.add(new FragmentInfo("默认", new DefaultSortWaresFragment(campaignId,DefaultSortWaresFragment.DEFAULT_SORT)));
-        mFragments.add(new FragmentInfo("价格", new DefaultSortWaresFragment(campaignId,DefaultSortWaresFragment.PRICE_SORT)));
-        mFragments.add(new FragmentInfo("销量", new DefaultSortWaresFragment(campaignId,DefaultSortWaresFragment.SALES_SORT)));
+        mFragments.add(new FragmentInfo("默认", new SortWaresFragment(campaignId, SortWaresFragment.DEFAULT_SORT)));
+        mFragments.add(new FragmentInfo("价格", new SortWaresFragment(campaignId, SortWaresFragment.PRICE_SORT)));
+        mFragments.add(new FragmentInfo("销量", new SortWaresFragment(campaignId, SortWaresFragment.SALES_SORT)));
         return mFragments;
     }
 
@@ -85,5 +103,43 @@ public class CampaignWaresActivity extends ProgressActivity {
     public void initEvent() {
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.toolbar, menu);
+        menu.findItem(R.id.upper_right_corner).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_list_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("hymmmm", "onOptionsItemSelected: " +item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.upper_right_corner:
+                if(mPageStatus == PAGE_LIST){
+                    mPageStatus= PAGE_GIRD;
+                    item.setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_grid_view_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+                    mPageStatusChangeListener.pageStatusChange(mPageStatus);
+//                    mWaresAdapter.resetLayout(R.layout.template_grid_wares);
+//
+//                    mRecyclerview_wares.setLayoutManager(new GridLayoutManager(this,2));
+                }
+                else if(mPageStatus == PAGE_GIRD){
+                    mPageStatus= PAGE_LIST;
+                    item.setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_list_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+
+                    mPageStatusChangeListener.pageStatusChange(mPageStatus);
+
+//                    mWaresAdapter.resetLayout(R.layout.template_hot_wares);
+//
+//                    mRecyclerview_wares.setLayoutManager(new LinearLayoutManager(this));
+                }
+                break;
+        }
+        return true;
+    }
+
+
 
 }
