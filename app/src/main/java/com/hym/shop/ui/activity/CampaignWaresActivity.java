@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
@@ -30,16 +32,6 @@ import butterknife.BindView;
 public class CampaignWaresActivity extends ProgressActivity {
 
 
-    private PageStatusChangeListener mPageStatusChangeListener;
-
-    public interface PageStatusChangeListener{
-        void pageStatusChange(int pageStatus);
-    }
-
-    public void setPageStatusChangeListener(PageStatusChangeListener listener){
-        this.mPageStatusChangeListener =listener;
-    }
-
     @BindView(R.id.main_viewpager)
     ViewPager mainViewpager;
     @BindView(R.id.main_tab_layout)
@@ -51,6 +43,8 @@ public class CampaignWaresActivity extends ProgressActivity {
     public static final int PAGE_GIRD = 2;
 
     private int mPageStatus = PAGE_LIST;
+
+    private List<FragmentInfo> mFragments = new ArrayList<>(3);
 
 
     @Override
@@ -78,7 +72,6 @@ public class CampaignWaresActivity extends ProgressActivity {
     }
 
     private List<FragmentInfo> initFragments() {
-        List<FragmentInfo> mFragments = new ArrayList<>(3);
         mFragments.add(new FragmentInfo("默认", new SortWaresFragment(campaignId, SortWaresFragment.DEFAULT_SORT)));
         mFragments.add(new FragmentInfo("价格", new SortWaresFragment(campaignId, SortWaresFragment.PRICE_SORT)));
         mFragments.add(new FragmentInfo("销量", new SortWaresFragment(campaignId, SortWaresFragment.SALES_SORT)));
@@ -108,32 +101,23 @@ public class CampaignWaresActivity extends ProgressActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.toolbar, menu);
-        menu.findItem(R.id.upper_right_corner).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_list_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+        menu.findItem(R.id.upper_right_corner).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_grid_view_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("hymmmm", "onOptionsItemSelected: " +item.getItemId());
         switch (item.getItemId()) {
             case R.id.upper_right_corner:
                 if(mPageStatus == PAGE_LIST){
                     mPageStatus= PAGE_GIRD;
-                    item.setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_grid_view_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
-                    mPageStatusChangeListener.pageStatusChange(mPageStatus);
-//                    mWaresAdapter.resetLayout(R.layout.template_grid_wares);
-//
-//                    mRecyclerview_wares.setLayoutManager(new GridLayoutManager(this,2));
-                }
-                else if(mPageStatus == PAGE_GIRD){
-                    mPageStatus= PAGE_LIST;
                     item.setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_list_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
-
-                    mPageStatusChangeListener.pageStatusChange(mPageStatus);
-
-//                    mWaresAdapter.resetLayout(R.layout.template_hot_wares);
-//
-//                    mRecyclerview_wares.setLayoutManager(new LinearLayoutManager(this));
+                } else if(mPageStatus == PAGE_GIRD){
+                    mPageStatus= PAGE_LIST;
+                    item.setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_grid_view_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
+                }
+                for (int i = 0; i < mFragments.size(); i++) {
+                    ((SortWaresFragment)mFragments.get(i).getFragment()).UpdateUI(mPageStatus);
                 }
                 break;
         }

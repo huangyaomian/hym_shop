@@ -1,5 +1,6 @@
 package com.hym.shop.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class HotWares {
@@ -79,7 +80,7 @@ public class HotWares {
         this.list = list;
     }
 
-    public static class WaresBean {
+    public static class WaresBean implements Serializable {
         /**
          * id : 1
          * categoryId : 5

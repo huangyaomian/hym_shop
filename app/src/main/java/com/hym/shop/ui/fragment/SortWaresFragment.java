@@ -27,13 +27,14 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
-import com.youth.banner.Banner;
+
+import java.util.List;
 
 import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
-public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> implements SortWaresContract.SortWaresView, CampaignWaresActivity.PageStatusChangeListener {
+public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> implements SortWaresContract.SortWaresView {
 
     private final int STATUS_NORMAL = 1;
     private final int STATUS_MORE = 2;
@@ -62,6 +63,12 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
     private TextView totalWares;
     private View mView;
 
+    private List<HotWares.WaresBean> waresList;
+
+    private SpaceItemDecoration4 mSpaceItemDecoration4;
+    private SpaceItemDecoration2 mSpaceItemDecoration2;
+
+
     public SortWaresFragment(int campaignId, int mOrder) {
         this.mCampaignId = campaignId;
         this.mOrder = mOrder;
@@ -80,8 +87,7 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
 
     @Override
     protected void initView() {
-        mAdapter =  new HotWaresAdapter(R.layout.template_category_wares);
-//        mAdapter = new HotWaresAdapter();
+        mAdapter = new HotWaresAdapter();
         initRefresh();
         initHead();
     }
@@ -91,15 +97,13 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
     protected void init() {
         hideToolBar();
 
-        ((CampaignWaresActivity)getContext()).setPageStatusChangeListener(this);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        SpaceItemDecoration4 dividerDecoration = new SpaceItemDecoration4(UIUtils.dp2px(8));
-        mRecyclerView.addItemDecoration(dividerDecoration);
+        mSpaceItemDecoration4 = new SpaceItemDecoration4(UIUtils.dp2px(8));
+        mSpaceItemDecoration2 = new SpaceItemDecoration2(UIUtils.dp2px(8));
+        mRecyclerView.addItemDecoration(mSpaceItemDecoration4);
         mRecyclerView.setLayoutManager(layoutManager);
-
 
         mPresenter.getSortWares(true,mCurPage,mPageSize,mCampaignId,mOrder);
     }
@@ -135,9 +139,17 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
 
 
     private void initHead(){
+
         mLayoutInflater= this.getLayoutInflater();
         mView = mLayoutInflater.inflate(R.layout.sort_wares_head, null, false);
         totalWares = mView.findViewById(R.id.total_wares);
+
+        totalWares.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UpdateUI(2);
+            }
+        });
 
     }
 
@@ -157,6 +169,7 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
 
         switch (mStatus){
             case STATUS_NORMAL:
+                waresList = hotWares.getList();
                 totalWares.setText("总共有" + hotWares.getTotalCount() +"件商品");
                 if (!(mAdapter.getHeaderLayoutCount() > 0)) {
                     mAdapter.addHeaderView(mView);
@@ -167,6 +180,7 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
                 mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
                 break;
             case STATUS_MORE:
+                waresList.addAll(hotWares.getList());
                 mAdapter.getData().addAll(hotWares.getList());
                 mAdapter.notifyItemRangeInserted(mAdapter.getData().size(),hotWares.getList().size());
                 break;
@@ -181,25 +195,36 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
 
     }
 
-    @Override
-    public void pageStatusChange(int pageStatus) {
+
+    public void UpdateUI(int pageStatus){
+
+        mAdapter.removeHeaderView(mView);
 
         if (pageStatus == CampaignWaresActivity.PAGE_LIST){
+            mRecyclerView.removeItemDecoration(mSpaceItemDecoration2);
+            if (mRecyclerView.getItemDecorationCount() == 0){
+                mRecyclerView.addItemDecoration(mSpaceItemDecoration4);
+            }
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            SpaceItemDecoration4 dividerDecoration = new SpaceItemDecoration4(UIUtils.dp2px(8));
-            mRecyclerView.addItemDecoration(dividerDecoration);
             mRecyclerView.setLayoutManager(layoutManager);
             mAdapter = new HotWaresAdapter();
-
         }else {
-            SpaceItemDecoration2 dividerDecoration = new SpaceItemDecoration2(UIUtils.dp2px(4));
-            mRecyclerView.addItemDecoration(dividerDecoration);
+            mRecyclerView.removeItemDecoration(mSpaceItemDecoration4);
+            if (mRecyclerView.getItemDecorationCount() == 0){
+                mRecyclerView.addItemDecoration(mSpaceItemDecoration2);
+            }
             mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             mAdapter = new HotWaresAdapter(R.layout.template_category_wares);
+
         }
 
+        if (!(mAdapter.getHeaderLayoutCount() > 0)) {
+            mAdapter.addHeaderView(mView);
+        }
+
+        mAdapter.addData(waresList);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.notifyItemRangeChanged(0,mAdapter.getData().size());
+        mAdapter.notifyDataSetChanged();
     }
 }
