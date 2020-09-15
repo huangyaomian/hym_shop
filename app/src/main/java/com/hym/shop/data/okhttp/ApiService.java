@@ -13,12 +13,15 @@ import com.hym.shop.bean.SearchResult;
 import com.hym.shop.bean.SortBean;
 import com.hym.shop.bean.Subject;
 import com.hym.shop.bean.SubjectDetail;
+import com.hym.shop.bean.User;
 import com.hym.shop.bean.requestbean.LoginRequestBean;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -98,6 +101,13 @@ public interface ApiService {
 
     @GET("wares/campaign/list")
     Observable<HotWares> getCampaignWaresList(@Query("curPage") int curPage, @Query("pageSize") int pageSize,@Query("campaignId") int campaignId, @Query("orderBy") int orderBy );
+
+    @FormUrlEncoded //用户登录
+    @POST("auth/login")
+    public Observable<BaseBean<User>> shopLogin(@Field("phone") String phone, @Field("password") String password);
+
+    @POST("auth/reg")
+    public Observable<LoginBean> shopReg(@Body LoginRequestBean bean);
 
 
 }

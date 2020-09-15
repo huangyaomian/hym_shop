@@ -33,4 +33,5 @@ public class Constant {
 
     public static final String POSITION = "position";
 
+    public static final String DES_KEY = "Cniao5_123456";
 }

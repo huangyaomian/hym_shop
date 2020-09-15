@@ -12,7 +12,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hym.shop.R;
+import com.hym.shop.bean.BaseBean;
 import com.hym.shop.bean.LoginBean;
+import com.hym.shop.bean.User;
+import com.hym.shop.common.Constant;
+import com.hym.shop.common.utils.DESUtil;
 import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.dagger2.component.DaggerLoginComponent;
 import com.hym.shop.dagger2.module.LoginModule;
@@ -29,13 +33,9 @@ import butterknife.BindView;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.LoginView {
+public class LoginActivity extends ProgressActivity<LoginPresenter> implements LoginContract.LoginView {
 
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.appBarLayout)
-    AppBarLayout appBarLayout;
     @BindView(R.id.txt_phone_edit)
     EditText txtPhoneEdit;
     @BindView(R.id.view_phone_wrapper)
@@ -64,19 +64,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void init() {
-
+        setShowToolBarBack(true);
     }
 
     @Override
     public void initView() {
 
-        toolbar.setNavigationIcon(
-                new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_ios_arrow_back)
-                        .sizeDp(16)
-                        .color(getResources().getColor(R.color.theme_black)
-                        )
-        );
         InitialValueObservable<CharSequence> obPhone = RxTextView.textChanges(txtPhoneEdit);
         InitialValueObservable<CharSequence> obPassword = RxTextView.textChanges(txtPasswordEdit);
 
@@ -95,22 +88,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         RxView.clicks(mBtnLogin).subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
-                mPresenter.login(txtPhoneEdit.getText().toString().trim(),txtPasswordEdit.getText().toString().trim());
+                mPresenter.login(txtPhoneEdit.getText().toString().trim(), DESUtil.encode(Constant.DES_KEY, txtPasswordEdit.getText().toString().trim()));
             }
         });
 
-        /*RxView.clicks(mBtnLogin).subscribe(new Consumer<Unit>() {
-            @Override
-            public void accept(Unit unit) {
-                mPresenter.login(txtPhoneEdit.getText().toString().trim(),txtPasswordEdit.getText().toString().trim());
-            }
-        });*/
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
         txtPhoneEdit.setText("13020169902");
         txtPasswordEdit.setText("cq13020169902");
     }
@@ -139,7 +120,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    public void loginSuccess(LoginBean bean) {
+    public void loginSuccess(BaseBean<User> bean) {
         finish();
         Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
     }
@@ -147,7 +128,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     public void showLoading() {
         mBtnLogin.showLoading();
-
     }
 
     @Override

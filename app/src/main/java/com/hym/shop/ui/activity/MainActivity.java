@@ -23,6 +23,7 @@ import com.hym.shop.bean.User;
 import com.hym.shop.common.Constant;
 import com.hym.shop.common.rx.RxBus;
 import com.hym.shop.common.utils.ACache;
+import com.hym.shop.common.utils.StatusBarUtil;
 import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.dagger2.component.DaggerMainComponent;
 import com.hym.shop.dagger2.module.MainModule;
@@ -113,6 +114,7 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
 
     @Override
     public void initView() {
+        StatusBarUtil.setWindowStatusBarColor(this,R.color.transparent);
         initViewpager();
     }
 
@@ -178,64 +180,14 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.toolbar, menu);
-//        menu.getItem(2).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_trash_outline).color(getResources().getColor(R.color.TextColor)).actionBar());
-//        MenuItem downloadMenuItem = toolbar.getMenu().findItem(R.id.delete);
-//        badgeActionProvider = (BadgeActionProvider) MenuItemCompat.getActionProvider(downloadMenuItem);
-//        menu.findItem(R.id.search).setIcon(new IconicsDrawable(this, Ionicons.Icon.ion_ios_search).color(getResources().getColor(R.color.TextColor)).actionBar());
-
-        return true;
-    }
-
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-//        badgeActionProvider.setIcon(DrawableCompat.wrap(new IconicsDrawable(this, Ionicons.Icon.ion_ios_cloud_download_outline).color(ContextCompat.getColor(this, R.color.TextColor))));
-//        badgeActionProvider.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Intent intent = new Intent(MainActivity.this, AppManagerActivity.class);
-////                if (badgeActionProvider.getBadgeNum() > 0) {
-////                    intent.putExtra(Constant.POSITION,2);
-////                }
-////                startActivity(intent);
-//            }
-//        });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home://Toolbar 的最左边加入一个导航按钮；引得用户滑动
-//
-//                break;
-//            case R.id.search:
-//                startActivity(SearchActivity.class);
-//                break;
-///*            case R.id.setting:
-//                Toast.makeText(this, "you clicked 11", Toast.LENGTH_SHORT).show();
-//                break;*/
-//            case R.id.setting2:
-//                Toast.makeText(this, "you clicked 22", Toast.LENGTH_SHORT).show();
-//                break;
-//        }
-        return true;
-    }
 
 
 
-   /* private void initUser() {
-        Object objUser = ACache.get(this).getAsObject(Constant.USER);
-        if (objUser == null) {
 
-        } else {
-            User user = (User) objUser;
-        }
-    }*/
+
+
+
+
 
 
     @Override

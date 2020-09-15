@@ -5,8 +5,21 @@ import com.hym.shop.common.rx.Optional;
 public class BaseBean<T> extends BaseEntity {
 
     public static final int  SUCCESS = 1;
+
     private int status;
+
     private String message;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    private String token;
+
     private T data;
 
 

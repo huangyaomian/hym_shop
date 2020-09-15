@@ -8,34 +8,6 @@
     tools:context=".ui.activity.LoginActivity">
 
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="true"
-        app:elevation="0dp"
-        android:fitsSystemWindows="true"
-        app:layout_constraintTop_toTopOf="parent">
-        <!--AppBarLayout 搭配使用 否则会被水果列表遮住 -->
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            />
-
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"/>
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
