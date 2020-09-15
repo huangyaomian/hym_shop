@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/theme_blue"
+        android:orientation="vertical">
+        <com.xuexiang.xui.widget.imageview.RadiusImageView
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:id="@+id/radius_image_view"
+            app:riv_corner_radius="1000dp"
+            app:srcCompat="@drawable/vector_drawable_no_log"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/username"
+            android:textSize="18sp"
+            android:text="暂未登录"
+            android:textColor="@color/theme_while"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        >
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/my_order"
+            android:text="我的订单"
+            android:drawableStart="@drawable/vector_drawable_my_order"
+            android:gravity="center_vertical"
+            android:drawablePadding="8dp"
+            android:textSize="18sp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/my_favorites"
+            android:text="我的收藏"
+            android:drawableStart="@drawable/vector_drawable_my_favorites"
+            android:gravity="center_vertical"
+            android:drawablePadding="8dp"
+            android:textSize="18sp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/my_addr"
+            android:text="收货地址"
+            android:drawableStart="@drawable/vector_drawable_my_addr"
+            android:gravity="center_vertical"
+            android:drawablePadding="8dp"
+            android:textSize="18sp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"/>
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout_btn"
+        android:layout_marginTop="20dp"
+        android:text="退出登录"
+        android:background="@color/theme_blue"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:textColor="@color/theme_while"/>
+
+
+</LinearLayout>

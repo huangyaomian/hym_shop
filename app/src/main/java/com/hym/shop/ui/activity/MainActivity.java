@@ -34,6 +34,7 @@ import com.hym.shop.ui.fragment.GameFragment;
 import com.hym.shop.ui.fragment.HomeCampaignFragment;
 import com.hym.shop.ui.fragment.HomeFragment;
 import com.hym.shop.ui.fragment.HotWaresFragment;
+import com.hym.shop.ui.fragment.MineFragment;
 import com.hym.shop.ui.fragment.RankingFragment;
 import com.hym.shop.ui.fragment.ShoppingCarFragment;
 import com.hym.shop.ui.fragment.SortFragment;
@@ -105,7 +106,7 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
         mFragments.add(new HotWaresFragment());
         mFragments.add(new CategoryFragment());
         mFragments.add(new ShoppingCarFragment());
-        mFragments.add(new HomeCampaignFragment());
+        mFragments.add(new MineFragment());
         return mFragments;
     }
 
@@ -225,24 +226,7 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
         return true;
     }
 
-//    private void logout() {
-//        headerView.setEnabled(true);
-//        ACache aCache = ACache.get(this);
-//        aCache.put(Constant.TOKEN, "");
-//        aCache.put(Constant.USER, "");
-//        mUserHeadView.setImageDrawable(new IconicsDrawable(this, Cniao5Font.Icon.cniao_head).colorRes(R.color.theme_while));
-//        mTextUserName.setText(R.string.no_login);
-//        mTextUserPhone.setText(R.string.phone_num);
-//        headerView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-//            }
-//        });
-//        Toast.makeText(MainActivity.this, "退出登錄", Toast.LENGTH_LONG).show();
-//        navigationView.getMenu().setGroupVisible(R.id.group2,false);
-//        mUserHeadView.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_no_log));
-//    }
+
 
    /* private void initUser() {
         Object objUser = ACache.get(this).getAsObject(Constant.USER);
