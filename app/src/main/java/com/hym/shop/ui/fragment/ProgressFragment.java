@@ -28,6 +28,7 @@ import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.presenter.BasePresenter;
 import com.hym.shop.ui.BaseView;
 import com.hym.shop.ui.activity.LoginActivity;
+import com.hym.shop.ui.widget.WindowInsetsFrameLayout;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 
@@ -77,6 +78,7 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
         mToolBar = mRootView.findViewById(R.id.fragment_tool_bar);
         mAppBarLayout = mRootView.findViewById(R.id.appBarLayout);
         line = mRootView.findViewById(R.id.line);
+
         mTextError.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +141,7 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     }
 
     public void showToolBar() {
+
         mToolBar.setVisibility(View.VISIBLE);
         mAppBarLayout.setVisibility(View.VISIBLE);
         line.setVisibility(View.VISIBLE);
@@ -229,6 +232,10 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
 
     public void setShowContent(boolean b) {
         this.isShowContent = b;
+    }
+
+    protected void setFitsSystemWindows(boolean b){
+        mRootView.setFitsSystemWindows(b);
     }
 
     @Override

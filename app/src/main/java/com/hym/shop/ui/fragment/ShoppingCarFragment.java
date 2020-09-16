@@ -93,10 +93,12 @@ public class ShoppingCarFragment extends ProgressFragment<ShoppingCarPresenter> 
 
     @Override
     protected void init() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(getToolBar());
 
         showToolBar();
 
-        ((AppCompatActivity) getActivity()).setSupportActionBar(getToolBar());
+        setToolBarTitle("购物车");
+
         setHasOptionsMenu(true);
 
         mShoppingCarAdapter = new ShoppingCarAdapter();

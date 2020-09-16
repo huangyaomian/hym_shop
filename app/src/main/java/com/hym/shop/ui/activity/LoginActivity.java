@@ -70,6 +70,8 @@ public class LoginActivity extends ProgressActivity<LoginPresenter> implements L
     @Override
     public void initView() {
 
+        setToolBarTitle("登錄");
+
         InitialValueObservable<CharSequence> obPhone = RxTextView.textChanges(txtPhoneEdit);
         InitialValueObservable<CharSequence> obPassword = RxTextView.textChanges(txtPasswordEdit);
 

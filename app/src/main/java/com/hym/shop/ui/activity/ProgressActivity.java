@@ -229,6 +229,10 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
         line.setVisibility(View.GONE);
     }
 
+    public void setFitsSystemWindows(boolean b){
+        mRootView.setFitsSystemWindows(b);
+    }
+
     @Override
     public void showLoading() {
         showProgressView();

@@ -141,6 +141,10 @@ dependencies {
 
     //banner
     implementation 'com.youth.banner:banner:2.1.0'
+
+    //Ping++
+    implementation 'com.pingxx:pingpp-android:2.3.5' // (Ping++ 标准版 SDK) 必须添加
+    implementation 'com.pingxx:pingpp-android-alipay-with-utdid:15.7.4' // 使用支付宝时添加(包含 UTDID)
 }
 
 

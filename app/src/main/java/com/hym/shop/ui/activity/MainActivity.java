@@ -1,5 +1,6 @@
 package com.hym.shop.ui.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -82,7 +83,7 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
 
     @Override
     public void init() {
-
+//        setFitsSystemWindows(false);
        /* RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
             @Override
             public void accept(User user) {
@@ -114,8 +115,9 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
 
     @Override
     public void initView() {
-        StatusBarUtil.setWindowStatusBarColor(this,R.color.transparent);
+//        StatusBarUtil.setWindowStatusBarColor(this, Color.TRANSPARENT);
         initViewpager();
+
     }
 
     private void initViewpager() {

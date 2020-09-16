@@ -85,7 +85,8 @@ public class MineFragment extends ProgressFragment<MinePresenter> implements Min
     @Override
     protected void initView() {
         hideToolBar();
-
+        ((MainActivity)getContext()).setFitsSystemWindows(false);
+//        setFitsSystemWindows(false);
     }
 
 
@@ -124,6 +125,7 @@ public class MineFragment extends ProgressFragment<MinePresenter> implements Min
 
 
     private void logout() {
+        mUser =null;
         ACache aCache = ACache.get(getContext());
         aCache.put(Constant.TOKEN, "");
         aCache.put(Constant.USER, "");

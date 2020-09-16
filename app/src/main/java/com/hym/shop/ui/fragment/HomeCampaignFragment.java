@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -95,6 +96,7 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
         mAdapter = new HomeCampaignAdapter();
         initBanner();
         initRefresh();
+
     }
 
     private void initBanner(){
@@ -107,9 +109,6 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
 
     @Override
     protected void init() {
-
-
-
         showToolBar();
 
         //这里为了解决recycleview不能撑满全屏的问题，这里layoutManager不管你布局里是否设置，都不准确，所以需要在代码里
@@ -130,6 +129,15 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
         mPresenter.getHomeRecommendAndBanner(true);
     }
 
+    private int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
     @Override
     protected void initEvent() {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -142,6 +150,8 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
             }
         });
     }
+
+
 
     private void  initRefresh() {
         mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));

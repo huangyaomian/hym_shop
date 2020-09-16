@@ -235,7 +235,7 @@ public class AppUtils {
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                Uri contentUri = FileProvider.getUriForFile(context, "com.hym.appstore.fileProvider", file);
+                Uri contentUri = FileProvider.getUriForFile(context, context.getPackageName()+".fileprovider", file);
 
                 i.setDataAndType(contentUri, "application/vnd.android.package-archive");
             } else {

@@ -6,10 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:layout_gravity="center"
     android:background="@color/theme_while"
-    tools:context=".ui.fragment.ProgressFragment">
+>
 
 
     <com.google.android.material.appbar.AppBarLayout
@@ -117,6 +116,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
+
+
 
 
 </LinearLayout>
