@@ -84,9 +84,6 @@ public class MineFragment extends ProgressFragment<MinePresenter> implements Min
 
     @Override
     protected void initView() {
-        hideToolBar();
-        ((MainActivity)getContext()).setFitsSystemWindows(false);
-//        setFitsSystemWindows(false);
     }
 
 

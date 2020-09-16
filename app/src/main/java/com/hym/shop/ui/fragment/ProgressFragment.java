@@ -110,6 +110,9 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     }
 
 
+    /**
+     * 初始化toolbar
+     */
 
     public void initToolbar(){
 
