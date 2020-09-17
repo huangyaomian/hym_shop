@@ -94,8 +94,8 @@ public class LoginActivity extends ProgressActivity<LoginPresenter> implements L
             }
         });
 
-        txtPhoneEdit.setText("13020169902");
-        txtPasswordEdit.setText("cq13020169902");
+        txtPhoneEdit.setText("15829238397");
+        txtPasswordEdit.setText("bb001314");
     }
 
     @Override

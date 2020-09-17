@@ -5,6 +5,7 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="TextColor">#333333</color>
     <color name="theme_blue">#00c6e6</color>
+    <color name="theme_blue_80">#8000c6e6</color>
     <color name="theme_while">#ffffff</color>
     <color name="theme_black">#000000</color>
     <color name="theme_grey">#999999</color>

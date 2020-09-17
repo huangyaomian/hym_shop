@@ -98,4 +98,21 @@ public class DBManager {
         return count>0?true:false;
 
     }
+
+    //獲取數據庫中所有選中的商品
+    public static  List<HotWares.WaresBean> getAllCheckedWares(){
+        ArrayList<HotWares.WaresBean> list = new ArrayList<>();
+        Cursor cursor = database.query("wares", null, "isCheck=" + 1, null, null, null, null);
+        while (cursor.moveToNext()) {
+            HotWares.WaresBean waresBean = new HotWares.WaresBean();
+            waresBean.setId(cursor.getInt(cursor.getColumnIndex("waresId")));
+            waresBean.setName(cursor.getString(cursor.getColumnIndex("title")));
+            waresBean.setPrice(cursor.getFloat(cursor.getColumnIndex("price")));
+            waresBean.setImgUrl(cursor.getString(cursor.getColumnIndex("img")));
+            waresBean.setCount(cursor.getInt(cursor.getColumnIndex("count")));
+            waresBean.setCheck(cursor.getInt(cursor.getColumnIndex("isCheck")) == 1);
+            list.add(waresBean);
+        }
+        return list;
+    }
 }

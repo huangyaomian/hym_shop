@@ -2,6 +2,7 @@ package com.hym.shop.dagger2.component;
 
 import android.app.Application;
 
+import com.google.gson.Gson;
 import com.hym.shop.common.rx.RxErrorHandler;
 import com.hym.shop.dagger2.module.AppModule;
 import com.hym.shop.dagger2.module.HttpModule;
@@ -21,5 +22,7 @@ public interface AppComponent {
     public Application getApplication();
 
     public RxErrorHandler getRxErrorHandler();
+
+    public Gson getGson();
 
 }

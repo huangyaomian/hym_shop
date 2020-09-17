@@ -141,7 +141,13 @@
 
     <style name="line_horizontal" parent="line">
         <item name="android:layout_width">1px</item>
-        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="line_horizontal_2" parent="line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
@@ -163,6 +169,11 @@
     <style name="ware_price">
         <item name="android:textColor">@color/xui_config_color_red</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ware_price_12">
+        <item name="android:textColor">@color/theme_grey</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
 
@@ -226,7 +237,10 @@
     </style>
 
 
-
+    <style name="radioButton">
+        <item name="android:background">@drawable/selector_checkbox</item>
+        <item name="android:button">@null</item>
+    </style>
 
 
 

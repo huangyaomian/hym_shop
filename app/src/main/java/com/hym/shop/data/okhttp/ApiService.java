@@ -8,6 +8,7 @@ import com.hym.shop.bean.HomeBean;
 import com.hym.shop.bean.HomeCampaign;
 import com.hym.shop.bean.HotWares;
 import com.hym.shop.bean.LoginBean;
+import com.hym.shop.bean.OrderRespMsg;
 import com.hym.shop.bean.PageBean;
 import com.hym.shop.bean.SearchResult;
 import com.hym.shop.bean.SortBean;
@@ -28,7 +29,11 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
-//    http://112.124.22.238:8081/course_api/cniaoplay/featured?p={%22page%22:0}
+
+//    https://github.com/15829238397/CN5E-shop
+
+
+    //    http://112.124.22.238:8081/course_api/cniaoplay/featured?p={%22page%22:0}
     String BASE_URL = "http:112.124.22.238:8081/course_api/";
 
     /*@GET("featured")
@@ -107,19 +112,19 @@ public interface ApiService {
     Observable<BaseBean<User>> shopLogin(@Field("phone") String phone, @Field("password") String password);
 
     @POST("auth/reg")
-     Observable<LoginBean> shopReg(@Body LoginRequestBean bean);
+    Observable<LoginBean> shopReg(@Body LoginRequestBean bean);
 
     @FormUrlEncoded
     @POST("order/create")
-     Observable<LoginBean> createOrder(@Field("user_id") long userId, @Field("item_json") String itemJson, @Field("amount") int amount, @Field("addr_id") String addrId, @Field("pay_channel") String payChannel);
+    Observable<BaseBean<OrderRespMsg>> submitOrder(@Field("user_id") long userId, @Field("item_json") String itemJson, @Field("amount") int amount, @Field("addr_id") int addrId, @Field("pay_channel") String payChannel, @Field("token") String token);
 
     @FormUrlEncoded
     @POST("order/complete")
-     Observable<LoginBean> completeOrder(@Field("phone") String phone, @Field("password") String password);
+    Observable<BaseBean<OrderRespMsg>> completeOrder(@Field("order_num") String orderNum, @Field("status") String status, @Field("token") String token);
 
     @FormUrlEncoded
     @POST("order/list")
-     Observable<LoginBean> getOrderList(@Field("phone") String phone, @Field("password") String password);
+    Observable<LoginBean> getOrderList(@Field("phone") String phone, @Field("password") String password);
 
 
 }

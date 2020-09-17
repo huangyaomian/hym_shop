@@ -1,6 +1,7 @@
 package com.hym.shop.ui.fragment;
 
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +33,7 @@ import com.hym.shop.dagger2.component.DaggerShoppingCarComponent;
 import com.hym.shop.dagger2.module.ShoppingCarModule;
 import com.hym.shop.presenter.ShoppingCarPresenter;
 import com.hym.shop.presenter.contract.ShoppingCarContract;
+import com.hym.shop.ui.activity.CreateOrderActivity;
 import com.hym.shop.ui.activity.MainActivity;
 import com.hym.shop.ui.activity.SearchActivity;
 import com.hym.shop.ui.adapter.ShoppingCarAdapter;
@@ -170,6 +172,13 @@ public class ShoppingCarFragment extends ProgressFragment<ShoppingCarPresenter> 
                     }
                 }
                 Toast.makeText(getContext(),"請選擇刪除的商品！",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mBtnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), CreateOrderActivity.class));
             }
         });
     }

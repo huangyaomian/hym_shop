@@ -10,13 +10,6 @@
     android:paddingBottom="4dp"
     >
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/car_checkbox"
-        android:layout_gravity="center"
-        style="@style/customCheckbox"
-        />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,23 +20,12 @@
 
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:background="@null"
             android:id="@+id/image_view"
             android:layout_alignParentLeft="true"
             />
-
-        <com.hym.shop.ui.widget.WaresAddAndSubView
-            android:id="@+id/car_add_and_sub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:gravity="center_vertical"
-            android:layout_alignBottom="@id/image_view"
-            android:layout_marginBottom="8dp"
-            />
-
 
         <LinearLayout
             android:orientation="vertical"
@@ -52,22 +34,33 @@
             android:layout_marginStart="4dp"
             android:layout_toEndOf="@+id/image_view">
 
-        <TextView
-            android:id="@+id/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            style="@style/ware_title_2"
-            />
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                style="@style/ware_title_2"
+                />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ware_price_12"
+            android:layout_toEndOf="@+id/image_view"
+            android:layout_alignBottom="@id/image_view"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="4dp"
+            />
 
         <TextView
             android:id="@+id/text_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ware_price"
-            android:layout_toEndOf="@+id/image_view"
+            style="@style/ware_price_12"
+            android:layout_alignParentEnd="true"
             android:layout_alignBottom="@id/image_view"
             android:layout_marginBottom="8dp"
             />

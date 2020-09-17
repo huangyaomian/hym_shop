@@ -19,6 +19,7 @@
         <activity android:name="com.hym.shop.ui.activity.SubjectActivity" />
         <activity android:name="com.hym.shop.ui.activity.CampaignWaresActivity" />
         <activity android:name="com.hym.shop.ui.activity.WaresDetailActivity" />
+        <activity android:name="com.hym.shop.ui.activity.CreateOrderActivity" />
         <activity
             android:name="com.hym.shop.ui.activity.AppDetailsActivity3" />
         <activity android:name="com.hym.shop.ui.activity.SortAppActivity" />

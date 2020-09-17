@@ -34,4 +34,14 @@ public class Constant {
     public static final String POSITION = "position";
 
     public static final String DES_KEY = "Cniao5_123456";
+
+    public static final int REQUEST_CODE = 0;
+    public static final int REQUEST_CODE_PAYMENT = 1;
+    public static final int SUCCESS = 1;
+    public static final int FAIL = -1;
+    public static final int CANCEL = -2;
+    public static final int INVALID = 0;
+
+    public static final int ADDRESS_ADD = 100;
+    public static final int ADDRESS_EDIT = 200;
 }
