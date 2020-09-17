@@ -104,10 +104,22 @@ public interface ApiService {
 
     @FormUrlEncoded //用户登录
     @POST("auth/login")
-    public Observable<BaseBean<User>> shopLogin(@Field("phone") String phone, @Field("password") String password);
+    Observable<BaseBean<User>> shopLogin(@Field("phone") String phone, @Field("password") String password);
 
     @POST("auth/reg")
-    public Observable<LoginBean> shopReg(@Body LoginRequestBean bean);
+     Observable<LoginBean> shopReg(@Body LoginRequestBean bean);
+
+    @FormUrlEncoded
+    @POST("order/create")
+     Observable<LoginBean> createOrder(@Field("user_id") long userId, @Field("item_json") String itemJson, @Field("amount") int amount, @Field("addr_id") String addrId, @Field("pay_channel") String payChannel);
+
+    @FormUrlEncoded
+    @POST("order/complete")
+     Observable<LoginBean> completeOrder(@Field("phone") String phone, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("order/list")
+     Observable<LoginBean> getOrderList(@Field("phone") String phone, @Field("password") String password);
 
 
 }
