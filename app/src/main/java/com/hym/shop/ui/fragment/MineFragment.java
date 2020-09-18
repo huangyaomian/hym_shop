@@ -41,6 +41,7 @@ import com.hym.shop.presenter.HotWaresPresenter;
 import com.hym.shop.presenter.MinePresenter;
 import com.hym.shop.presenter.contract.HotWaresContract;
 import com.hym.shop.presenter.contract.MineContract;
+import com.hym.shop.ui.activity.AddressListActivity;
 import com.hym.shop.ui.activity.LoginActivity;
 import com.hym.shop.ui.activity.MainActivity;
 import com.hym.shop.ui.adapter.HotWaresAdapter;
@@ -116,6 +117,13 @@ public class MineFragment extends ProgressFragment<MinePresenter> implements Min
                 logout();
             }
         });
+
+        mMyAddr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getContext().startActivity(new Intent(getContext(), AddressListActivity.class));
+            }
+        });
     }
 
 
@@ -139,7 +147,12 @@ public class MineFragment extends ProgressFragment<MinePresenter> implements Min
             mLogoutBtn.setVisibility(View.VISIBLE);
             mUser =user;
             mUsername.setText(user.getUsername());
-            ImageLoader.load("http:" + user.getLogo_url(),mRadiusImageView);
+            if (user.getLogo_url().contains("thumbnail")){
+                ImageLoader.load("https:" + user.getLogo_url().split("thumbnail")[0],mRadiusImageView);
+            }else {
+                ImageLoader.load("https:" + user.getLogo_url(),mRadiusImageView);
+            }
+
         }
 
 

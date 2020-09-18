@@ -120,10 +120,10 @@ public class CreateOrderActivity extends ProgressActivity<CreateOrderPresenter> 
     private List<WareItem> wareItemList = new ArrayList<>();
 
     private double totalPrice = 0.0;
+
     private String payChannel = CHANNEL_ALIPAY;//默认途径为支付宝
 
     private String orderNum;
-    private int SIGN;
 
     private HashMap<String, RadioButton> channels = new HashMap<>(3);
 

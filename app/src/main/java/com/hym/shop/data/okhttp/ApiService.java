@@ -1,5 +1,6 @@
 package com.hym.shop.data.okhttp;
 
+import com.hym.shop.bean.Address;
 import com.hym.shop.bean.AppInfoBean;
 import com.hym.shop.bean.Banner;
 import com.hym.shop.bean.BaseBean;
@@ -126,5 +127,24 @@ public interface ApiService {
     @POST("order/list")
     Observable<LoginBean> getOrderList(@Field("phone") String phone, @Field("password") String password);
 
+    @GET("addr/list")
+    Observable<List<Address>> getAddrList(@Query("user_id") long userId, @Query("token") String token);
+
+    @FormUrlEncoded
+    @POST("addr/create")
+    Observable<BaseBean> addAddr(@Field("user_id") long user_id, @Field("consignee") String consignee,
+                                  @Field("phone") String phone, @Field("addr") String addr,
+                                  @Field("zip_code") String zip_code, @Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("addr/update")
+    Observable<BaseBean> updateAddr(@Field("id") long id, @Field("consignee") String consignee,
+                                     @Field("phone") String phone, @Field("addr") String addr,
+                                     @Field("zip_code") String zip_code, @Field("is_default") boolean is_default,
+                                     @Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("addr/del")
+    Observable<BaseBean> delAddr(@Field("id") Long id, @Field("token") String token);
 
 }

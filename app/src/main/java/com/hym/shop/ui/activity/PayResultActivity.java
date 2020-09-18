@@ -2,6 +2,7 @@ package com.hym.shop.ui.activity;
 
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,7 +41,8 @@ public class PayResultActivity extends ProgressActivity {
     @Override
     public void init() {
         mPayStatus = getIntent().getIntExtra(Constant.PAY_STATUS, 0);
-        setShowToolBarBack(true);
+        setShowToolBarBack(false);
+
     }
 
     @Override
@@ -71,7 +73,12 @@ public class PayResultActivity extends ProgressActivity {
 
     @Override
     public void initEvent() {
-
+        btnBackHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
 

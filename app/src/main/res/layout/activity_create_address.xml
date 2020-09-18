@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/theme_while"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="收件人"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/consignee_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:hint="请输入收件人姓名"
+                    android:textColorHint="@color/line"
+                    android:textSize="14sp"
+                    android:enabled="true"
+                    android:background="@color/theme_while"
+                    />
+                <View
+                    style="@style/line_horizontal_2"
+                    />
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="联系电话"/>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/consignee_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:hint="请输入收件人电话"
+                    android:textColorHint="@color/line"
+                    android:inputType="number"
+                    android:textSize="14sp"
+                    android:enabled="true"
+                    android:background="@color/theme_while"
+                    />
+                <View
+                    style="@style/line_horizontal_2"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:id="@+id/select_consigneeAdr"
+                android:text="联系地址"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:hint="请选择收件人地址"
+                    android:textColorHint="@color/line"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/consigneeAdr"
+                    />
+                <View
+                    style="@style/line_horizontal_2"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="详细地址"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/consignee_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@color/theme_while"
+                    android:hint="请填写收件人详细地址"
+                    android:textColorHint="@color/line"
+                    android:enabled="true"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"
+                    />
+
+                <View
+                    style="@style/line_horizontal_2"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/save"
+        style="@style/bigGreenButton"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/largerPadding"
+        android:padding="10dp"
+        android:text="保存" />
+
+</LinearLayout>
+
+
+
+
+

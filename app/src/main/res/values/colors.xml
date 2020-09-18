@@ -21,6 +21,8 @@
 
     <item type="color" name="blue_btn_color_disable">#6000c6e6</item>
 
+
+
     <color name="blue_btn_color_pressed">#6000c6e6</color>
     <color name="red_btn_color_normal">#ffff5454</color>
     <color name="red_btn_color_pressed">#ffd24242</color>

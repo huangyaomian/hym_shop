@@ -103,7 +103,6 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
         mLayoutInflater= this.getLayoutInflater();
         mView = mLayoutInflater.inflate(R.layout.template_banner, null, false);
         mBanner = mView.findViewById(R.id.template_banner);
-
     }
 
 

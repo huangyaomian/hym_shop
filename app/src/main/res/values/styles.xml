@@ -242,6 +242,11 @@
         <item name="android:button">@null</item>
     </style>
 
+    <style name="radioButton_2">
+        <item name="android:background">@drawable/selector_radio_button</item>
+        <item name="android:button">@null</item>
+    </style>
+
 
 
 

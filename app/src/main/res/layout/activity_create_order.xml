@@ -269,7 +269,7 @@
                     android:focusable="true"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
-                    android:tag="bfb">
+                    android:tag="bfb_wap">
 
                     <ImageView
                         android:id="@+id/img_bd"
