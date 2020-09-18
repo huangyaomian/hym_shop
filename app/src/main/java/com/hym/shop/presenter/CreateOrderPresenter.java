@@ -72,10 +72,10 @@ public class CreateOrderPresenter extends BasePresenter<CreateOrderContract.ICre
     public void completeOrder(String orderNum, String status, String token){
         mModel.completeOrder(orderNum, status, token)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(new ProgressDisposableObserver<BaseBean<OrderRespMsg>>(mContext,mView) {
+                .subscribe(new ProgressDisposableObserver<BaseBean>(mContext,mView) {
                     @Override
-                    public void onNext(BaseBean<OrderRespMsg> orderRespMsgBaseBean) {
-                        mView.showCompleteOrderResult(orderRespMsgBaseBean);
+                    public void onNext(BaseBean baseBean) {
+                        mView.showCompleteOrderResult(baseBean);
                     }
                     @Override
                     protected boolean isShowProgress() {

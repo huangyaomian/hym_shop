@@ -15,14 +15,14 @@ public interface CreateOrderContract {
     interface  CreateOrderView extends BaseView {
         void showWares(List<HotWares.WaresBean> waresBeanList);
         void showSubmitOrderResult(BaseBean<OrderRespMsg> orderRespMsgBaseBean);
-        void showCompleteOrderResult(BaseBean<OrderRespMsg> orderRespMsgBaseBean);
+        void showCompleteOrderResult(BaseBean baseBean);
     }
 
 
     interface ICreateOrderModel{
         Observable<List<HotWares.WaresBean>> getWares();
         Observable<BaseBean<OrderRespMsg>> submitOrder(long userId, String itemJson, int amount, int addrId, String payChannel, String token);
-        Observable<BaseBean<OrderRespMsg>> completeOrder(String orderNum, String status, String token);
+        Observable<BaseBean> completeOrder(String orderNum, String status, String token);
     }
 
 

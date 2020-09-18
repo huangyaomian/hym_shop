@@ -41,6 +41,7 @@ public class Constant {
     public static final int FAIL = -1;
     public static final int CANCEL = -2;
     public static final int INVALID = 0;
+    public static final String PAY_STATUS = "status";
 
     public static final int ADDRESS_ADD = 100;
     public static final int ADDRESS_EDIT = 200;

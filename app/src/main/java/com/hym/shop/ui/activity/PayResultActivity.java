@@ -1,55 +1,35 @@
 package com.hym.shop.ui.activity;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.view.View;
+import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.DrawableRes;
 
-import com.google.gson.Gson;
 import com.hym.shop.R;
-import com.hym.shop.bean.BaseBean;
-import com.hym.shop.bean.Charge;
-import com.hym.shop.bean.HotWares;
-import com.hym.shop.bean.OrderRespMsg;
-import com.hym.shop.bean.User;
 import com.hym.shop.common.Constant;
-import com.hym.shop.common.utils.ACache;
-import com.hym.shop.common.utils.UIUtils;
 import com.hym.shop.dagger2.component.AppComponent;
-import com.hym.shop.dagger2.component.DaggerCreateOrderComponent;
-import com.hym.shop.dagger2.module.CreateOrderModule;
-import com.hym.shop.presenter.CreateOrderPresenter;
-import com.hym.shop.presenter.contract.CreateOrderContract;
-import com.hym.shop.ui.adapter.CreateOrderWaresAdapter;
-import com.hym.shop.ui.widget.SpaceItemDecoration4;
-import com.pingplusplus.android.Pingpp;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class PayResultActivity extends ProgressActivity {
 
 
+    @BindView(R.id.img_pay)
+    ImageView imgPay;
+    @BindView(R.id.tv_pay_result)
+    TextView tvPayResult;
+    @BindView(R.id.btn_back_home)
+    Button btnBackHome;
 
-
+    private int mPayStatus;
 
     @Override
     protected int setLayoutResourceID() {
-        return R.layout.;
+        return R.layout.activity_pay_result;
     }
 
     @Override
@@ -59,6 +39,7 @@ public class PayResultActivity extends ProgressActivity {
 
     @Override
     public void init() {
+        mPayStatus = getIntent().getIntExtra(Constant.PAY_STATUS, 0);
         setShowToolBarBack(true);
     }
 
@@ -71,6 +52,20 @@ public class PayResultActivity extends ProgressActivity {
 
     @Override
     public void initView() {
+        if (mPayStatus == Constant.SUCCESS){
+            tvPayResult.setText("支付成功");
+            imgPay.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_pay_success));
+        }else if(mPayStatus == Constant.CANCEL){
+            tvPayResult.setText("用户取消支付");
+            imgPay.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_pay_fail));
+        }else if(mPayStatus == Constant.INVALID){
+            tvPayResult.setText("用户未安装支付APP");
+            imgPay.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_pay_fail));
+        }else {
+            //支付失败
+            tvPayResult.setText("支付失败");
+            imgPay.setImageDrawable(getResources().getDrawable(R.drawable.vector_drawable_pay_fail));
+        }
     }
 
 
@@ -78,12 +73,6 @@ public class PayResultActivity extends ProgressActivity {
     public void initEvent() {
 
     }
-
-
-
-
-
-
 
 
 }

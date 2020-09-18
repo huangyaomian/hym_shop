@@ -13,10 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:background="@drawable/selector_view_block"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/largePadding">
+        android:padding="30dp">
 
         <ImageView
             android:id="@+id/img_pay"
@@ -40,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/largerPadding"
+        android:padding="6dp"
         android:text="返回首页"/>
 
 

@@ -34,7 +34,7 @@ public class CreateOrderModel implements CreateOrderContract.ICreateOrderModel {
     }
 
     @Override
-    public Observable<BaseBean<OrderRespMsg>> completeOrder(String orderNum, String status, String token) {
+    public Observable<BaseBean> completeOrder(String orderNum, String status, String token) {
         return  mApiService.completeOrder( orderNum, status, token);
     }
 }

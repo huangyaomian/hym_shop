@@ -120,7 +120,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("order/complete")
-    Observable<BaseBean<OrderRespMsg>> completeOrder(@Field("order_num") String orderNum, @Field("status") String status, @Field("token") String token);
+    Observable<BaseBean> completeOrder(@Field("order_num") String orderNum, @Field("status") String status, @Field("token") String token);
 
     @FormUrlEncoded
     @POST("order/list")

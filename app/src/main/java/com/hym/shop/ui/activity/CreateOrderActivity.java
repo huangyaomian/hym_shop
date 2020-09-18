@@ -127,6 +127,10 @@ public class CreateOrderActivity extends ProgressActivity<CreateOrderPresenter> 
 
     private HashMap<String, RadioButton> channels = new HashMap<>(3);
 
+    private String mToken;
+
+    private int mPayStatus;
+
 
     @Inject
     public Gson mGson;
@@ -200,8 +204,10 @@ public class CreateOrderActivity extends ProgressActivity<CreateOrderPresenter> 
     }
 
     @Override
-    public void showCompleteOrderResult(BaseBean<OrderRespMsg> orderRespMsgBaseBean) {
-
+    public void showCompleteOrderResult(BaseBean baseBean) {
+        if (baseBean.success()) {
+            toPayResultActivity(mPayStatus);
+        }
     }
 
     private void setAllCheckAndTotalPrice(List<HotWares.WaresBean> waresBeanList){
@@ -223,11 +229,11 @@ public class CreateOrderActivity extends ProgressActivity<CreateOrderPresenter> 
 
         User user = (User) ACache.get(this).getAsObject(Constant.USER);
 
-        String token = ACache.get(this).getAsString(Constant.TOKEN);
+        mToken = ACache.get(this).getAsString(Constant.TOKEN);
 
         String userId = user.getId() + "";
 
-        mPresenter.submitOrder(Long.parseLong(userId),item_json,(int)totalPrice,1,payChannel,token);
+        mPresenter.submitOrder(Long.parseLong(userId),item_json,(int)totalPrice,1,payChannel,mToken);
     }
 
     private void initPayChannels() {
@@ -321,12 +327,16 @@ public class CreateOrderActivity extends ProgressActivity<CreateOrderPresenter> 
                 String result = data.getExtras().getString("pay_result");
                 if (result.equals("success")) {
                     changeOrderStatus(Constant.SUCCESS);
+                    mPayStatus = Constant.SUCCESS;
                 } else if (result.equals("fail")) {
                     changeOrderStatus(Constant.FAIL);
+                    mPayStatus = Constant.FAIL;
                 } else if (result.equals("cancel")) {
                     changeOrderStatus(Constant.CANCEL);
+                    mPayStatus = Constant.CANCEL;
                 } else {
                     changeOrderStatus(Constant.INVALID);
+                    mPayStatus = Constant.INVALID;
                 }
 
             }
@@ -341,35 +351,15 @@ public class CreateOrderActivity extends ProgressActivity<CreateOrderPresenter> 
      * @param status
      */
     private void changeOrderStatus(final int status) {
-        Map<String, String> params = new HashMap<>(5);
-        params.put("order_num", orderNum);
-        params.put("status", status + "");
-
-//        ServiceGenerator.getRetrofit(this)
-//                .orderComplete(orderNum, status, MyApplication.getInstance().getToken())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new SubscriberCallBack<CreateOrderRespMsg>(this, false) {
-//                    @Override
-//                    public void onSuccess(CreateOrderRespMsg result) {
-//                        /**
-//                         * 跳转到支付结果页面
-//                         */
-//                        toPayResultActivity(status);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        super.onError(e);
-//                        /**
-//                         * 跳转到支付失败页面
-//                         */
-//                        toPayResultActivity(Constants.FAIL);
-//                    }
-//                });
+        mPresenter.completeOrder(orderNum,status+"",mToken);
     }
 
-
+    private void toPayResultActivity(int status) {
+        Intent intent = new Intent(CreateOrderActivity.this,PayResultActivity.class);
+        intent.putExtra(Constant.PAY_STATUS,status);
+        startActivity(intent);
+        finish();
+    }
 
 
     /**
