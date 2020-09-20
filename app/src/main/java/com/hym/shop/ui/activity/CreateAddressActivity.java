@@ -1,9 +1,13 @@
 package com.hym.shop.ui.activity;
 
 
+import android.content.Intent;
+import android.net.MacAddress;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -25,10 +29,13 @@ import com.hym.shop.presenter.contract.AddressContract;
 import com.jakewharton.rxbinding2.InitialValueObservable;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.xuexiang.xui.widget.dialog.LoadingDialog;
 import com.xuexiang.xui.widget.edittext.ClearEditText;
 
 import org.json.JSONArray;
 
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +65,12 @@ public class CreateAddressActivity extends ProgressActivity<AddressPresenter> im
     private long mUserId;
     private String mToken;
 
+    private LoadingDialog mLoadingDialog;
+
+    private Address mAddress;
+
+    private int status = Constant.ADDRESS_ADD;
+
 
     @Override
     protected int setLayoutResourceID() {
@@ -71,6 +84,7 @@ public class CreateAddressActivity extends ProgressActivity<AddressPresenter> im
 
     @Override
     public void init() {
+
         initJsonData();
         setShowToolBarBack(true);
         getUser();
@@ -79,6 +93,15 @@ public class CreateAddressActivity extends ProgressActivity<AddressPresenter> im
     @Override
     public void initView() {
         setToolBarTitle("收貨地址");
+        mLoadingDialog = new LoadingDialog(this);
+        mAddress  = (Address) getIntent().getSerializableExtra(Constant.ADDRESS);
+        if (mAddress != null){
+            status = Constant.ADDRESS_EDIT;
+            mConsigneeName.setText(mAddress.getConsignee());
+            mConsigneePhone.setText(mAddress.getPhone());
+            mConsigneeAdr.setText(mAddress.getAddr().split("-")[0]);
+            mConsigneeAddress.setText(mAddress.getAddr().split("-")[1]);
+        }
     }
 
     @Override
@@ -89,15 +112,7 @@ public class CreateAddressActivity extends ProgressActivity<AddressPresenter> im
                 showPickerView();
             }
         });
-
-        mSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveAddress();
-            }
-        });
-
-
+        saveAddress();
     }
 
 
@@ -108,12 +123,41 @@ public class CreateAddressActivity extends ProgressActivity<AddressPresenter> im
 
     @Override
     public void addAddress(BaseBean baseBean) {
-
+        if (baseBean.success()) {
+            Intent intent = new Intent();
+            intent.putExtra(Constant.ADDRESS, mAddress);
+            // 设置返回码和返回携带的数据
+            setResult(Constant.ADDRESS_ADD, intent);
+            mAddress=null;
+            Toast.makeText(this,"添加成功！",Toast.LENGTH_SHORT).show();
+            finish();
+        }else {
+            if (mLoadingDialog.isShowing()){
+                mLoadingDialog.dismiss();
+            }
+            Toast.makeText(this,"添加失败:"+baseBean.getMessage(),Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void updateAddress(BaseBean baseBean) {
-
+        if (baseBean.success()) {
+            Intent intent = new Intent();
+            mAddress.setConsignee(mConsigneeName.getText().toString());
+            mAddress.setPhone(mConsigneePhone.getText().toString());
+            mAddress.setAddr(mConsigneeAdr.getText().toString() + "-" +mConsigneeAddress.getText().toString());
+            intent.putExtra(Constant.ADDRESS, mAddress);
+            // 设置返回码和返回携带的数据
+            setResult(Constant.ADDRESS_EDIT, intent);
+            mAddress=null;
+            Toast.makeText(this,"修改成功！",Toast.LENGTH_SHORT).show();
+            finish();
+        }else {
+            if (mLoadingDialog.isShowing()){
+                mLoadingDialog.dismiss();
+            }
+            Toast.makeText(this,"添加失败:"+baseBean.getMessage(),Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -123,6 +167,7 @@ public class CreateAddressActivity extends ProgressActivity<AddressPresenter> im
 
 
     private void showPickerView() {// 弹出选择器（省市区三级联动）
+        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);//收回输入法
         OptionsPickerView pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -216,27 +261,31 @@ public class CreateAddressActivity extends ProgressActivity<AddressPresenter> im
      * 保存地址
      */
     private void saveAddress(){
-//        InitialValueObservable<CharSequence> obConsigneeName = RxTextView.textChanges(mConsigneeName);
-//        InitialValueObservable<CharSequence> oConsigneePhone = RxTextView.textChanges(mConsigneePhone);
-//        InitialValueObservable<CharSequence> obConsigneeAdr = RxTextView.textChanges(mConsigneeAdr);
-//        InitialValueObservable<CharSequence> obConsigneeAddress = RxTextView.textChanges(mConsigneeAddress);
-//        InitialValueObservable.combineLatest(obConsigneeName, oConsigneePhone, obConsigneeAdr,obConsigneeAddress, new Function4<CharSequence, CharSequence, CharSequence, CharSequence, Boolean>() {
-//            @Override
-//            public Boolean apply(CharSequence charSequence, CharSequence charSequence2, CharSequence charSequence3, CharSequence charSequence4) throws Exception {
-//                return isPhoneValid(mConsigneePhone.getText().toString().trim());
-//            }
-//        }).subscribe(new Consumer<Boolean>() {
-//            @Override
-//            public void accept(Boolean aBoolean) {
-//                mSave.setEnabled(aBoolean);
-//            }
-//        });
-
-
+        if (mAddress == null){
+            mAddress = new Address();
+            mAddress.setConsignee(mConsigneeName.getText().toString());
+            mAddress.setPhone(mConsigneePhone.getText().toString());
+            mAddress.setAddr(toUtf8(mConsigneeAdr.getText().toString() + "-" +mConsigneeAddress.getText().toString()));
+            mAddress.setZip_code("000000");
+            mAddress.setIsDefault(true);
+        }
         RxView.clicks(mSave).subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
-                mPresenter.createAddress(mUserId,mConsigneeName.getText().toString(), mConsigneePhone.getText().toString(), mConsigneeAdr.getText().toString(),  "000000" ,mToken,false);
+                mLoadingDialog.show();
+                if (status == Constant.ADDRESS_EDIT) {
+                    mPresenter.updateAddress(mAddress.getId()
+                            ,mConsigneeName.getText().toString()
+                            ,mConsigneePhone.getText().toString()
+                            ,mConsigneeAdr.getText().toString() + "-" +mConsigneeAddress.getText().toString()
+                            ,mAddress.getZip_code()
+                            ,mAddress.getIsDefault()
+                            ,mToken
+                            ,false);
+                }else {
+                    mPresenter.createAddress(mUserId,mAddress.getConsignee(), mAddress.getPhone(), mAddress.getAddr(),  mAddress.getZip_code() ,mToken,false);
+                }
+
             }
         });
     }
@@ -270,5 +319,26 @@ public class CreateAddressActivity extends ProgressActivity<AddressPresenter> im
         mToken = ACache.get(this).getAsString(Constant.TOKEN);
 
         mUserId = user.getId();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (mLoadingDialog.isShowing()){
+            mLoadingDialog.dismiss();
+        }else {
+            super.onBackPressed();
+        }
+
+    }
+
+    public static String toUtf8(String str) {
+        String result = null;
+        try {
+            result = new String(str.getBytes("iso-8859-1"), "iso-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 }

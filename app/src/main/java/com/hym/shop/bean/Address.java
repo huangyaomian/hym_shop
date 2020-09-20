@@ -12,6 +12,16 @@ public class Address implements Serializable , Comparable<Address>{
     private String zip_code;
     private Boolean isDefault;
 
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    private int position;
+
     public Address() {
 
     }
@@ -82,10 +92,8 @@ public class Address implements Serializable , Comparable<Address>{
     //地址排序
     @Override
     public int compareTo(Address another) {
-
         if (another.getIsDefault() != null && this.getIsDefault() != null)
             return another.getIsDefault().compareTo(this.getIsDefault());
-
         return -1;
     }
 }

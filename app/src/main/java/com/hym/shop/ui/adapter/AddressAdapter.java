@@ -27,7 +27,8 @@ public class AddressAdapter extends BaseQuickAdapter<Address, BaseViewHolder>{
         holder.setText(R.id.consignee_name,address.getConsignee());
         holder.setText(R.id.consignee_phone,replacePhoneNum(address.getPhone()));
         holder.setText(R.id.consignee_address,address.getAddr());
-
+        RadioButton radioButton = holder.getView(R.id.radio_selected);
+        radioButton.setChecked(address.getIsDefault());
     }
 
 

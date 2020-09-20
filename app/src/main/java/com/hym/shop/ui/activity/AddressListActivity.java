@@ -3,6 +3,7 @@ package com.hym.shop.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +41,7 @@ import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.xuexiang.xui.widget.dialog.LoadingDialog;
 import com.youth.banner.adapter.BannerImageAdapter;
 import com.youth.banner.holder.BannerImageHolder;
 import com.youth.banner.indicator.CircleIndicator;
@@ -63,6 +66,7 @@ public class AddressListActivity extends ProgressActivity<AddressPresenter> impl
     private long mUserId;
     private String mToken;
     private int mDelPosition;
+    private LoadingDialog mLoadingDialog;
 
 
     @Override
@@ -77,6 +81,7 @@ public class AddressListActivity extends ProgressActivity<AddressPresenter> impl
 
     @Override
     public void init() {
+        mLoadingDialog = new LoadingDialog(this);
         getUser();
         setShowToolBarBack(true);
         mAddressAdapter = new AddressAdapter();
@@ -118,7 +123,9 @@ public class AddressListActivity extends ProgressActivity<AddressPresenter> impl
                 switch (view.getId()){
                     case R.id.radio_selected:
                     case R.id.radio_selectedText:
+                        mLoadingDialog.show();
                         Address address = mAddressAdapter.getData().get(position);
+                        address.setPosition(position);
                         mPresenter.updateAddress(address.getId(),address.getConsignee(),address.getPhone(),address.getAddr(),address.getZip_code(),true,mToken,false);
                         break;
                     case R.id.delete_address_item:
@@ -130,6 +137,9 @@ public class AddressListActivity extends ProgressActivity<AddressPresenter> impl
                         });
                         break;
                     case R.id.edit_address_item:
+                        Intent intent = new Intent(AddressListActivity.this, CreateAddressActivity.class);
+                        intent.putExtra(Constant.ADDRESS,mAddressAdapter.getData().get(position));
+                        startActivityForResult(intent,Constant.ADDRESS_EDIT);
                         break;
                 }
             }
@@ -162,6 +172,9 @@ public class AddressListActivity extends ProgressActivity<AddressPresenter> impl
         if (baseBean.success()){
             mAddressAdapter.setRadioBtn(mDelPosition);
         }
+        if (mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
         mDelPosition = 0;
     }
 
@@ -185,10 +198,33 @@ public class AddressListActivity extends ProgressActivity<AddressPresenter> impl
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.upper_right_corner:
-                startActivity(new Intent(AddressListActivity.this, CreateAddressActivity.class));
+                startActivityForResult(new Intent(AddressListActivity.this, CreateAddressActivity.class),Constant.ADDRESS_ADD);
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (data != null) {
+            if (requestCode == Constant.ADDRESS_ADD){
+                Address address  = (Address) data.getSerializableExtra(Constant.ADDRESS);
+                mAddressAdapter.getData().add(0,address);
+                mAddressAdapter.notifyItemInserted(0);
+            }else if (requestCode == Constant.ADDRESS_EDIT){
+                Address newAddress  = (Address) data.getSerializableExtra(Constant.ADDRESS);
+                if (newAddress != null){
+                    Address oldAddress = mAddressAdapter.getData().get(newAddress.getPosition());
+                    oldAddress.setConsignee(newAddress.getConsignee());
+                    oldAddress.setPhone(newAddress.getPhone());
+                    oldAddress.setAddr(newAddress.getAddr());
+                    mAddressAdapter.notifyItemChanged(newAddress.getPosition());
+                }
+
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     private void getUser(){
@@ -198,5 +234,15 @@ public class AddressListActivity extends ProgressActivity<AddressPresenter> impl
         mToken = ACache.get(this).getAsString(Constant.TOKEN);
 
         mUserId = user.getId();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("hymmmm", "onBackPressed: ");
+        if (mLoadingDialog.isShowing()){
+            mLoadingDialog.dismiss();
+        }else {
+            super.onBackPressed();
+        }
     }
 }

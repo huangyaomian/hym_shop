@@ -45,4 +45,5 @@ public class Constant {
 
     public static final int ADDRESS_ADD = 100;
     public static final int ADDRESS_EDIT = 200;
+    public static final String ADDRESS = "address";
 }
