@@ -1,17 +1,9 @@
 package com.hym.shop.ui.activity;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -19,7 +11,6 @@ import com.hym.shop.R;
 import com.hym.shop.bean.FragmentInfo;
 import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.ui.adapter.MyViewPagerAdapter2;
-import com.hym.shop.ui.adapter.ShoppingCarAdapter;
 import com.hym.shop.ui.fragment.SortWaresFragment;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
@@ -49,7 +40,7 @@ public class CampaignWaresActivity extends ProgressActivity {
 
     @Override
     protected int setLayoutResourceID() {
-        return R.layout.activity_campaign_wares;
+        return R.layout.template_up_tab_layout;
     }
 
     @Override
