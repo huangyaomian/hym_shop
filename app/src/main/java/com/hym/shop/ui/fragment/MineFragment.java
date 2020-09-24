@@ -44,6 +44,7 @@ import com.hym.shop.presenter.contract.MineContract;
 import com.hym.shop.ui.activity.AddressListActivity;
 import com.hym.shop.ui.activity.LoginActivity;
 import com.hym.shop.ui.activity.MainActivity;
+import com.hym.shop.ui.activity.MyOrderActivity;
 import com.hym.shop.ui.adapter.HotWaresAdapter;
 import com.hym.shop.ui.widget.SpaceItemDecoration4;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -122,6 +123,13 @@ public class MineFragment extends ProgressFragment<MinePresenter> implements Min
             @Override
             public void onClick(View view) {
                 getContext().startActivity(new Intent(getContext(), AddressListActivity.class));
+            }
+        });
+
+        mMyOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getContext().startActivity(new Intent(getContext(), MyOrderActivity.class));
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.hym.shop.ui.fragment;
 
 
+import android.media.session.MediaSession;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -11,14 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hym.shop.R;
 import com.hym.shop.bean.HotWares;
+import com.hym.shop.bean.Order;
+import com.hym.shop.bean.User;
+import com.hym.shop.common.Constant;
+import com.hym.shop.common.utils.ACache;
 import com.hym.shop.common.utils.UIUtils;
 import com.hym.shop.dagger2.component.AppComponent;
+import com.hym.shop.dagger2.component.DaggerMyOrderComponent;
 import com.hym.shop.dagger2.component.DaggerSortWaresComponent;
+import com.hym.shop.dagger2.module.MyOrderModule;
 import com.hym.shop.dagger2.module.SortWaresModule;
+import com.hym.shop.presenter.MyOrderPresenter;
 import com.hym.shop.presenter.SortWaresPresenter;
+import com.hym.shop.presenter.contract.MyOrderContract;
 import com.hym.shop.presenter.contract.SortWaresContract;
 import com.hym.shop.ui.activity.CampaignWaresActivity;
 import com.hym.shop.ui.adapter.HotWaresAdapter;
+import com.hym.shop.ui.adapter.MyOrderAdapter;
 import com.hym.shop.ui.widget.SpaceItemDecoration2;
 import com.hym.shop.ui.widget.SpaceItemDecoration4;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
@@ -34,19 +44,19 @@ import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
-public class MyOrderFragment extends ProgressFragment<SortWaresPresenter> implements SortWaresContract.SortWaresView {
+public class MyOrderFragment extends ProgressFragment<MyOrderPresenter> implements MyOrderContract.MyOrderView {
 
 
     @BindView(R.id.home_rv)
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh)
     SmartRefreshLayout mSmartRefreshLayout;
-    private HotWaresAdapter mAdapter;
+    private MyOrderAdapter mAdapter;
 
 
     private int mOrderStatus;
-
-    private List<HotWares.WaresBean> waresList;
+    private long mUserId;
+    private String mToken;
 
     private SpaceItemDecoration4 mSpaceItemDecoration4;
 
@@ -58,7 +68,7 @@ public class MyOrderFragment extends ProgressFragment<SortWaresPresenter> implem
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-//        DaggerSortWaresComponent.builder().appComponent(appComponent).sortWaresModule(new SortWaresModule(this)).build().inject(this);
+        DaggerMyOrderComponent.builder().appComponent(appComponent).myOrderModule(new MyOrderModule(this)).build().inject(this);
     }
 
     @Override
@@ -68,14 +78,16 @@ public class MyOrderFragment extends ProgressFragment<SortWaresPresenter> implem
 
     @Override
     protected void initView() {
-        mAdapter = new HotWaresAdapter();
+        mAdapter = new MyOrderAdapter();
         initRefresh();
+
     }
 
 
     @Override
     protected void init() {
         hideToolBar();
+        getUser();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
@@ -84,7 +96,7 @@ public class MyOrderFragment extends ProgressFragment<SortWaresPresenter> implem
         mRecyclerView.addItemDecoration(mSpaceItemDecoration4);
         mRecyclerView.setLayoutManager(layoutManager);
 
-//        mPresenter.getSortWares(true,mCurPage,mPageSize,mCampaignId,mOrder);
+        mPresenter.getMyOrder(mUserId,mOrderStatus, mToken,true);
     }
 
     @Override
@@ -94,39 +106,35 @@ public class MyOrderFragment extends ProgressFragment<SortWaresPresenter> implem
 
     private void  initRefresh() {
         mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
+        mSmartRefreshLayout.setEnableLoadMore(false);
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 mSmartRefreshLayout.setEnableLoadMore(true);
-//                mPresenter.getSortWares(false,mCurPage,mPageSize,mCampaignId,mOrder);
+                mPresenter.getMyOrder(mUserId,mOrderStatus, mToken,false);
             }
         });
 
-
-
     }
-
-
 
 
 
     @Override
-    public void showSortWares(HotWares hotWares) {
-
+    public void showMyOrder(List<Order> orders) {
         if (mSmartRefreshLayout.isRefreshing()) {
             mSmartRefreshLayout.finishRefresh();
         }
-
-        waresList = hotWares.getList();
-        mAdapter.addData(hotWares.getList());
+        mAdapter.addData(orders);
         SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mAdapter);
         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
-
-
-
-
     }
 
+    private void getUser(){
 
+        User user = (User) ACache.get(getContext()).getAsObject(Constant.USER);
 
+        mToken = ACache.get(getContext()).getAsString(Constant.TOKEN);
+
+        mUserId = user.getId();
+    }
 }

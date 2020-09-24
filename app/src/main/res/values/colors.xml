@@ -9,6 +9,7 @@
     <color name="theme_while">#ffffff</color>
     <color name="theme_black">#000000</color>
     <color name="theme_grey">#999999</color>
+    <color name="theme_grey_95">#95999999</color>
     <color name="line">#ebebeb</color>
     <color name="line_60">#60ebebeb</color>
     <color name="skip_btn">#80000000</color>

@@ -9,6 +9,7 @@ import com.hym.shop.bean.HomeBean;
 import com.hym.shop.bean.HomeCampaign;
 import com.hym.shop.bean.HotWares;
 import com.hym.shop.bean.LoginBean;
+import com.hym.shop.bean.Order;
 import com.hym.shop.bean.OrderRespMsg;
 import com.hym.shop.bean.PageBean;
 import com.hym.shop.bean.SearchResult;
@@ -146,5 +147,10 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("addr/del")
     Observable<BaseBean> delAddr(@Field("id") Long id, @Field("token") String token);
+
+
+    @FormUrlEncoded //我的订单
+    @POST("order/list")
+    Observable<List<Order>> orderList(@Field("user_id") long user_id, @Field("status") int status, @Field("token") String token);
 
 }
