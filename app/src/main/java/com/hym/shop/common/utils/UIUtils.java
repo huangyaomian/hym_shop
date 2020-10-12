@@ -16,6 +16,11 @@ import android.widget.EditText;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+  * UI工具類
+  * @author Mika.
+  * @created 2020/10/12 18:24.
+  */
 public class UIUtils {
     private static final String TAG = UIUtils.class.getSimpleName();
 

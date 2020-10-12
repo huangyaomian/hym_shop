@@ -22,9 +22,11 @@ import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
 /**
- * Create by h4de5ing 2016/5/21 021
- * https://github.com/sharinghuang/ASRabbit/blob/7350ea1c212946633316d36760c7088728dc2730/baselib/src/main/java/com/ht/baselib/utils/FormatVerificationUtils.java
- */
+  * 通知工具類
+  * https://github.com/sharinghuang/ASRabbit/blob/7350ea1c212946633316d36760c7088728dc2730/baselib/src/main/java/com/ht/baselib/utils/FormatVerificationUtils.java
+  * @author Mika.
+  * @created 2020/10/12 18:25.
+  */
 public class VerificationUtils {
     public static boolean matcherRealName(String value) {
         String regex = "^([\\u4e00-\\u9fa5]+|([a-zA-Z]+\\s?)+)$";

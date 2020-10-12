@@ -30,7 +30,6 @@ import com.hym.shop.common.imageloader.GlideCircleTransform;
 import com.hym.shop.common.imageloader.ImageLoader;
 import com.hym.shop.common.rx.RxBus;
 import com.hym.shop.common.utils.ACache;
-import com.hym.shop.common.utils.StatusBarUtil;
 import com.hym.shop.common.utils.UIUtils;
 import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.dagger2.component.DaggerHotWaresComponent;

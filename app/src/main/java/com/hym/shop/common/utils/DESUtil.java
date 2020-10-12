@@ -11,8 +11,10 @@ import javax.crypto.spec.IvParameterSpec;
 
 
 /**
- * DES加密工具类
- */
+  * DES加密工具类
+  * @author Mika.
+  * @created 2020/10/12 18:23.
+  */
 public class DESUtil {
     public static final String ALGORITHM_DES = "DES/CBC/PKCS5Padding";
 

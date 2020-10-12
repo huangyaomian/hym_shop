@@ -44,8 +44,10 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * Create by h4de5ing 2016/5/7 007
- */
+  * 文件工具類
+  * @author Mika.
+  * @created 2020/10/12 18:23.
+  */
 public class FileUtils {
 
     public static String getFileMD5(File file) {

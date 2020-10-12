@@ -27,6 +27,11 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.Buffer;
 
+/**
+  * 通用的http攔截器
+  * @author Mika.
+  * @created 2020/10/12 18:26.
+  */
 public class CommonParamsInterceptor implements Interceptor {
 
     public static final MediaType JSON = MediaType.parse("application/json;charset=uft-8");

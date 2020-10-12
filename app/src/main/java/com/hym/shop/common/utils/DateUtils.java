@@ -22,8 +22,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Create by h4de5ing 2016/5/7 007
- */
+  * 日期工具類
+  * @author Mika.
+  * @created 2020/10/12 18:22.
+  */
 public class DateUtils {
     private static final SimpleDateFormat DATE_FORMAT_DATETIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static final SimpleDateFormat DATE_FORMAT_DATE = new SimpleDateFormat("yyyy-MM-dd");

@@ -11,6 +11,11 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+  * json工具類
+  * @author Mika.
+  * @created 2020/10/12 18:23.
+  */
 public class JsonUtils {
     public static String toJson(Object obj) {
         Gson gson = new Gson();

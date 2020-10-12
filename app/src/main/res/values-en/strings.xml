@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="home">home</string>
+    <string name="search">search</string>
+    <string name="sort">sort</string>
+    <string name="shopping_cart">cart</string>
+    <string name="mine">mine</string>
+    <string name="selling">selling</string>
+    <string name="share">Share</string>
+
+</resources>
