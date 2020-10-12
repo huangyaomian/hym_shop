@@ -69,8 +69,6 @@ public class SortFragment extends ProgressFragment<SortPresenter> implements Sor
         mSortAdapter = new SortAdapter();
 
         mHomeRv.setAdapter(mSortAdapter);
-
-
         mSortAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {

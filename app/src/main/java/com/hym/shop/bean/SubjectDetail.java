@@ -1,6 +1,6 @@
 package com.hym.shop.bean;
 
-public class SubjectDetail extends AppInfoPager{
+public class SubjectDetail{
 
     private String description;
 

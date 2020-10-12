@@ -1,6 +1,5 @@
 package com.hym.shop.data;
 
-import com.hym.shop.bean.AppInfoBean;
 import com.hym.shop.bean.BaseBean;
 import com.hym.shop.bean.requestbean.AppsUpdateBean;
 import com.hym.shop.data.okhttp.ApiService;
@@ -22,7 +21,8 @@ public class MainModel implements MainContract.IMainModel {
 
 
     @Override
-    public Observable<BaseBean<List<AppInfoBean>>> getUpdateApps(AppsUpdateBean param) {
-        return mApiService.getAppsUpdateinfo(param.getPackageName(),param.getVersionCode());
+    public Observable<BaseBean<List<BaseBean>>> getUpdateApps(AppsUpdateBean param) {
+//        return mApiService.getAppsUpdateinfo(param.getPackageName(),param.getVersionCode());
+        return null;
     }
 }

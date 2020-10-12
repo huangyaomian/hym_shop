@@ -12,7 +12,7 @@ import com.hym.shop.bean.Subject;
 import com.hym.shop.bean.SubjectDetail;
 import com.hym.shop.common.Constant;
 import com.hym.shop.common.imageloader.ImageLoader;
-import com.hym.shop.ui.adapter.AppInfoAdapter;
+import com.hym.shop.ui.adapter.AddressAdapter;
 
 import butterknife.BindView;
 
@@ -30,7 +30,7 @@ public class SubjectDetailFragment extends BaseSubjectFragment {
 
     private Subject mSubject;
 
-    private AppInfoAdapter mAdapter;
+    private AddressAdapter mAdapter;
 
     public SubjectDetailFragment() {
 
@@ -55,8 +55,8 @@ public class SubjectDetailFragment extends BaseSubjectFragment {
     }
 
     private void initRecycleView() {
-        mAdapter = AppInfoAdapter.builder().showBrief(false).showCategoryName(true)
-                .build();
+//        mAdapter = AddressAdapter.builder().showBrief(false).showCategoryName(true)
+//                .build();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
@@ -74,6 +74,6 @@ public class SubjectDetailFragment extends BaseSubjectFragment {
 
         mtxtDesc.setText(detail.getDescription());
 
-        mAdapter.addData(detail.getListApp());
+//        mAdapter.addData(detail.getListApp());
     }
 }

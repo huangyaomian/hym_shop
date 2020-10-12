@@ -11,7 +11,6 @@ import com.hym.shop.R;
 import com.hym.shop.bean.SortBean;
 import com.hym.shop.common.Constant;
 import com.hym.shop.dagger2.component.AppComponent;
-import com.hym.shop.ui.adapter.SortAppViewPagerAdapter;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 
@@ -75,8 +74,8 @@ public class SortAppActivity extends BaseActivity {
     }
 
     private void initTabLayout(){
-        SortAppViewPagerAdapter adapter = new SortAppViewPagerAdapter(getSupportFragmentManager(),mSortBean.getId());
-        mViewPager.setAdapter(adapter);
+//        SortAppViewPagerAdapter adapter = new SortAppViewPagerAdapter(getSupportFragmentManager(),mSortBean.getId());
+//        mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 

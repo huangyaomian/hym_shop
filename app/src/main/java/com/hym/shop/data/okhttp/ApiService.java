@@ -1,11 +1,9 @@
 package com.hym.shop.data.okhttp;
 
 import com.hym.shop.bean.Address;
-import com.hym.shop.bean.AppInfoBean;
 import com.hym.shop.bean.Banner;
 import com.hym.shop.bean.BaseBean;
 import com.hym.shop.bean.Category;
-import com.hym.shop.bean.HomeBean;
 import com.hym.shop.bean.HomeCampaign;
 import com.hym.shop.bean.HotWares;
 import com.hym.shop.bean.LoginBean;
@@ -41,18 +39,9 @@ public interface ApiService {
     /*@GET("featured")
     public Call<RecommendBean2> getApps(@Query("p") String jsonParam);*/
 
-    @GET("cniaoplay/featured")
-    public Observable<BaseBean<List<AppInfoBean>>> getApps(@Query("p") String jsonParam);
 
     //http://112.124.22.238:8081/course_api/cniaoplay/index?p={"publicParams":{"model":"12","imei":"12","la":"12","os":"12","resolution":"12","sdk":"12","densityScaleFactor":"12"}}
-    @GET("cniaoplay/index")
-    public Observable<BaseBean<HomeBean>> getHome();
 
-    @GET("cniaoplay/toplist")
-    public Observable<BaseBean<PageBean<AppInfoBean>>> getTopList(@Query("page") int page);
-
-    @GET("cniaoplay/game")
-    public Observable<BaseBean<PageBean<AppInfoBean>>> getGames(@Query("page") int page);
 
     @POST("cniaoplay/login")
     public Observable<BaseBean<LoginBean>> login(@Body LoginRequestBean bean);
@@ -60,20 +49,6 @@ public interface ApiService {
     @GET("cniaoplay/category")
     Observable<BaseBean<List<SortBean>>> getCategories();
 
-    @GET("cniaoplay/category/featured/{categoryid}")
-    Observable<BaseBean<PageBean<AppInfoBean>>> getFeaturedAppsBySort(@Path("categoryid") int categoryid, @Query("page") int page);
-
-    @GET("cniaoplay/category/toplist/{categoryid}")
-    Observable<BaseBean<PageBean<AppInfoBean>>> getTopListAppsBySort(@Path("categoryid") int categoryid,@Query("page") int page);
-
-    @GET("cniaoplay/category/newlist/{categoryid}")
-    Observable<BaseBean<PageBean<AppInfoBean>>> getNewListAppsBySort(@Path("categoryid") int categoryid,@Query("page") int page);
-
-    @GET("cniaoplay/app/{id}")
-    Observable<BaseBean<AppInfoBean>> getAppDetail(@Path("id")int id);
-
-    @GET("cniaoplay/apps/updateinfo")
-    Observable<BaseBean<List<AppInfoBean>>> getAppsUpdateinfo(@Query("packageName") String packageName,@Query("versionCode") String versionCode);
 
     @GET("cniaoplay/subject/hot")
     Observable<BaseBean<PageBean<Subject>>> subjects(@Query("page") int page);

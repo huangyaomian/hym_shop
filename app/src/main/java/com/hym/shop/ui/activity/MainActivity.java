@@ -1,57 +1,33 @@
 package com.hym.shop.ui.activity;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hym.shop.R;
-import com.hym.shop.bean.FragmentInfo;
-import com.hym.shop.bean.User;
-import com.hym.shop.common.Constant;
-import com.hym.shop.common.rx.RxBus;
-import com.hym.shop.common.utils.ACache;
-import com.hym.shop.common.utils.StatusBarUtil;
 import com.hym.shop.dagger2.component.AppComponent;
-import com.hym.shop.dagger2.component.DaggerMainComponent;
 import com.hym.shop.dagger2.module.MainModule;
-import com.hym.shop.presenter.MainPresenter;
 import com.hym.shop.presenter.contract.MainContract;
 import com.hym.shop.ui.adapter.MyViewPagerAdapter;
 import com.hym.shop.ui.fragment.CategoryFragment;
-import com.hym.shop.ui.fragment.GameFragment;
 import com.hym.shop.ui.fragment.HomeCampaignFragment;
-import com.hym.shop.ui.fragment.HomeFragment;
 import com.hym.shop.ui.fragment.HotWaresFragment;
 import com.hym.shop.ui.fragment.MineFragment;
-import com.hym.shop.ui.fragment.RankingFragment;
 import com.hym.shop.ui.fragment.ShoppingCarFragment;
-import com.hym.shop.ui.fragment.SortFragment;
 import com.hym.shop.ui.widget.BadgeActionProvider;
-import com.mikepenz.iconics.IconicsDrawable;
-import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import io.reactivex.functions.Consumer;
 
-public class MainActivity extends ProgressActivity<MainPresenter> implements MainContract.MainView {
+//public class MainActivity extends ProgressActivity<MainPresenter> implements MainContract.MainView {
+public class MainActivity extends ProgressActivity implements MainContract.MainView {
 
 
     @BindView(R.id.main_viewpager)
@@ -74,10 +50,10 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-        DaggerMainComponent.builder().appComponent(appComponent)
-                .mainModule(new MainModule(this))
-                .build()
-                .inject(this);
+//        DaggerMainComponent.builder().appComponent(appComponent)
+//                .mainModule(new MainModule(this))
+//                .build()
+//                .inject(this);
     }
 
 
@@ -91,7 +67,7 @@ public class MainActivity extends ProgressActivity<MainPresenter> implements Mai
             }
         });*/
 
-        mPresenter.requestPermission();
+//        mPresenter.requestPermission();
 
 //        mPresenter.getAppUpdateInfo();
 

@@ -1,6 +1,5 @@
 package com.hym.shop.presenter.contract;
 
-import com.hym.shop.bean.AppInfoBean;
 import com.hym.shop.bean.BaseBean;
 import com.hym.shop.bean.requestbean.AppsUpdateBean;
 import com.hym.shop.ui.BaseView;
@@ -23,7 +22,7 @@ public interface MainContract {
 
     interface IMainModel{
 
-        Observable<BaseBean<List<AppInfoBean>>> getUpdateApps(AppsUpdateBean param);
+        Observable<BaseBean<List<BaseBean>>> getUpdateApps(AppsUpdateBean param);
 
     }
 

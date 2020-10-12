@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme1"
         tools:targetApi="n">
-        <activity android:name="com.hym.shop.ui.activity.SearchActivity" />
         <activity android:name="com.hym.shop.ui.activity.SubjectActivity" />
         <activity android:name="com.hym.shop.ui.activity.CampaignWaresActivity" />
         <activity android:name="com.hym.shop.ui.activity.WaresDetailActivity" />
@@ -24,11 +23,8 @@
         <activity android:name="com.hym.shop.ui.activity.AddressListActivity" />
         <activity android:name="com.hym.shop.ui.activity.CreateAddressActivity" />
         <activity android:name="com.hym.shop.ui.activity.MyOrderActivity" />
-        <activity
-            android:name="com.hym.shop.ui.activity.AppDetailsActivity3" />
         <activity android:name="com.hym.shop.ui.activity.SortAppActivity" />
         <activity android:name="com.hym.shop.ui.activity.LoginActivity" />
-        <activity android:name="com.hym.shop.ui.activity.HomeAppActivity" />
         <activity android:name="com.hym.shop.ui.activity.TestActivity" />
         <activity android:name="com.hym.shop.ui.activity.MainActivity">
             <intent-filter>
@@ -53,28 +49,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <service
-            android:name="com.hym.shop.service.InstallAccessibilityService"
-            android:label="@string/smart_install"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config" />
-        </service>
-
-        <receiver android:name="com.hym.shop.service.receiver.MyInstallReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
     </application>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

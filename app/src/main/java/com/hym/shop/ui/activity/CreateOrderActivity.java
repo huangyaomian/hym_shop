@@ -1,15 +1,8 @@
 package com.hym.shop.ui.activity;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.hym.shop.R;
-import com.hym.shop.app.MyApplication;
 import com.hym.shop.bean.BaseBean;
 import com.hym.shop.bean.Charge;
 import com.hym.shop.bean.HotWares;
@@ -32,21 +24,14 @@ import com.hym.shop.common.Constant;
 import com.hym.shop.common.utils.ACache;
 import com.hym.shop.common.utils.UIUtils;
 import com.hym.shop.dagger2.component.AppComponent;
-import com.hym.shop.dagger2.component.DaggerCategoryComponent;
 import com.hym.shop.dagger2.component.DaggerCreateOrderComponent;
 import com.hym.shop.dagger2.module.CreateOrderModule;
-import com.hym.shop.presenter.AppDetailPresenter;
 import com.hym.shop.presenter.CreateOrderPresenter;
-import com.hym.shop.presenter.contract.AppInfoContract;
 import com.hym.shop.presenter.contract.CreateOrderContract;
 import com.hym.shop.ui.adapter.CreateOrderWaresAdapter;
 import com.hym.shop.ui.widget.SpaceItemDecoration4;
-import com.mikepenz.iconics.IconicsDrawable;
-import com.mikepenz.ionicons_typeface_library.Ionicons;
-import com.pingplusplus.android.PaymentActivity;
 import com.pingplusplus.android.Pingpp;
 
-import java.lang.invoke.CallSite;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,9 +40,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class CreateOrderActivity extends ProgressActivity<CreateOrderPresenter> implements CreateOrderContract.CreateOrderView, View.OnClickListener {
 

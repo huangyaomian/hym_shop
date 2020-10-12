@@ -37,7 +37,6 @@ public class RxHttpResponseCompat {
                                     } catch (Exception e) {
                                         subscriber.onError(e);
                                     }
-
                                 }
                             });
                         }

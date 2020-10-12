@@ -2,29 +2,22 @@ package com.hym.shop.ui.fragment;
 
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.core.view.MenuItemCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.diff.BrvahAsyncDiffer;
 import com.hym.shop.R;
 import com.hym.shop.bean.HotWares;
 import com.hym.shop.common.db.DBManager;
@@ -34,13 +27,8 @@ import com.hym.shop.dagger2.module.ShoppingCarModule;
 import com.hym.shop.presenter.ShoppingCarPresenter;
 import com.hym.shop.presenter.contract.ShoppingCarContract;
 import com.hym.shop.ui.activity.CreateOrderActivity;
-import com.hym.shop.ui.activity.MainActivity;
-import com.hym.shop.ui.activity.SearchActivity;
 import com.hym.shop.ui.adapter.ShoppingCarAdapter;
-import com.hym.shop.ui.widget.BadgeActionProvider;
 import com.hym.shop.ui.widget.MyDialog;
-import com.mikepenz.iconics.IconicsDrawable;
-import com.mikepenz.ionicons_typeface_library.Ionicons;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
