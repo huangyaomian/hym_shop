@@ -155,6 +155,8 @@ dependencies {
 MobSDK {
     appKey "30ccfdfd6604c"
     appSecret "821f103cad770fc09f2dcadfd41906b0"
+    // 调用MobPush
+    MobPush {}
     ShareSDK {
         loopShare true
         devInfo {

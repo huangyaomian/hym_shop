@@ -64,6 +64,7 @@ public class AppUtils {
     }
 
 
+
     public static Drawable getAppIcon(Context context, String packageName) {
         PackageManager pm = context.getPackageManager();
         Drawable appIcon = null;

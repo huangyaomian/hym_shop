@@ -16,13 +16,29 @@
         android:theme="@style/AppTheme1"
         tools:targetApi="n">
         <activity android:name="com.hym.shop.ui.activity.SubjectActivity" />
-        <activity android:name="com.hym.shop.ui.activity.CampaignWaresActivity" />
+        <activity android:name="com.hym.shop.ui.activity.CampaignWaresActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.mob.mobpush.link"
+                    android:scheme="mlink" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.hym.shop.ui.activity.WaresDetailActivity" />
         <activity android:name="com.hym.shop.ui.activity.CreateOrderActivity" />
         <activity android:name="com.hym.shop.ui.activity.PayResultActivity" />
         <activity android:name="com.hym.shop.ui.activity.AddressListActivity" />
         <activity android:name="com.hym.shop.ui.activity.CreateAddressActivity" />
-        <activity android:name="com.hym.shop.ui.activity.MyOrderActivity" />
+        <activity android:name="com.hym.shop.ui.activity.MyOrderActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+<!--                <data-->
+<!--                    android:host="com.mob.mobpush.link"-->
+<!--                    android:scheme="mlink" />-->
+            </intent-filter>
+    </activity>
         <activity android:name="com.hym.shop.ui.activity.SortAppActivity" />
         <activity android:name="com.hym.shop.ui.activity.LoginActivity" />
         <activity android:name="com.hym.shop.ui.activity.TestActivity" />

@@ -31,6 +31,8 @@ import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 import com.xuexiang.xui.utils.StatusBarUtils;
 
+import org.json.JSONException;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
