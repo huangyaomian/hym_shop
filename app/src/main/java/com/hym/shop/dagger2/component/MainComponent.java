@@ -7,8 +7,8 @@ import com.hym.shop.ui.activity.MainActivity;
 
 import dagger.Component;
 
-//@ActivityScope
-//@Component(modules = MainModule.class,dependencies= AppComponent.class)
+@ActivityScope
+@Component(modules = MainModule.class,dependencies= AppComponent.class)
 public interface MainComponent {
     void inject(MainActivity activity);
 }

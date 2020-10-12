@@ -16,9 +16,18 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-
+/**
+  * rxjava請求結果的預處理
+  * @author Mika.
+  * @created 2020/10/12 19:00.
+  */
 public class RxHttpResponseCompat {
 
+    /**
+     * rxjava請求結果預處理，如果是null的會可能會報錯
+     * @param <T>
+     * @return
+     */
     public static  <T>ObservableTransformer<BaseBean<T>,T> compatResult(){
         return new ObservableTransformer<BaseBean<T>, T>() {
             @Override
@@ -84,8 +93,7 @@ public class RxHttpResponseCompat {
 //    }
 
     /**
-     * http请求结果处理方法
-     *
+     * rxjava請求結果預處理，兼容了null的情況
      * @param <T>
      * @return
      */
@@ -109,6 +117,13 @@ public class RxHttpResponseCompat {
                 ).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
     }
 
+
+    /**
+     * 返回數據的處理
+     * @param t
+     * @param <T>
+     * @return
+     */
     private static <T> Observable<Optional<T>> createHttpData(Optional<T> t) {
 
         return Observable.create(e -> {

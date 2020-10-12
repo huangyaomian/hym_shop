@@ -11,7 +11,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hym.shop.R;
 import com.hym.shop.dagger2.component.AppComponent;
+import com.hym.shop.dagger2.component.DaggerMainComponent;
 import com.hym.shop.dagger2.module.MainModule;
+import com.hym.shop.presenter.MainPresenter;
 import com.hym.shop.presenter.contract.MainContract;
 import com.hym.shop.ui.adapter.MyViewPagerAdapter;
 import com.hym.shop.ui.fragment.CategoryFragment;
@@ -26,8 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-//public class MainActivity extends ProgressActivity<MainPresenter> implements MainContract.MainView {
-public class MainActivity extends ProgressActivity implements MainContract.MainView {
+public class MainActivity extends ProgressActivity<MainPresenter> implements MainContract.MainView {
 
 
     @BindView(R.id.main_viewpager)
@@ -50,16 +51,15 @@ public class MainActivity extends ProgressActivity implements MainContract.MainV
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-//        DaggerMainComponent.builder().appComponent(appComponent)
-//                .mainModule(new MainModule(this))
-//                .build()
-//                .inject(this);
+        DaggerMainComponent.builder().appComponent(appComponent)
+                .mainModule(new MainModule(this))
+                .build()
+                .inject(this);
     }
 
 
     @Override
     public void init() {
-//        setFitsSystemWindows(false);
        /* RxBus.getDefault().toObservable(User.class).subscribe(new Consumer<User>() {
             @Override
             public void accept(User user) {
@@ -67,7 +67,7 @@ public class MainActivity extends ProgressActivity implements MainContract.MainV
             }
         });*/
 
-//        mPresenter.requestPermission();
+        mPresenter.requestPermission();
 
 //        mPresenter.getAppUpdateInfo();
 
@@ -91,9 +91,7 @@ public class MainActivity extends ProgressActivity implements MainContract.MainV
 
     @Override
     public void initView() {
-//        StatusBarUtil.setWindowStatusBarColor(this, Color.TRANSPARENT);
         initViewpager();
-
     }
 
     private void initViewpager() {
@@ -156,15 +154,6 @@ public class MainActivity extends ProgressActivity implements MainContract.MainV
         });
 
     }
-
-
-
-
-
-
-
-
-
 
 
 

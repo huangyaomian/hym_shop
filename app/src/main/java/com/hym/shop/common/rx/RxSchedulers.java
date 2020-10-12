@@ -7,15 +7,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 菜鸟窝http://www.cniao5.com 一个高端的互联网技能学习平台
- *
- * @author Ivan
- * @version V1.0
- * @Package com.cniao5.cniao5market.common.util.rx
- * @Description: ${TODO}(用一句话描述该文件做什么)
- * @date
- */
-
+  *
+  * @author Mika.
+  * @created 2020/10/12 18:59.
+  */
 public class RxSchedulers {
 
     public static <T> ObservableTransformer<T, T> io_main() {

@@ -100,7 +100,6 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
         mRecyclerView.addItemDecoration(dividerDecoration);
         mRecyclerView.setLayoutManager(layoutManager);
 
-
         mPresenter.getHomeRecommendAndBanner(true);
     }
 
