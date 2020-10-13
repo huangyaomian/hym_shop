@@ -16,10 +16,8 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -32,8 +30,6 @@ public class MainPresenter extends BasePresenter<MainContract.IMainModel,MainCon
     public MainPresenter(MainContract.IMainModel model, MainContract.MainView mView) {
         super(model, mView);
     }
-
-
 
 
     public  void requestPermission(){
@@ -99,28 +95,7 @@ public class MainPresenter extends BasePresenter<MainContract.IMainModel,MainCon
 
     }
 
-//    private AppsUpdateBean buildParams(List<AndroidApk> apks){
-//
-//
-//        StringBuilder packageNameBuilder = new StringBuilder();
-//        StringBuilder versionCodeBuilder = new StringBuilder();
-//
-//        for(AndroidApk apk :apks){
-//
-//            if(!apk.isSystem()){
-//
-//                packageNameBuilder.append(apk.getPackageName()).append(",");
-//                versionCodeBuilder.append(apk.getAppVersionCode()).append(",");
-//            }
-//        }
-//
-//        AppsUpdateBean param = new AppsUpdateBean();
-//        param.setPackageName(packageNameBuilder.toString());
-//        param.setVersionCode(versionCodeBuilder.toString());
-//
-//        return param;
-//
-//    }
+
 
 
 }

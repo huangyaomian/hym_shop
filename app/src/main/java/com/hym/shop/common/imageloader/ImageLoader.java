@@ -33,12 +33,6 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.GrayscaleTransformation;
 
-//import com.bumptech.glide.BitmapRequestBuilder;
-//import com.bumptech.glide.DrawableRequestBuilder;
-//import com.bumptech.glide.GenericRequestBuilder;
-//import com.bumptech.glide.request.animation.GlideAnimation;
-//import com.bumptech.glide.signature.StringSignature;
-
 /**
  * ImageLoader
  * @author Mika.
@@ -122,47 +116,6 @@ public class ImageLoader {
         }
         try {
             RequestBuilder builder = getRequestBuilder(context, objUrl, config);
-          /*  if (config.isAsGif()) {//gif类型
-//                GifRequestBuilder request = Glide.with(context).asGif().load(objUrl);
-                RequestBuilder<GifDrawable> request = Glide.with(context).asGif().load(objUrl);
-                if (config.getCropType() == ImageLoadConfig.CENTER_CROP) {
-                    request.centerCrop();
-                } else {
-                    request.fitCenter();
-                }
-                builder = request;
-            } else if (config.isAsBitmap()) {  //bitmap 类型
-//                BitmapRequestBuilder request = Glide.with(context).asBitmap().load(objUrl);
-                RequestBuilder<Bitmap> request = Glide.with(context).asBitmap().load(objUrl);
-                if (config.getCropType() == ImageLoadConfig.CENTER_CROP) {
-                    request.centerCrop();
-                } else {
-                    request.fitCenter();
-                }
-                //transform bitmap
-                if (config.isRoundedCorners()) {
-                    request.transform(new RoundedCornersTransformation(50, 50));
-                } else if (config.isCropCircle()) {
-                    request.transform(new CropCircleTransformation());
-                } else if (config.isGrayscale()) {
-                    request.transform(new GrayscaleTransformation());
-                } else if (config.isBlur()) {
-                    request.transform(new BlurTransformation(8, 8));
-                } else if (config.isRotate()) {
-//                    request.transform(new RotateTransformation(context, config.getRotateDegree()));
-                }
-                builder = request;
-            } else if (config.isCrossFade()) { // 渐入渐出动画
-                DrawableCrossFadeFactory drawableCrossFadeFactory = new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
-//                DrawableRequestBuilder request = Glide.with(context).load(objUrl).transition(DrawableTransitionOptions.with(drawableCrossFadeFactory));
-                RequestBuilder<Drawable> request = Glide.with(context).load(objUrl).transition(DrawableTransitionOptions.with(drawableCrossFadeFactory));
-                if (config.getCropType() == ImageLoadConfig.CENTER_CROP) {
-                    request.centerCrop();
-                } else {
-                    request.fitCenter();
-                }
-                builder = request;
-            }*/
             //缓存设置
             builder.diskCacheStrategy(config.getDiskCacheStrategy().getStrategy()).
                     skipMemoryCache(config.isSkipMemoryCache()).
@@ -170,16 +123,12 @@ public class ImageLoader {
             builder.dontAnimate();
             if (null != config.getTag()) {
                 builder.signature(new ObjectKey(config.getTag()));
-//                builder.signature(new StringSignature(config.getTag()));
             } else {
-//                builder.signature(new StringSignature(objUrl.toString()));
                 builder.signature(new ObjectKey(objUrl.toString()));
             }
            if (null != config.getAnimator()) {
                builder.transition(GenericTransitionOptions.with(config.getAnimator()));
-//                builder.animate(config.getAnimator());
             } else if (null != config.getAnimResId()) {
-//                builder.animate(config.getAnimResId());
                builder.transition(GenericTransitionOptions.with(config.getAnimResId()));
             }
             if (config.getThumbnail() > 0.0f) {
@@ -198,7 +147,6 @@ public class ImageLoader {
                 setListener(builder, listener);
             }
             if (null != config.getThumbnailUrl()) {
-//                BitmapRequestBuilder thumbnailRequest = Glide.with(context).asBitmap().load(config.getThumbnailUrl());
                 RequestBuilder<Bitmap> thumbnailRequest = Glide.with(context).asBitmap().load(config.getThumbnailUrl());
                 builder.thumbnail(thumbnailRequest).into(view);
             } else {
@@ -210,8 +158,8 @@ public class ImageLoader {
     }
 
     private static RequestBuilder getRequestBuilder(Context context, Object objUrl, ImageLoadConfig config){
-        if (config.isAsGif()) {//gif类型
-//                GifRequestBuilder request = Glide.with(context).asGif().load(objUrl);
+        if (config.isAsGif()) {
+            //gif类型
             RequestBuilder<GifDrawable> request = Glide.with(context).asGif().load(objUrl);
             if (config.getCropType() == ImageLoadConfig.CENTER_CROP) {
                 request.centerCrop();
@@ -220,7 +168,6 @@ public class ImageLoader {
             }
             return request;
         } else if (config.isAsBitmap()) {  //bitmap 类型
-//                BitmapRequestBuilder request = Glide.with(context).asBitmap().load(objUrl);
             RequestBuilder<Bitmap> request = Glide.with(context).asBitmap().load(objUrl);
             if (config.getCropType() == ImageLoadConfig.CENTER_CROP) {
                 request.centerCrop();
@@ -229,7 +176,6 @@ public class ImageLoader {
             }
             //transform bitmap
             if (config.isRoundedCorners()) {
-//                request.transform(new RoundedCornersTransformation(50, 50));
                 request.transform(new GlideRoundTransform());
             } else if (config.isCropCircle()) {
                 request.transform(new CropCircleTransformation());
@@ -243,7 +189,6 @@ public class ImageLoader {
             return request;
         } else if (config.isCrossFade()) { // 渐入渐出动画
             DrawableCrossFadeFactory drawableCrossFadeFactory = new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
-//                DrawableRequestBuilder request = Glide.with(context).load(objUrl).transition(DrawableTransitionOptions.with(drawableCrossFadeFactory));
             RequestBuilder<Drawable> request = Glide.with(context).load(objUrl).transition(DrawableTransitionOptions.with(drawableCrossFadeFactory));
             if (config.getCropType() == ImageLoadConfig.CENTER_CROP) {
                 request.centerCrop();

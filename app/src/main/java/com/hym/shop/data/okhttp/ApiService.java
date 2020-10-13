@@ -1,5 +1,6 @@
 package com.hym.shop.data.okhttp;
 
+import com.hym.shop.BuildConfig;
 import com.hym.shop.bean.Address;
 import com.hym.shop.bean.Banner;
 import com.hym.shop.bean.BaseBean;
@@ -34,7 +35,8 @@ public interface ApiService {
 
 
     //    http://112.124.22.238:8081/course_api/cniaoplay/featured?p={%22page%22:0}
-    String BASE_URL = "http:112.124.22.238:8081/course_api/";
+//    String BASE_URL = "http:112.124.22.238:8081/course_api/";
+    String BASE_URL = BuildConfig.API_HOST + "/course_api/";
 
     /*@GET("featured")
     public Call<RecommendBean2> getApps(@Query("p") String jsonParam);*/
