@@ -5,7 +5,6 @@ import android.app.Application;
 import com.google.gson.Gson;
 import com.hym.shop.BuildConfig;
 import com.hym.shop.common.Interceptor.CommonParamsInterceptor;
-import com.hym.shop.common.Interceptor.LoggingInterceptor;
 import com.hym.shop.common.Interceptor.ShopInterceptor;
 import com.hym.shop.common.rx.RxErrorHandler;
 import com.hym.shop.data.okhttp.ApiService;

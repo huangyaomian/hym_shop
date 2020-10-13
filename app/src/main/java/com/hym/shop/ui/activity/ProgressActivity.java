@@ -25,7 +25,6 @@ import com.hym.shop.common.exception.BaseException;
 import com.hym.shop.dagger2.component.AppComponent;
 import com.hym.shop.presenter.BasePresenter;
 import com.hym.shop.ui.BaseView;
-import com.hym.shop.ui.widget.CNToolbar;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
@@ -98,18 +97,33 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
 
     }
 
+    /**
+     * 设置是否显示toolbar的返回按钮
+     * @param showToolBarBack
+     */
     public void setShowToolBarBack(boolean showToolBarBack) {
         isShowToolBarBack = showToolBarBack;
     }
 
+    /**
+     * 设置toolbar的title
+     * @param toolBarTitle
+     */
     public void setToolBarTitle(String toolBarTitle) {
         mToolBar.setTitle(toolBarTitle);
     }
 
+    /**
+     * 获取toolbar的对象
+     * @return
+     */
     public Toolbar getToolBar() {
         return mToolBar;
     }
 
+    /**
+     * 初始化toolbar
+     */
     public void initToolbar(){
 
         setSupportActionBar(mToolBar);
@@ -135,72 +149,102 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
 
     }
 
-
-
-
+    /**
+     * 此方法用于返回Fragment设置ContentView的布局文件资源ID
+     */
     protected abstract int setLayoutResourceID();
 
+    /**
+     * 设置component
+     * @param appComponent
+     */
     protected abstract void setupActivityComponent(AppComponent appComponent);
 
-
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mUnbinder != Unbinder.EMPTY) {
-            mUnbinder.unbind();
-        }
-    }
-
-
-
-
-
+    /**
+     * 启动另一个activity
+     * @param c
+     */
     protected void startActivity(Class c) {
         this.startActivity(new Intent(this, c));
     }
 
+    /**
+     * 做一些初始化的操作
+     */
     public abstract void init();
+
+    /**
+     * 一些View的相关操作
+     */
     public abstract void initView();
+
+    /**
+     * 一些事件相關的監聽
+     */
     public abstract void initEvent();
 
 
-    //子类实现此方法使其点击重新刷新页面
+    /**
+     * 子类实现此方法使其点击重新刷新页面
+     */
     public void onEmptyViewClick(){
 
     }
 
-
+    /**
+     * 子类设置实际布局
+     */
     protected  void setRealContentView(){
         View realContentView = LayoutInflater.from(this).inflate(setLayoutResourceID(), mViewContent, true);
         mUnbinder = ButterKnife.bind(this, realContentView);
     }
 
+    /**
+     * 显示加载中的布局
+     */
     public void showProgressView(){
         Log.d("ProgressFragment","showProgressView");
         showView(R.id.view_progress);
     }
 
+    /**
+     * 显示内容的布局
+     */
     public void showContentView(){
         Log.d("ProgressFragment","showContentView");
         showView(R.id.view_content);
     }
 
+    /**
+     *  显示空布局
+     */
     public void showEmptyView(){
         showView(R.id.view_empty);
     }
 
+    /**
+     *  显示空布局，并制定提示语
+     * @param resId
+     */
     public void showEmptyView(int resId){
         showView(R.id.view_empty);
         mTextError.setText(resId);
     }
 
+    /**
+     * 显示空布局，并制定提示语
+     * @param msg
+     */
     public void showEmptyView(String msg){
         showView(R.id.view_empty);
         mTextError.setText(msg);
     }
 
+    /**
+     * 显示空布局，并根据error code 判断否显示登陆按钮
+     * @param msg
+     * @param errorCode
+     */
     public void showEmptyView(String msg, int errorCode){
         showEmptyView(msg);
         if (errorCode == BaseException.ERROR_TOKEN || errorCode == BaseException.INVALID_TOKEN) {
@@ -215,6 +259,10 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
         }
     }
 
+    /**
+     * 显示指定布局
+     * @param viewId
+     */
     public void showView(int viewId){
         for (int i = 0; i < mRootView.getChildCount(); i++) {
             if (mRootView.getChildAt(i).getId() == viewId || mRootView.getChildAt(i).getId() == R.id.appBarLayout) {
@@ -225,15 +273,15 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
         }
     }
 
+    /**
+     * 隐藏toolbar
+     */
     public void hideToolbar(){
         mAppBarLayout.setVisibility(View.GONE);
         mToolBar.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
     }
 
-    public void setFitsSystemWindows(boolean b){
-        mRootView.setFitsSystemWindows(b);
-    }
 
     @Override
     public void showLoading() {
@@ -249,5 +297,13 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
     public void showError(String msg,int errorCode) {
         Log.d("ProgressFragment","showError");
         showEmptyView(msg,errorCode);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mUnbinder != Unbinder.EMPTY) {
+            mUnbinder.unbind();
+        }
     }
 }

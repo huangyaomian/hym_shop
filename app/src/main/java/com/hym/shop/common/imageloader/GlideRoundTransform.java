@@ -14,46 +14,13 @@ import com.hym.shop.common.utils.UIUtils;
 
 import java.security.MessageDigest;
 
+/**
+ * 圆角图片处理
+ * @author Mika.
+ * @created 2020/10/12 19:00.
+ */
 public class GlideRoundTransform extends CenterCrop {
-  /*  private static float radius = 0f;
 
-    public GlideRoundTransform() {
-        this(4);
-    }
-
-    public GlideRoundTransform(int dp) {
-        super();
-        this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
-    }
-
-    @Override
-    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
-        Bitmap transform = super.transform(pool, toTransform, outWidth, outHeight);
-        return roundCrop(pool, transform);
-//        return roundCrop(pool, toTransform);
-    }
-
-    private static Bitmap roundCrop(BitmapPool pool, Bitmap source) {
-        if (source == null) return null;
-
-        Bitmap result = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
-        if (result == null) {
-            result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
-        }
-
-        Canvas canvas = new Canvas(result);
-        Paint paint = new Paint();
-        paint.setShader(new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
-        paint.setAntiAlias(true);
-        RectF rectF = new RectF(0f, 0f, source.getWidth(), source.getHeight());
-        canvas.drawRoundRect(rectF, radius, radius, paint);
-        return result;
-    }
-
-    @Override
-    public void updateDiskCacheKey(MessageDigest messageDigest) {
-
-    }*/
   private float mRadius;
     private CornerType mCornerType;
     private static final int VERSION = 1;

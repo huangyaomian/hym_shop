@@ -14,6 +14,11 @@ import java.net.SocketTimeoutException;
 
 import retrofit2.HttpException;
 
+/**
+ * rxjava报错处理
+ * @author Mika.
+ * @created 2020/10/12 19:00.
+ */
 public class RxErrorHandler {
     private Context mContext;
 

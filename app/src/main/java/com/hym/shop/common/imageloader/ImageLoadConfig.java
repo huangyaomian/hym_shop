@@ -14,15 +14,10 @@ import com.bumptech.glide.request.target.ViewTarget;
 import com.bumptech.glide.request.transition.ViewPropertyTransition;
 
 /**
- * 菜鸟窝http://www.cniao5.com 一个高端的互联网技能学习平台
- *
- * @author Ivan
- * @version V1.0
- * @Package com.cniao5.cniao5market.common.imageloader
- * @Description: ${TODO}(用一句话描述该文件做什么)
- * @date
+ * image load 配置类
+ * @author Mika.
+ * @created 2020/10/12 19:00.
  */
-
 public class ImageLoadConfig {
 
     public static final int CENTER_CROP = 0;

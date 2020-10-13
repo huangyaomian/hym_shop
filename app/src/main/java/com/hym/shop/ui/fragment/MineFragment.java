@@ -1,53 +1,27 @@
 package com.hym.shop.ui.fragment;
 
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.StatusBarManager;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
-import androidx.core.view.ViewCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.bumptech.glide.Glide;
 import com.hym.shop.R;
-import com.hym.shop.bean.HotWares;
 import com.hym.shop.bean.User;
 import com.hym.shop.common.Constant;
-import com.hym.shop.common.font.Cniao5Font;
-import com.hym.shop.common.imageloader.GlideCircleTransform;
 import com.hym.shop.common.imageloader.ImageLoader;
 import com.hym.shop.common.rx.RxBus;
 import com.hym.shop.common.utils.ACache;
-import com.hym.shop.common.utils.UIUtils;
 import com.hym.shop.dagger2.component.AppComponent;
-import com.hym.shop.dagger2.component.DaggerHotWaresComponent;
 import com.hym.shop.dagger2.component.DaggerMineComponent;
-import com.hym.shop.dagger2.module.HotWaresModule;
 import com.hym.shop.dagger2.module.MineModule;
-import com.hym.shop.presenter.HotWaresPresenter;
 import com.hym.shop.presenter.MinePresenter;
-import com.hym.shop.presenter.contract.HotWaresContract;
 import com.hym.shop.presenter.contract.MineContract;
 import com.hym.shop.ui.activity.AddressListActivity;
 import com.hym.shop.ui.activity.LoginActivity;
-import com.hym.shop.ui.activity.MainActivity;
 import com.hym.shop.ui.activity.MyOrderActivity;
-import com.hym.shop.ui.adapter.HotWaresAdapter;
-import com.hym.shop.ui.widget.SpaceItemDecoration4;
-import com.mikepenz.iconics.IconicsDrawable;
-import com.xuexiang.xui.XUI;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
 import butterknife.BindView;

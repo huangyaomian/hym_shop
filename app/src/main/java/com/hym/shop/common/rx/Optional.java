@@ -4,6 +4,11 @@ import androidx.annotation.Nullable;
 
 import java.util.NoSuchElementException;
 
+/**
+ * 处理返回的结果
+ * @author Mika.
+ * @created 2020/10/12 19:00.
+ */
 public class Optional<M> {
     private final M optional; // 接收到的返回结果
     public Optional(@Nullable M optional) {

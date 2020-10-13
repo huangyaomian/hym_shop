@@ -13,15 +13,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * 菜鸟窝http://www.cniao5.com 一个高端的互联网技能学习平台
- *
- * @author Ivan
- * @version V1.0
- * @Package com.cniao5.cniao5play.common.util
- * @Description: ${TODO}(用一句话描述该文件做什么)
- * @date
+ * 获取屏幕尺寸和尺寸之间的转换
+ * @author Mika.
+ * @created 2020/10/12 18:23.
  */
-
 public class DensityUtil {
 
     public static int dip2px(Context c, float dpValue) {

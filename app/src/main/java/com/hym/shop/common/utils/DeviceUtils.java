@@ -25,6 +25,11 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.UUID;
 
+/**
+ * 设备信息工具类
+ * @author Mika.
+ * @created 2020/10/12 18:23.
+ */
 public class DeviceUtils {
     public static String getAndroidID(Context ctx) {
         return Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);

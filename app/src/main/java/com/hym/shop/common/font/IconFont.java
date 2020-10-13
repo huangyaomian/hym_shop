@@ -11,10 +11,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
- * Created by Ivan on 2016/12/14.
+ * icon压缩包的使用的类
+ * @author Mika.
+ * @created 2020/10/12 19:00.
  */
-
-public class Cniao5Font implements ITypeface {
+public class IconFont implements ITypeface {
 
     private static final String TTF_FILE = "iconfont.ttf";
     private static Typeface typeface = null;
@@ -132,7 +133,7 @@ public class Cniao5Font implements ITypeface {
 
         public ITypeface getTypeface() {
             if (typeface == null) {
-                typeface = new Cniao5Font();
+                typeface = new IconFont();
             }
             return typeface;
         }

@@ -4,6 +4,11 @@ import android.content.Context;
 
 import com.hym.shop.R;
 
+/**
+ * 错误信息的仓库
+ * @author Mika.
+ * @created 2020/10/12 19:00.
+ */
 public class ErrorMessageFactory {
 
     public static String create(Context context, int code){

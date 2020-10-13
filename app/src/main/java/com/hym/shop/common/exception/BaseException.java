@@ -1,5 +1,10 @@
 package com.hym.shop.common.exception;
 
+/**
+ * 异常的基类
+ * @author Mika.
+ * @created 2020/10/12 19:00.
+ */
 public class BaseException extends Exception {
 
     //api错误

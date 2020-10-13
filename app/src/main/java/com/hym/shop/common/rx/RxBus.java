@@ -6,15 +6,10 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 /**
- * 菜鸟窝http://www.cniao5.com 一个高端的互联网技能学习平台
  *
- * @author Ivan
- * @version V1.0
- * @Package com.cniao5.cniao5market.common.util.rx
- * @Description: ${TODO}(用一句话描述该文件做什么)
- * @date
+ * @author Mika.
+ * @created 2020/10/12 19:00.
  */
-
 public class RxBus {
 
     private static volatile RxBus defaultInstance;
