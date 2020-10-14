@@ -6,6 +6,7 @@ import com.hym.shop.bean.HomeCampaign;
 import com.hym.shop.bean.LoginBean;
 import com.hym.shop.bean.User;
 import com.hym.shop.common.Constant;
+import com.hym.shop.common.Interceptor.CommonParamsInterceptor2;
 import com.hym.shop.common.rx.RxBus;
 import com.hym.shop.common.rx.RxHttpResponseCompat;
 import com.hym.shop.common.rx.subscriber.ErrorHandlerDisposableObserver;
@@ -70,7 +71,6 @@ public class  LoginPresenter extends BasePresenter<LoginContract.ILoginModel, Lo
                     public void onNext(@NonNull BaseBean<User>  baseBean) {
                         mView.loginSuccess(baseBean);
                         saveUser(baseBean);
-//                        RxBus.get().post(loginBean.getUser());
                         RxBus.getDefault().post(baseBean.getData()); //發送數據
                     }
 
@@ -85,6 +85,7 @@ public class  LoginPresenter extends BasePresenter<LoginContract.ILoginModel, Lo
     private void saveUser(BaseBean<User> bean){
         ACache aCache = ACache.get(mContext);
         aCache.put(Constant.TOKEN,bean.getToken());
+        aCache.put(Constant.USER_ID,bean.getData().getId());
         aCache.put(Constant.USER,bean.getData());
     }
 }
