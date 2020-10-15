@@ -46,7 +46,7 @@ public interface ApiService {
 
 
     @POST("cniaoplay/login")
-    public Observable<BaseBean<LoginBean>> login(@Body LoginRequestBean bean);
+    Observable<BaseBean<LoginBean>> login(@Body LoginRequestBean bean);
 
     @GET("cniaoplay/category")
     Observable<BaseBean<List<SortBean>>> getCategories();

@@ -18,13 +18,9 @@ public interface LoginContract {
     }
 
     interface LoginView extends BaseView {
-
         void checkPhoneError();
         void checkPhoneSuccess();
-
         void loginSuccess(BaseBean<User> bean);
-
-//        void loginError(String msg);  //errorhander里面处理了
     }
 
 

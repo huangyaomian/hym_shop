@@ -16,20 +16,20 @@ android {
 
     }
 
-    signingConfigs {
-        debug {
-            keyAlias 'testkey0'
-            keyPassword '123456'
-            storeFile file('D:/Download/hym.jks')
-            storePassword '123456'
-        }
-        release {
-            keyAlias 'testkey0'
-            keyPassword '123456'
-            storeFile file('D:/Download/hym.jks')
-            storePassword '123456'
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            keyAlias 'testkey0'
+//            keyPassword '123456'
+//            storeFile file('D:/Download/hym.jks')
+//            storePassword '123456'
+//        }
+//        release {
+//            keyAlias 'testkey0'
+//            keyPassword '123456'
+//            storeFile file('D:/Download/hym.jks')
+//            storePassword '123456'
+//        }
+//    }
 
 
     buildTypes {
@@ -40,7 +40,7 @@ android {
             shrinkResources true  //是否去除无效的资源文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String", "API_HOST", "\"http:112.124.22.238:8081\"")
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
         debug {
             debuggable true
@@ -48,7 +48,7 @@ android {
             minifyEnabled false //是否混淆
             shrinkResources false  //是否去除无效的资源文件
             buildConfigField("String", "API_HOST", "\"http:112.124.22.238:8081\"")
-            signingConfig signingConfigs.debug
+//            signingConfig signingConfigs.debug
         }
     }
     sourceSets {
