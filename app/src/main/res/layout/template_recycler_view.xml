@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:background="#ffffff">
@@ -14,7 +15,8 @@
 
         <com.scwang.smart.refresh.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:srlTextLoading="@string/app_name"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_rv"
@@ -26,13 +28,8 @@
 
         <com.scwang.smart.refresh.footer.ClassicsFooter
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="--已經到底部了--"
-                android:textSize="16sp"
-                android:textColor="@color/line"/>
+            android:layout_height="wrap_content"
+            >
         </com.scwang.smart.refresh.footer.ClassicsFooter>
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>

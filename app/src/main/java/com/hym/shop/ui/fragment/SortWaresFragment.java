@@ -114,8 +114,10 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
     }
 
     private void  initRefresh() {
+        ClassicsFooter.REFRESH_FOOTER_NOTHING = getString(R.string.app_name);//"没有更多数据了";
         mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         mSmartRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
+        mSmartRefreshLayout.setEnableFooterFollowWhenNoMoreData(true);
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -163,9 +165,7 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
             mSmartRefreshLayout.finishRefresh();
         }
 
-        if (mSmartRefreshLayout.isLoading()) {
-            mSmartRefreshLayout.finishLoadMore();
-        }
+
 
         switch (mStatus){
             case STATUS_NORMAL:
@@ -189,7 +189,12 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
         if (mCurPage * mPageSize < hotWares.getTotalCount()) {
             mSmartRefreshLayout.setEnableLoadMore(true);
         }else {
-            mSmartRefreshLayout.setEnableLoadMore(false);
+//            mSmartRefreshLayout.setEnableLoadMore(false);
+            mSmartRefreshLayout.finishLoadMoreWithNoMoreData();//显示全部加载完成，并不再触发加载更事件
+        }
+
+        if (mSmartRefreshLayout.isLoading()) {
+            mSmartRefreshLayout.finishLoadMore();
         }
 
 
