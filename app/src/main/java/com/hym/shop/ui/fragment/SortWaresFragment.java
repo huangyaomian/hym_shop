@@ -114,7 +114,7 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
     }
 
     private void  initRefresh() {
-        ClassicsFooter.REFRESH_FOOTER_NOTHING = getString(R.string.app_name);//"没有更多数据了";
+        ClassicsFooter.REFRESH_FOOTER_NOTHING = getString(R.string.no_more_data);//"没有更多数据了";
         mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         mSmartRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
         mSmartRefreshLayout.setEnableFooterFollowWhenNoMoreData(true);
