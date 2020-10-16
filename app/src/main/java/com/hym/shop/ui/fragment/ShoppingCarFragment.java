@@ -2,6 +2,7 @@ package com.hym.shop.ui.fragment;
 
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -57,6 +58,7 @@ public class ShoppingCarFragment extends ProgressFragment<ShoppingCarPresenter> 
     Button mBtnDel;
 
     private ShoppingCarAdapter mShoppingCarAdapter;
+    private List<HotWares.WaresBean> mCarWares;
 
     private final int  PAGE_STATUS_NORMAL = 1;
     private final int  PAGE_STATUS_EDIT = 2;
@@ -219,15 +221,17 @@ public class ShoppingCarFragment extends ProgressFragment<ShoppingCarPresenter> 
         if (mSmartRefreshLayout.isRefreshing()) {
             mSmartRefreshLayout.finishRefresh();
         }
-        if (mShoppingCarAdapter.getData() != null && mShoppingCarAdapter.getData().size() > 0) {
-            mShoppingCarAdapter.getData().clear();
+
+        if (mCarWares == null || (!mCarWares.equals(waresBeanList))){
+            if (mShoppingCarAdapter.getData() != null && mShoppingCarAdapter.getData().size() > 0) {
+                mShoppingCarAdapter.getData().clear();
+            }
+            mCarWares = waresBeanList;
+            mShoppingCarAdapter.addData(mCarWares);
+            SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mShoppingCarAdapter);
+            mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
+            setAllCheckAndTotalPrice(mCarWares);
         }
-
-        mShoppingCarAdapter.addData(waresBeanList);
-        SlideInBottomAnimationAdapter alphaAdapter = new SlideInBottomAnimationAdapter(mShoppingCarAdapter);
-        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
-
-        setAllCheckAndTotalPrice(waresBeanList);
 
     }
 

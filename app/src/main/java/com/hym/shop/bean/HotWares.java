@@ -1,5 +1,7 @@
 package com.hym.shop.bean;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -171,6 +173,22 @@ public class HotWares {
 
         public void setSale(int sale) {
             this.sale = sale;
+        }
+
+        @Override
+        public boolean equals(@Nullable Object obj) {
+            WaresBean waresBean = (WaresBean) obj;
+            if (obj == null){
+                return false;
+            }
+            if (waresBean.getId() == id) {
+                if (waresBean.getPrice() == price) {
+                    if (waresBean.getCount() == count) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

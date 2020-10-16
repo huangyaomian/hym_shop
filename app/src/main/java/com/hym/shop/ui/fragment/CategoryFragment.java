@@ -188,9 +188,7 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
                 mSmartRefreshLayout.finishRefresh();
             }
 
-            if (mSmartRefreshLayout.isLoading()) {
-                mSmartRefreshLayout.finishLoadMore();
-            }
+
 
             switch (mStatus){
                 case STATUS_NORMAL:
@@ -232,6 +230,10 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
             mSmartRefreshLayout.setEnableLoadMore(true);
         }else {
             mSmartRefreshLayout.finishLoadMoreWithNoMoreData();//显示全部加载完成，并不再触发加载更事件
+        }
+
+        if (mSmartRefreshLayout.isLoading()) {
+            mSmartRefreshLayout.finishLoadMore();
         }
 
     }
