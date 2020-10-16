@@ -109,8 +109,7 @@ public class HotWaresFragment extends ProgressFragment<HotWaresPresenter> implem
     }
 
     private void  initRefresh() {
-        mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
-        mSmartRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
+        mSmartRefreshLayout.setEnableFooterFollowWhenNoMoreData(true);
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -163,7 +162,7 @@ public class HotWaresFragment extends ProgressFragment<HotWaresPresenter> implem
         if (mCurPage * mPageSize < hotWares.getTotalCount()) {
             mSmartRefreshLayout.setEnableLoadMore(true);
         }else {
-            mSmartRefreshLayout.setEnableLoadMore(false);
+            mSmartRefreshLayout.finishLoadMoreWithNoMoreData();//显示全部加载完成，并不再触发加载更事件
         }
     }
 }
