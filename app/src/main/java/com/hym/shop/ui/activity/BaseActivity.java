@@ -39,7 +39,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         setContentView(setLayoutResourceID());
         mUnbinder = ButterKnife.bind(this);
         XUI.initTheme(this);
-        StatusBarUtils.initStatusBarStyle(this,false, ActivityCompat.getColor(this, R.color.theme_blue));
         mMyApplication = (MyApplication) getApplication();
         setupActivityComponent(mMyApplication.getAppComponent());
         init();

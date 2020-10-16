@@ -2,10 +2,9 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item  android:state_focused="true" android:drawable="@color/line_60" />
+    <item  android:state_pressed="true" android:drawable="@color/line_60" />
 
-    <item  android:state_focused="true" android:drawable="@color/theme_blue" />
-    <item  android:state_pressed="true" android:drawable="@color/theme_blue" />
-
-    <item android:drawable="@color/theme_while"/>
+    <item android:drawable="@color/transparent2"/>
 
 </selector>
