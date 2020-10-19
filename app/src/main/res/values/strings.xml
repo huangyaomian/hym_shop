@@ -63,5 +63,6 @@
 
 
     <string name="no_more_data">-沒有更多數據了-</string>
+    <string name="total_sort_wares">總共有%d件商品</string>
 
 </resources>

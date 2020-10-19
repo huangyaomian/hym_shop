@@ -167,7 +167,7 @@ public class SortWaresFragment extends ProgressFragment<SortWaresPresenter> impl
         switch (mStatus){
             case STATUS_NORMAL:
                 waresList = hotWares.getList();
-                totalWares.setText("总共有" + hotWares.getTotalCount() +"件商品");
+                totalWares.setText(String.format(getResources().getString(R.string.total_sort_wares),hotWares.getTotalCount()));
                 if (!(mAdapter.getHeaderLayoutCount() > 0)) {
                     mAdapter.addHeaderView(mView);
                 }
