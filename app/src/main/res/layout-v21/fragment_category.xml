@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@color/line_60">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category"
@@ -51,27 +52,27 @@
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="0dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
+
         android:layout_height="match_parent"
         android:layout_weight="3"
         android:visibility="gone">
 
         <com.scwang.smart.refresh.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/line_60"
+            android:layout_height="match_parent"
             />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/category_wares"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/theme_while"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
             />
         <com.scwang.smart.refresh.footer.ClassicsFooter
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/line_60"
+            android:layout_height="match_parent"
             app:srlTextNothing="@string/no_more_data"
             android:paddingTop="6dp"
             />

@@ -85,7 +85,7 @@ public class ImageLoader {
     }
 
 
-    public static void load(String url , ImageView imageView){
+    public static void  load(String url , ImageView imageView){
 
         load(imageView.getContext(),imageView,url,null,null);
 

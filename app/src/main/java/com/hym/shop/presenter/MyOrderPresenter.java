@@ -5,6 +5,7 @@ import com.hym.shop.bean.Order;
 import com.hym.shop.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.shop.presenter.contract.MyOrderContract;
 import com.hym.shop.presenter.contract.SortWaresContract;
+import com.mob.tools.RxMob;
 
 import java.lang.invoke.CallSite;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -38,7 +40,6 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.IMyOrderMode
                         return isShowProgress;
                     }
                 });
-
 
     }
 

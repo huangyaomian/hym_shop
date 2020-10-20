@@ -86,7 +86,6 @@ public class HotWaresFragment extends ProgressFragment<HotWaresPresenter> implem
 
         showToolBar();
 
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         SpaceItemDecoration4 dividerDecoration = new SpaceItemDecoration4(UIUtils.dp2px(8));

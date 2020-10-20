@@ -123,7 +123,7 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
                     mStatus = STATUS_NORMAL;
                     mCurPage = 1;
                     mCategoryId = mCategoryAdapter.getData().get(position).getId();
-                    requestCategoryWares(mCategoryId);
+                    requestCategoryWaresAndBanner(mCategoryId);
                     mCategoryAdapter.getData().get(mCategoryFlag).setSelect(false);
                     mCategoryAdapter.getData().get(position).setSelect(true);
                     mCategoryAdapter.notifyItemChanged(mCategoryFlag);
@@ -175,7 +175,6 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
         mCategoryId = categoryList.get(0).getId();
         requestCategoryWaresAndBanner(mCategoryId);
 
-
     }
 
     @Override
@@ -188,10 +187,9 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
                 mSmartRefreshLayout.finishRefresh();
             }
 
-
-
             switch (mStatus){
                 case STATUS_NORMAL:
+
                     if (hotWares.getBanners() != null && hotWares.getBanners().size()>0) {
                         mBanner.setAdapter(new BannerImageAdapter<com.hym.shop.bean.Banner>(hotWares.getBanners()) {
                             @Override
@@ -201,15 +199,19 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
 
 
                         })
-                                .addBannerLifecycleObserver(this)//添加生命周期观察者
+                                .addBannerLifecycleObserver(this) //添加生命周期观察者
                                 .addPageTransformer(new ScaleInTransformer())
                                 .setIndicator(new CircleIndicator(getContext()));
+                        if (!mCategoryWaresAdapter.getHeaderViewAsFlow()) {
+                            mCategoryWaresAdapter.removeHeaderView(mView);
+                            mCategoryWaresAdapter.addHeaderView(mView);
+                        }
 
-                        mCategoryWaresAdapter.addHeaderView(mView);
+
                     }
 
 
-                    if (mCategoryWaresAdapter.getData() != null && mCategoryWaresAdapter.getData().size() > 0) {
+                    if  (mCategoryWaresAdapter.getData().size() > 0) {
                         mCategoryWaresAdapter.getData().clear();
                     }
 

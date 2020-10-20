@@ -80,7 +80,6 @@ public class MyOrderFragment extends ProgressFragment<MyOrderPresenter> implemen
     protected void initView() {
         mAdapter = new MyOrderAdapter();
         initRefresh();
-
     }
 
 
@@ -121,7 +120,7 @@ public class MyOrderFragment extends ProgressFragment<MyOrderPresenter> implemen
 
     @Override
     public void showMyOrder(List<Order> orders) {
-        if (mSmartRefreshLayout.isRefreshing()) {
+        if (mSmartRefreshLayout != null && mSmartRefreshLayout.isRefreshing()) {
             mSmartRefreshLayout.finishRefresh();
         }
         mAdapter.addData(orders);

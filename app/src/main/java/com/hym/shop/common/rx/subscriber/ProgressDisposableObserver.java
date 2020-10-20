@@ -4,21 +4,25 @@ import android.content.Context;
 import android.util.Log;
 
 import com.hym.shop.common.exception.BaseException;
+import com.hym.shop.common.rx.RxErrorHandler;
 import com.hym.shop.common.utils.ProgressDialogHandler;
 import com.hym.shop.ui.BaseView;
 
 import io.reactivex.disposables.Disposable;
 
 
-public abstract class ProgressDisposableObserver<T> extends ErrorHandlerDisposableObserver<T> implements ProgressDialogHandler.OnProgressCancelListener {
+//public abstract class ProgressDisposableObserver<T> extends ErrorHandlerDisposableObserver<T> implements ProgressDialogHandler.OnProgressCancelListener {
+public abstract class ProgressDisposableObserver<T> extends DefaultDisposableObserver<T> implements ProgressDialogHandler.OnProgressCancelListener {
 
+    protected RxErrorHandler mRxErrorHandler = null;
 
     private BaseView mBaseView;
     private Disposable mDisposable;
 
     public ProgressDisposableObserver(Context context, BaseView baseView) {
-        super(context);
+//        super(context);
         this.mBaseView = baseView;
+        mRxErrorHandler = new RxErrorHandler(context);
     }
 
     protected boolean isShowProgress(){
@@ -27,7 +31,9 @@ public abstract class ProgressDisposableObserver<T> extends ErrorHandlerDisposab
 
     @Override
     public void onCancelProgress() {
-        mDisposable.dispose();
+        if(mDisposable != null && !mDisposable.isDisposed()){
+            mDisposable.dispose();
+        }
     }
 
 

@@ -99,7 +99,6 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
         SpaceItemDecoration4 dividerDecoration = new SpaceItemDecoration4(UIUtils.dp2px(8));
         mRecyclerView.addItemDecoration(dividerDecoration);
         mRecyclerView.setLayoutManager(layoutManager);
-
         mPresenter.getHomeRecommendAndBanner(true);
     }
 
@@ -133,11 +132,12 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
         mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                mAdapter.removeHeaderView(mView);
+//                mAdapter.removeHeaderView(mView);
 
                 mPresenter.getHomeRecommendAndBanner(false);
             }
         });
+
     }
 
 
@@ -148,6 +148,10 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
 
         if (mSmartRefreshLayout.isRefreshing()) {
             mSmartRefreshLayout.finishRefresh();
+        }
+
+        if (!mAdapter.getHeaderViewAsFlow()) {
+            mAdapter.removeHeaderView(mView);
         }
 
         //—————————————————————————如果你想偷懒，而又只是图片轮播————————————————————————
@@ -165,6 +169,7 @@ public class HomeCampaignFragment extends ProgressFragment<HomeCampaignPresenter
 
 
         mAdapter.addHeaderView(mView);
+
         if (mAdapter.getData() != null && mAdapter.getData().size()>0){
             mAdapter.getData().clear();
         }

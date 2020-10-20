@@ -184,7 +184,7 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
 
 
     /**
-     * 子类实现此方法使其点击重新刷新页面
+     * 子类实现此方法使其点击提示文本重新刷新页面
      */
     public void onEmptyViewClick() {
 
@@ -262,6 +262,8 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
                 @Override
                 public void onClick(View v) {
                     init();
+                    initView();
+                    initEvent();
                 }
             });
         }
