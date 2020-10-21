@@ -1,6 +1,7 @@
 package com.hym.shop.common.rx.subscriber;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.hym.shop.common.utils.ProgressDialogHandler;
 
@@ -24,7 +25,8 @@ public abstract class ProgressDialogDisposableObserver<T> extends ErrorHandlerDi
 
     @Override
     public void onCancelProgress() {
-        mDisposable.dispose();//這個是取消訂閲的但是暫時不知道怎麽弄
+        Log.d("hymmmm", "onCancelProgress: ProgressDialogDisposableObserver");
+        mDisposable.dispose();      //這個是取消訂閲的但是暫時不知道怎麽弄
     }
 
 //    protected abstract void unsubscribe();

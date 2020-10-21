@@ -28,7 +28,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <com.xuexiang.xui.widget.progress.materialprogressbar.MaterialProgressBar
             android:id="@+id/progress"
@@ -55,7 +55,7 @@
 
         android:layout_height="match_parent"
         android:layout_weight="3"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.scwang.smart.refresh.header.ClassicsHeader
             android:layout_width="match_parent"

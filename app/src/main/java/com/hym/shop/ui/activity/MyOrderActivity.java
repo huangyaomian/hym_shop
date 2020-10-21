@@ -60,7 +60,6 @@ public class MyOrderActivity extends ProgressActivity {
     public void initToolbar() {
         super.initToolbar();
         setToolBarTitle("我的订单");
-
     }
 
     private List<FragmentInfo> initFragments() {

@@ -344,6 +344,9 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
         if (mUnbinder != Unbinder.EMPTY) {
             mUnbinder.unbind();
         }
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
     }
 }
 

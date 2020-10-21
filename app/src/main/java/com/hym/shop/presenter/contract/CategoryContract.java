@@ -16,6 +16,7 @@ public interface CategoryContract {
 
         void showCategory(List<Category> categories);
         void showCategoryWares(HotWares hotWares);
+
     }
 
 

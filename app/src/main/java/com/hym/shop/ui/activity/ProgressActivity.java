@@ -305,5 +305,8 @@ public abstract class ProgressActivity<T extends BasePresenter> extends AppCompa
         if (mUnbinder != Unbinder.EMPTY) {
             mUnbinder.unbind();
         }
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
     }
 }

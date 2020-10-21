@@ -1,9 +1,13 @@
 package com.hym.shop.presenter;
 
+import android.util.Log;
+
 import com.hym.shop.bean.Banner;
 import com.hym.shop.bean.Category;
 import com.hym.shop.bean.HomeCampaign;
 import com.hym.shop.bean.HotWares;
+import com.hym.shop.common.exception.BaseException;
+import com.hym.shop.common.rx.subscriber.ProgressDialogDisposableObserver;
 import com.hym.shop.common.rx.subscriber.ProgressDisposableObserver;
 import com.hym.shop.presenter.contract.CategoryContract;
 import com.hym.shop.presenter.contract.HotWaresContract;
@@ -45,17 +49,11 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.ICategoryM
     public void getCategoryWares(int curPage, int pageSize, int categoryId, boolean isShowProgress){
         mModel.getCategoryWares(curPage,pageSize,categoryId)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(new ProgressDisposableObserver<HotWares>(mContext,mView) {
+                .subscribe(new ProgressDialogDisposableObserver<HotWares>(mContext) {
                     @Override
                     public void onNext(HotWares hotWares) {
                         mView.showCategoryWares(hotWares);
                     }
-
-                    @Override
-                    protected boolean isShowProgress() {
-                        return isShowProgress;
-                    }
-
 
                 });
     }

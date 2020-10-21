@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable;
 
 
 //public abstract class ProgressDisposableObserver<T> extends ErrorHandlerDisposableObserver<T> implements ProgressDialogHandler.OnProgressCancelListener {
-public abstract class ProgressDisposableObserver<T> extends DefaultDisposableObserver<T> implements ProgressDialogHandler.OnProgressCancelListener {
+public abstract class ProgressDisposableObserver<T> extends DefaultDisposableObserver<T>{
 
     protected RxErrorHandler mRxErrorHandler = null;
 
@@ -29,12 +29,12 @@ public abstract class ProgressDisposableObserver<T> extends DefaultDisposableObs
         return true;
     }
 
-    @Override
-    public void onCancelProgress() {
-        if(mDisposable != null && !mDisposable.isDisposed()){
-            mDisposable.dispose();
-        }
-    }
+//    @Override
+//    public void onCancelProgress() {
+//        if(mDisposable != null && !mDisposable.isDisposed()){
+//            mDisposable.dispose();
+//        }
+//    }
 
 
     @Override
@@ -60,6 +60,10 @@ public abstract class ProgressDisposableObserver<T> extends DefaultDisposableObs
 //        Log.d("ErrorHandlerDO",t.getMessage());
 //        mBaseView.showError(baseException.getDisplayMessage());
         mBaseView.showError(baseException.getDisplayMessage(),baseException.getCode());
+    }
+
+    public Disposable getDisposable(){
+        return mDisposable;
     }
 
 

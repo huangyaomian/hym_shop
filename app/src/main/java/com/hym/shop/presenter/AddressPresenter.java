@@ -25,18 +25,36 @@ public class AddressPresenter extends BasePresenter<AddressContract.IAddressMode
 
     public void showAddressList(Long userId, String token, boolean isShowProgress){
 
+        ProgressDisposableObserver<List<Address>> progressDisposableObserver = new ProgressDisposableObserver<List<Address>>(mContext, mView) {
+            @Override
+            public void onNext(List<Address> addressList) {
+                mView.showAddressList(addressList);
+            }
+
+            @Override
+            protected boolean isShowProgress() {
+                return isShowProgress;
+            }
+        };
+
         mModel.getAddressList( userId, token)
-                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(new ProgressDisposableObserver<List<Address>>(mContext,mView) {
-                    @Override
-                    public void onNext(List<Address> addressList) {
-                        mView.showAddressList(addressList);
-                    }
-                    @Override
-                    protected boolean isShowProgress() {
-                        return isShowProgress;
-                    }
-                });
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(progressDisposableObserver);
+
+        addDisposable(progressDisposableObserver);
+
+
+//        mModel.getAddressList( userId, token)
+//                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+//                .subscribe(new ProgressDisposableObserver<List<Address>>(mContext,mView) {
+//                    @Override
+//                    public void onNext(List<Address> addressList) {
+//                        mView.showAddressList(addressList);
+//                    }
+//                    @Override
+//                    protected boolean isShowProgress() {
+//                        return isShowProgress;
+//                    }
+//                });
 
     }
 

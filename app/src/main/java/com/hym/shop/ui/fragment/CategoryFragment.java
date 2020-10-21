@@ -240,6 +240,8 @@ public class CategoryFragment extends ProgressFragment<CategoryPresenter> implem
 
     }
 
+
+
     private void showDialog() {
         mProgress.setVisibility(View.VISIBLE);
         mLoading.setText(R.string.xui_tip_loading_message);

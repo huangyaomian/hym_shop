@@ -58,6 +58,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         if (mUnbinder != Unbinder.EMPTY) {
             mUnbinder.unbind();
         }
+
+        if (mPresenter != null) {
+            mPresenter.removeDisposable();
+        }
     }
 
 

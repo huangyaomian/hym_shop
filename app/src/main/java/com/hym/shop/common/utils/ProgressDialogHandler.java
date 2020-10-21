@@ -38,6 +38,7 @@ public class ProgressDialogHandler extends Handler {
         if (mProgressDialog == null){
             mProgressDialog = new MiniLoadingDialog(mContext,"loading...");
             if (cancelable){
+                mProgressDialog.setCancelable(true);
                 mProgressDialog.setLoadingCancelListener(new LoadingCancelListener() {
                     @Override
                     public void onCancelLoading() {

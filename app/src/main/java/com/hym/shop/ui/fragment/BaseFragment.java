@@ -94,8 +94,13 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         if (mUnbinder != Unbinder.EMPTY) {
             mUnbinder.unbind();
+        }
+
+        if (mPresenter != null) {
+            mPresenter.removeDisposable();
         }
     }
 
